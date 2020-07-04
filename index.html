@@ -20,28 +20,8 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Start Bootstrap</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
-          </li>
-        </ul>
-      </div>
+      <a class="navbar-brand" href="#">uncivilized</a>
+      <span class="navbar-text">v0.0.01</span>
     </div>
   </nav>
 
@@ -55,6 +35,44 @@
           <li>Bootstrap 4.5.0</li>
           <li>jQuery 3.5.1</li>
         </ul>
+
+        <div class="page-header">
+          <h4>Resources</h4>
+          <hr style="height:1px;border-width:0;color:lightgray;background-color:lightgray">
+        </div>
+
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" id="food-tab" data-toggle="tab" href="#food">Food</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="materials-tab" data-toggle="tab" href="#materials">Materials</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="research-tab" data-toggle="tab" href="#research">Research</a>
+          </li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane active" id="food">
+            <ul class="nav nav-pills">
+              <li class="nav-item">
+                <a class="nav-link active" id="food-building2-tab" data-toggle="tab" href="#pasture">Pasture</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="food-building1-tab" data-toggle="tab" href="#farm">Farm</a>
+              </li>
+            </ul>
+          </div>
+          <div class="tab-pane" id="materials">
+            <h3>Menu 1</h3>
+            <p>Some content in menu 1.</p>
+          </div>
+          <div class="tab-pane" id="research">
+            <h3>Menu 2</h3>
+            <p>Some content in menu 2.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
