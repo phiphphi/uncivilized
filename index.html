@@ -10,8 +10,8 @@
 
   <title>Bare - Start Bootstrap Template</title>
 
-  <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap core CSS (change back to bootstrap.min.css for efficiency later)-->
+  <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 </head>
@@ -29,25 +29,31 @@
   <!-- Page Content -->
   <div class="container">
     <div class="row">
-      <div class="col-lg-12 text-center">
-        <h1 class="mt-5">A Bootstrap 4 Starter Template</h1>
-        <p class="lead">Complete with pre-defined file paths and responsive navigation!</p>
-        <ul class="list-unstyled">
-          <li>Bootstrap 4.5.0</li>
-          <li>jQuery 3.5.1</li>
-        </ul>
-
+      <div class="col-md-4 text-center">
         <div class="card">
           <div class="card-header">
             <span>Resources</span>
           </div>
           <ul class="list-unstyled">
-            <i class="fa fa-cutlery"></i> <span id="food-count">Food: 0</span>
-            <i class="fa fa-bars"></i> <span id="material-count">Materials: 0</span>
-            <i class="fa fa-flask"></i> <span id="research-count">Research: 0</span>
+            <i class="fa fa-male"></i> <span id="workers-count">Workers: 0 <br/></span>
+            <i class="fa fa-bars"></i> <span id="material-count">Materials: 0 <br/></span>
+            <i class="fa fa-flask"></i> <span id="research-count">Research: 0 <br/></span>
           </ul>
         </div>
-
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="card">
+          <h5 id="pop-count">Population: 10</h5>
+          <h6 id="city-status">Settlement</h6>
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="card">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 text-center">
         <ul class="nav nav-tabs">
           <li class="nav-item">
             <a class="nav-link active" id="food-tab" data-toggle="tab" href="#food">Food</a>
