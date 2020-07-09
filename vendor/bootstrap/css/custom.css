@@ -8,5 +8,23 @@
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
-    margin: 0;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+    color: #212529;
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+.btn {
+    border: 1px solid #ddd;
+}
+
+.btn:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+.btn:focus {
+    outline: none;
+    box-shadow: none;
 }
