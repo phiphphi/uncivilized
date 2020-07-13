@@ -1,3 +1,19 @@
+// Check if Jquery is loaded
+if (typeof jQuery === "undefined") {
+    console.log("jQuery hasn\"t loaded");
+} else {
+    console.log("jQuery has loaded");
+}
+
+// Variables
+
+let stats = {
+    name: "",
+    era: 0,
+    population: 0
+}
+
+
 _resources = {
     workers: {
         name: "Workers",
@@ -17,10 +33,11 @@ _eras = [
     {
        name: "Ancient Era",
        description: "",
-       requirement: [
-           _resources.workers.amount = 500,
-           _resources.materials.amount = 5000
-       ]
+       requirements: {
+           population: 1000,
+           materials: 500
+       }
+
     },
     {
 
