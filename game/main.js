@@ -63,18 +63,34 @@ _buildings = {
     research: {}
 };
 
+let fps = 60;
+let interval = (1000 / fps);
+let rewardInterval = 10;
+let version = "0.0.01";
+let init = false;
 
+// log
+function Log(text) { console.log("uncivilized v" + version + " : " + text); }
 
-// strings to move to own json file eventually
-$(function () {
+// update
+function Update() { Log("This is needed to make the other Update.() function to work."); }
 
-});
+Update.gameInit = function() {
+    Log("Calling Update.gameInit() - loading game!");
 
+    init = true;
+};
 
 
 // Game loop
-window.setInterval(function () {
-    updateDisplay();
-    updateStats();
-
-}, 1000);
+window.onload = function() {
+    Update.gameInit();
+}
+let mainInterval = window.setInterval(function () {
+    Update.playerStats();
+}, interval);
+// note: set all producers internal stats as amount produced per 10 milliseconds, but described as per second
+// so if description says 1 worker per second, then internal reward is 0.01 - since this goes every 10 milliseconds
+let rewardInterval = window.setInterval(function () {
+    Producers.reward();
+}, rewardInterval);
