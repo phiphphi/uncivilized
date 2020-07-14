@@ -62,6 +62,6 @@ let mainInterval = window.setInterval(function () {
 // note: set all producers internal stats as amount produced per 10 milliseconds, but described as per second
 // so if description says 1 worker per second, then internal reward is 0.01 - since this goes every 10 milliseconds
 let rewardInterval = window.setInterval(function () {
-    //Producers.reward();
+    Building.increment();
     //Update.UI();
 }, rewardIntervalTime);

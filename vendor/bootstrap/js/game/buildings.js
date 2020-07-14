@@ -40,11 +40,22 @@ Building.init = function() {
         for (let j = 0; j < category.length; j++) {
             let b = category[j];
             $("#b-name-" + b.id).text(b.name);
-            $("#b-desc-" + b.id).html("<h3>" + b.name + "</h3>" + b.description +
-                "<p id=b-count-" + b.id + ">" + "You currently have " + b.amount + " " + b.id + "s. <br/> </p> " +
+
+            let desc = "<h3>" + b.name + "</h3>" + b.description +
+                "<p id=b-count-" + b.id + ">" + "You currently have " + b.amount + " " + b.id + "s. <br/> </p> <hr/> " +
                 "<div class=btn-group> <button type=button class=btn>Buy 1</button> " +
-                "<button type=button class=btn>Buy 100</button></div>");
+                "<button type=button class=btn>Buy 100</button></div>";
+
+            $("#b-desc-" + b.id).html(desc);
             Log("initalizing id " + b.id + ", name: " + b.name);
         }
     }
+}
+
+Building.purchase = function() {
+
+}
+
+Building.increment = function() {
+
 }
