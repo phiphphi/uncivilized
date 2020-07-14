@@ -10,24 +10,8 @@ if (typeof jQuery === "undefined") {
 let stats = {
     name: "",
     era: 0,
-    population: 0
+    population: 10
 }
-
-
-_resources = {
-    workers: {
-        name: "Workers",
-        description: "The hard working citizens that build your empire. Required for almost everything.",
-        amount: 0,
-        production: 0
-    },
-    materials: {
-
-    },
-    research: {
-
-    }
-};
 
 _eras = [
     {
@@ -44,28 +28,10 @@ _eras = [
     },
 ];
 
-_buildings = {
-    infrastructure: {
-        building1a: {
-            name: "Tent",
-            description: "Primitive structures, providing shelter from the elements and predators.",
-        },
-        building1b: {
-
-        },
-        building2a: {
-            name: "Hut",
-            description: "These dwellings constructed from local materials provide a better quality of " +
-                "housing than tents."
-        }
-    },
-    materials: {},
-    research: {}
-};
 
 let fps = 60;
 let interval = (1000 / fps);
-let rewardInterval = 10;
+let rewardIntervalTime = 10;
 let version = "0.0.01";
 let init = false;
 
@@ -77,20 +43,25 @@ function Update() { Log("This is needed to make the other Update.() function to 
 
 Update.gameInit = function() {
     Log("Calling Update.gameInit() - loading game!");
-
+    Building.init();
     init = true;
 };
 
+Update.UI = function() {
+
+}
 
 // Game loop
 window.onload = function() {
     Update.gameInit();
 }
 let mainInterval = window.setInterval(function () {
-    Update.playerStats();
+    //Update.playerStats();
 }, interval);
+
 // note: set all producers internal stats as amount produced per 10 milliseconds, but described as per second
 // so if description says 1 worker per second, then internal reward is 0.01 - since this goes every 10 milliseconds
 let rewardInterval = window.setInterval(function () {
-    Producers.reward();
-}, rewardInterval);
+    //Producers.reward();
+    //Update.UI();
+}, rewardIntervalTime);

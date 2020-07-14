@@ -74,21 +74,21 @@
               <!-- nested pills inside tabs look messy!!-->
               <div class="col-lg-3 col-xs-2">
                 <ul class="nav nav-pills flex-column">
-                  <li class="nav-item d-none">
-                    <a class="nav-link" id="infrastructure-building2-pill" data-toggle="pill" href="#infra-hut">Hut</a>
+                  <li class="nav-item">
+                    <a class="nav-link" id="b-name-hut" data-toggle="pill" href="#b-desc-hut"></a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" id="infrastructure-building1-pill" data-toggle="pill" href="#infra-tent">Tent</a>
+                    <a class="nav-link" id="b-name-tent" data-toggle="pill" href="#b-desc-tent"></a>
                   </li>
                   <li class="nav-item active">
-                    <a class="nav-link" id="infrastructure-count" data-toggle="pill" href="#infra-count">Workers</a>
+                    <a class="nav-link" id="infrastructure-count" data-toggle="pill" href="#b-desc-count">Workers</a>
                   </li>
                 </ul>
               </div>
 
               <div class="col-lg-9 col-xs-10">
                 <div class="tab-content">
-                  <div class="tab-pane" id="infra-hut">
+                  <div class="tab-pane" id="b-desc-hut">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                       incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                       exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
@@ -96,20 +96,8 @@
                       Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
                       mollit anim id est laborum.</p>
                   </div>
-                  <div class="tab-pane" id="infra-tent">
-                    <h3>Tent</h3>
-                    Primitive structures, providing shelter from the elements and predators.
-                    <p>
-                      You currently have 0 tents. <br/>
-                    </p>
-
-                    <div class="btn-group d-flex">
-                      <button type="button" class="btn btn-default">Buy 1</button>
-                      <button type="button" class="btn btn-default d-none">Buy 1</button>
-                    </div>
-
-                  </div>
-                  <div class="tab-pane active" id="infra-count">
+                  <div class="tab-pane" id="b-desc-tent"></div>
+                  <div class="tab-pane active" id="b-desc-count">
                     <h3>Workers</h3>
                     The hard working citizens that build your empire. Required for almost everything.
                     <p>
@@ -140,7 +128,9 @@
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- game core Javascript -->
-  <script src="vendor/game/main.js"></script>
+  <script src="vendor/bootstrap/js/game/resources.js"></script>
+  <script src="vendor/bootstrap/js/game/buildings.js"></script>
+  <script src="vendor/bootstrap/js/game/main.js"></script>
 
 </body>
 
