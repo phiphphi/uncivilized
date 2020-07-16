@@ -66,6 +66,13 @@ Update.cityData = function() {
 
             $("#r-header-" + r.id).html(r.name + ": " + r.amount + " " + getResourcesPerTime(r.production) + "</br>");
         }
+
+        // updates buildings
+        for (let i = 0; i < buildings.length; i++) {
+            for (let j = 0; j < buildings[i].length; j++) {
+                determineButtonLayout(buildings[i][j]);
+            }
+        }
     }
 };
 
