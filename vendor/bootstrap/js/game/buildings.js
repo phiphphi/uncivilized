@@ -4,7 +4,7 @@ buildings = [
             "Tent",
             "Primitive structures, providing shelter from the elements and predators.",
             [0, 10, 0],
-            [0.016, 0, 0],
+            [0.0166, 0, 0],
             0), // 1 worker per min
         new Building( "hut",
             "Hut",
@@ -39,6 +39,7 @@ Building.init = function() {
         let category = buildings[i];
         for (let j = 0; j < category.length; j++) {
             let b = category[j];
+
             $("#b-name-" + b.id).text(b.name);
 
             let desc = "<h3>" + b.name + "</h3>" + b.description +

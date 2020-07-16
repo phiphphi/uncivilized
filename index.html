@@ -35,16 +35,16 @@
         <div class="card-header">
           <span>Resources</span>
         </div>
-        <ul class="list-unstyled">
-          <i class="fa fa-male"></i> <span id="workers-count">Workers: 10 <br/></span>
-          <i class="fa fa-bars"></i> <span id="material-count">Materials: 100 <br/></span>
-          <i class="fa fa-flask"></i> <span id="research-count">Research: 0 <br/></span>
+        <ul class="list-unstyled" id="r-header">
+          <i class="fa fa-male"></i> <span id="r-header-workers">Workers: 10 <br/></span>
+          <i class="fa fa-bars"></i> <span id="r-header-materials">Materials: 100 <br/></span>
+          <i class="fa fa-flask"></i> <span id="r-header-research">Research: 0 <br/></span>
         </ul>
       </div>
 
       <div class="card justify-content-center">
-        <h5 id="pop-count">Population: 10</h5>
-        <h6 id="city-status">Settlement</h6>
+        <h5 id="pop-count"></h5>
+        <h6 id="city-status"></h6>
       </div>
 
       <div class="card">
@@ -121,6 +121,7 @@
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- game core Javascript -->
+  <script src="vendor/bootstrap/js/game/helpers.js"></script>
   <script src="vendor/bootstrap/js/game/resources.js"></script>
   <script src="vendor/bootstrap/js/game/buildings.js"></script>
   <script src="vendor/bootstrap/js/game/main.js"></script>

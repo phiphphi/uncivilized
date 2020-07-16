@@ -10,8 +10,14 @@ if (typeof jQuery === "undefined") {
 let stats = {
     name: "",
     era: 0,
-    population: 10
+    population: 10,
+    city_status: ""
 }
+
+_city_statuses = {
+
+
+};
 
 _eras = [
     {
@@ -39,29 +45,41 @@ let init = false;
 function Log(text) { console.log("uncivilized v" + version + " : " + text); }
 
 // update
-function Update() { Log("This is needed to make the other Update.() function to work."); }
+function Update() { Log("This is needed to make the other Update.() functions work."); }
 
 Update.gameInit = function() {
     Log("Calling Update.gameInit() - loading game!");
+    Resource.init();
     Building.init();
     init = true;
 };
 
-Update.UI = function() {
+// Handles displaying the info for resources, population, city status...
+Update.cityData = function() {
+    if (init === true) {
+        $("#pop-count").text("Population: " + stats.population);
+        $("#city-status").text(getCityStatus(stats.population));
 
-}
+        // updates resources
+        for (let i = 0; i < resources.length; i++) {
+            let r = resources[i];
+
+            $("#r-header-" + r.id).html(r.name + ": " + r.amount + " " + getResourcesPerTime(r.production) + "</br>");
+        }
+    }
+};
 
 // Game loop
 window.onload = function() {
     Update.gameInit();
-}
-let mainInterval = window.setInterval(function () {
-    //Update.playerStats();
+};
+
+mainInterval = window.setInterval(function () {
+    Update.cityData();
 }, interval);
 
 // note: set all producers internal stats as amount produced per 10 milliseconds, but described as per second
 // so if description says 1 worker per second, then internal reward is 0.01 - since this goes every 10 milliseconds
-let rewardInterval = window.setInterval(function () {
+rewardInterval = window.setInterval(function () {
     Building.increment();
-    //Update.UI();
 }, rewardIntervalTime);
