@@ -9,7 +9,7 @@ resources = [
         "fa fa-bars",
         "Materials",
         "The hard working citizens that build your empire. Required for almost everything.",
-        100,
+        50000,
         0),
     new Resource("research",
         "fa fa-flask",

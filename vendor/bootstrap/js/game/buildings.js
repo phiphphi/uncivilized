@@ -104,7 +104,7 @@ Building.purchase = function(categoryIndex, buildingIndex, amount) {
     }
 
     for (let j = 0; j < building.production.length; j++) {
-        resources[j].production += building.production[j];
+        resources[j].production += building.production[j] * amount;
     }
 
     building.amount += amount;
@@ -118,6 +118,11 @@ Building.increment = function() {
         for (let j = 0; j < buildings[i].length; j++) {
             let b = buildings[i][j];
             for (let k = 0; k < b.production.length; k++) {
+                // also update population
+                if (k === 0) {
+                    stats.population += ((b.production[k] * b.amount) / divisor);
+                }
+
                 resources[k].amount += ((b.production[k] * b.amount) / divisor);
             }
         }

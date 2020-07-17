@@ -57,7 +57,7 @@ Update.gameInit = function() {
 // Handles displaying the info for resources, population, city status...
 Update.cityData = function() {
     if (init === true) {
-        $("#pop-count").text("Population: " + stats.population);
+        $("#pop-count").text("Population: " + prettify(stats.population));
         $("#city-status").text(getCityStatus(stats.population));
 
         // updates resources
