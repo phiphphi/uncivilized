@@ -23,6 +23,7 @@ function getCityStatus(pop) {
 }
 
 function getResourcesPerTime(amountPerSecond) {
+    Log("Amount per second passed in: " + amountPerSecond);
     if (amountPerSecond === 0) { // don't display anything if no production
       return "";
     } else if (amountPerSecond < 1) { // convert to minutes
@@ -67,6 +68,8 @@ function determineButtonLayout(building) {
         }
     }
 
+    building.purchasable = maxAmount;
+
     let $noBuyButton = $("#b-button-" + building.id + "-0");
     let $oneBuyButton = $("#b-button-" + building.id + "-1");
     let $25BuyButton = $("#b-button-" + building.id + "-2");
@@ -80,8 +83,10 @@ function determineButtonLayout(building) {
     } else {
         $noBuyButton.hide();
         $oneBuyButton.show();
+
         $25BuyButton.hide();
         $100BuyButton.hide();
+
         if (purchasableVal >= 2) {
             $100BuyButton.text("Buy " + maxAmount);
             $100BuyButton.show();
@@ -92,10 +97,8 @@ function determineButtonLayout(building) {
             }
         }
     }
-
-    Log(purchasableVal + " value for " + building.name);
 }
 
 function prettify(input) {
-    return Math.round(input * 1000000) / 1000000;
+    return Math.round(input);
 }

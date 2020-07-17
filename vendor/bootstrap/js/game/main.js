@@ -61,18 +61,10 @@ Update.cityData = function() {
         $("#city-status").text(getCityStatus(stats.population));
 
         // updates resources
-        for (let i = 0; i < resources.length; i++) {
-            let r = resources[i];
-
-            $("#r-header-" + r.id).html(r.name + ": " + r.amount + " " + getResourcesPerTime(r.production) + "</br>");
-        }
+        Resource.update();
 
         // updates buildings
-        for (let i = 0; i < buildings.length; i++) {
-            for (let j = 0; j < buildings[i].length; j++) {
-                determineButtonLayout(buildings[i][j]);
-            }
-        }
+        Building.update();
     }
 };
 

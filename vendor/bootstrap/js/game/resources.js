@@ -47,3 +47,11 @@ Resource.init = function() {
         $("#r-header-" + r.id).append(desc);
     }
 }
+
+Resource.update = function() {
+    for (let i = 0; i < resources.length; i++) {
+        let r = resources[i];
+
+        $("#r-header-" + r.id).html(r.name + ": " + prettify(r.amount) + " " + getResourcesPerTime(r.production) + "</br>");
+    }
+}
