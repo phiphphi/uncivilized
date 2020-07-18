@@ -20,6 +20,10 @@
     border: 1px solid #ddd;
 }
 
+.btn[disabled], .btn[disabled]:hover, .btn[disabled]:focus, .btn[disabled]:active {
+    background-color: transparent;
+}
+
 .btn:hover {
     background-color: rgba(0, 0, 0, 0.06);
 }

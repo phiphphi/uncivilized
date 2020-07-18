@@ -56,7 +56,7 @@ Building.init = function() {
             // initialize pill descriptions
             let desc = "<h3>" + b.name + "</h3>" + b.description +
                 "<p id=b-count-" + b.id + ">" + "You currently have " + b.amount + " " + b.id + "s. <br/> </p> <hr/> " +
-                "<div class=btn-group id=b-buttons-" + b.id + "> " +
+                "<div class=\"btn-group btn-block\" id=b-buttons-" + b.id + "> " +
                     "<button type=button class=btn disabled id=b-button-" + b.id + "-0>Can't build</button> " +
                     "<button type=button class=btn id=b-button-" + b.id + "-1>Buy 1</button>" +
                     "<button type=button class=btn id=b-button-" + b.id + "-2>Buy 25</button>" +

@@ -50,7 +50,7 @@ Resource.init = function() {
         let pillName = "<li class=nav-item>" +
             "<a class=nav-link id=r-name-" + r.id + " data-toggle=pill href=#r-desc-" + r.id + ">" + r.name + "</a>" +
             "</li>";
-        let pillDesc = "<div class=tab-pane id=r-desc-" + r.id + ">" +
+        let pillDesc = "<div class=\"tab-pane active\" id=r-desc-" + r.id + ">" +
             "<h3>" + r.name +"</h3>" + r.description +
             "<p id=r-desc-" + r.id + "-count>You currently have " + prettify(r.amount) + " workers. <br/>" +
             "Your available amount of workers is increasing by " + r.production.toFixed(2) + " every second." +
