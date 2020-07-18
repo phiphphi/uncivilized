@@ -8,13 +8,13 @@ resources = [
     new Resource("materials",
         "fa fa-bars",
         "Materials",
-        "The hard working citizens that build your empire. Required for almost everything.",
+        "The resources needed to build your cities.",
         50000,
         0),
     new Resource("research",
         "fa fa-flask",
         "Research",
-        "The hard working citizens that build your empire. Required for almost everything.",
+        "The combined knowledge of your civilization.",
         0,
         0)
 ];
@@ -45,6 +45,8 @@ Resource.init = function() {
         let desc = "<i class=" + r.image + "/> <span id=r-header-" + r.id + ">" + r.name + ": " + r.amount + "<br/></span>"
 
         $("#r-header-" + r.id).append(desc);
+
+        //TODO: initialize and update desc pills for each tab as well
     }
 }
 
