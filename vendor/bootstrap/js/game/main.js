@@ -49,6 +49,7 @@ function Update() { Log("This is needed to make the other Update.() functions wo
 
 Update.gameInit = function() {
     Log("Calling Update.gameInit() - loading game!");
+    // resource initializes before buildings to add resource descriptions
     Resource.init();
     Building.init();
     init = true;

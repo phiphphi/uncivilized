@@ -49,8 +49,9 @@ Building.init = function() {
             let b = buildings[i][j];
 
             // initialize pills
-            $("#b-col-" + i).prepend("<li class=nav-item><a class=nav-link id=b-name-" + b.id + " data-toggle=pill " +
+            $("#b-col-name-" + i).prepend("<li class=nav-item><a class=nav-link id=b-name-" + b.id + " data-toggle=pill " +
                 "href=#b-desc-" + b.id + ">" + b.name + "</a></li>")
+            $("#b-col-desc-" + i).prepend("<div class=tab-pane id=b-desc-" + b.id + "></div>");
 
             // initialize pill descriptions
             let desc = "<h3>" + b.name + "</h3>" + b.description +
