@@ -124,6 +124,7 @@ Building.purchase = function(categoryIndex, buildingIndex, amount) {
 
     building.amount += amount;
     building.currCost = getCost(building);
+    // TODO: change building prices to use curr cost
 }
 
 Building.increment = function() {

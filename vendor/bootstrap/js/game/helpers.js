@@ -33,7 +33,6 @@ function getCityStatus(pop) {
 
 // TODO: make different function for people per time since fractional people per second is weird
 function getResourcesPerTime(amountPerSecond) {
-    Log("Amount per second passed in: " + amountPerSecond);
     if (amountPerSecond === 0) { // don't display anything if no production
       return "";
     } else if (amountPerSecond < 0.1) { // convert to minutes if amount under 1 per 10 seconds
