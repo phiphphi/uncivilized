@@ -20,7 +20,7 @@ resources = [
 ];
 
 /**
- * Represents a collectable resource.
+ * Represents a collectible resource.
  *
  * @param id the text used internally for HTML id
  * @param image FontAwesome icon used
@@ -28,6 +28,7 @@ resources = [
  * @param description a short sentence on function and uses of the resource
  * @param amount current amount the player has
  * @param production how much of this resource is being produced over time
+ * @constructor
  */
 function Resource(id, image, name, description, amount, production) {
     this.id = id;

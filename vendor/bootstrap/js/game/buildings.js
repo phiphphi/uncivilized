@@ -4,6 +4,7 @@ buildings = [
             "Tent",
             "Primitive structures, providing shelter from the elements and predators.",
             [0, 10, 0],
+            [0, 10, 0],
             [0.0166, 0, 0], // 1 worker per min
             0,
             0),
@@ -11,6 +12,7 @@ buildings = [
             "Hut",
             "These dwellings constructed from local materials provide a better quality of " +
             "housing than tents.",
+            [0, 100, 0],
             [0, 100, 0],
             [0.1, 0, 0], // 1 worker per 10 seconds
             0,
@@ -20,6 +22,7 @@ buildings = [
         new Building("woodcutter",
             "Woodcutter",
             "Workers tasked with harvesting logs and branches to supply our stockpiles.",
+            [1, 5, 0],
             [1, 5, 0],
             [0, 0.5, 0],
             0,
@@ -32,13 +35,14 @@ buildings = [
 ];
 
 // need to make javadoc for these
-function Building(id, name, description, cost, production, amount, purchasable) {
+function Building(id, name, description, cost, currCost, production, amount, purchasable) {
     this.id = id;
     this.name = name;
     this.description = description;
 
     // cost is an array of [workers, materials, research, ...]
     this.cost = cost;
+    this.currCost = currCost;
 
     // production is the same as cost array
     // production is per second, but resources are incremented every 1/100th of a second
@@ -119,6 +123,7 @@ Building.purchase = function(categoryIndex, buildingIndex, amount) {
     }
 
     building.amount += amount;
+    building.currCost = getCost(building);
 }
 
 Building.increment = function() {

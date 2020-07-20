@@ -1,5 +1,14 @@
 // Helper utility functions for other scripts
 
+function getCost(building) {
+    let newCost = [];
+    for (let i = 0; i < building.cost.length; i++) {
+        newCost.push(building.cost[i] * Math.pow(1.1, building.amount));
+    }
+    return newCost;
+}
+
+
 function getCityStatus(pop) {
     if (pop <= 100) {
         return "Settlement";
