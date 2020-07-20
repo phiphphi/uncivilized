@@ -17,6 +17,13 @@ buildings = [
             0)
     ],
     [ // materials
+        new Building("woodcutter",
+            "Woodcutter",
+            "Workers tasked with harvesting logs and branches to supply our stockpiles.",
+            [1, 5, 0],
+            [0, 0.5, 0],
+            0,
+            0)
 
     ],
     [ // research

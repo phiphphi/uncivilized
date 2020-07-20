@@ -83,3 +83,5 @@ mainInterval = window.setInterval(function () {
 rewardInterval = window.setInterval(function () {
     Building.increment();
 }, rewardIntervalTime);
+
+// TODO: add input bar for purchasing buildings, add material and research buildings, make materials appear first

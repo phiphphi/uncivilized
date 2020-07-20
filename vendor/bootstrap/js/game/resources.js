@@ -3,20 +3,20 @@ resources = [
         "fa fa-male",
         "Workers",
         "The hard working citizens that build your empire. Required for almost everything.",
-        10,
+        5,
         0),
     new Resource("materials",
         "fa fa-bars",
         "Materials",
         "The resources needed to build your cities.",
-        50000,
+        50,
         0),
     new Resource("research",
         "fa fa-flask",
         "Research",
         "The combined knowledge of your civilization.",
         0,
-        0)
+        0.1)
 ];
 
 /**
@@ -52,8 +52,8 @@ Resource.init = function() {
             "</li>";
         let pillDesc = "<div class=\"tab-pane active\" id=r-desc-" + r.id + ">" +
             "<h3>" + r.name +"</h3>" + r.description +
-            "<p id=r-desc-" + r.id + "-count>You currently have " + prettify(r.amount) + " workers. <br/>" +
-            "Your available amount of workers is increasing by " + r.production.toFixed(2) + " every second." +
+            "<p id=r-desc-" + r.id + "-count>You currently have " + prettify(r.amount, 0) + " workers. <br/>" +
+            "Your available amount of workers is increasing by " + prettify(r.production, 2) + " every second." +
             "</p></div>";
         $("#b-col-name-" + i).append(pillName);
         $("#b-col-desc-" + i).append(pillDesc);
@@ -64,9 +64,9 @@ Resource.update = function() {
     for (let i = 0; i < resources.length; i++) {
         let r = resources[i];
 
-        $("#r-header-" + r.id).html(r.name + ": " + prettify(r.amount) + " " + getResourcesPerTime(r.production) + "</br>");
+        $("#r-header-" + r.id).html(r.name + ": " + prettify(r.amount, 0) + " " + getResourcesPerTime(r.production) + "</br>");
 
-        $("#r-desc-" + r.id + "-count").html("You currently have " + prettify(r.amount) + " workers. <br/>" +
-        "Your available amount of workers is increasing by " + r.production.toFixed(2) + " every second.")
+        $("#r-desc-" + r.id + "-count").html("You currently have " + prettify(r.amount, 0) + " " + r.id + ".<br/>" +
+        "Your available amount of " + r.id + " is increasing by " + prettify(r.production, 2) + " every second.")
     }
 }

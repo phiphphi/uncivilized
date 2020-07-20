@@ -33,7 +33,7 @@
     box-shadow: none;
 }
 
-/* Change styling for when columns stack */
+/* Change styling for when columns stack (large and smaller)*/
 @media only screen and (max-width: 992px) {
     [id*=col-desc] {
         border-top: 1px solid #ddd;

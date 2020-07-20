@@ -22,14 +22,15 @@ function getCityStatus(pop) {
     }
 }
 
+// TODO: make different function for people per time since fractional people per second is weird
 function getResourcesPerTime(amountPerSecond) {
     Log("Amount per second passed in: " + amountPerSecond);
     if (amountPerSecond === 0) { // don't display anything if no production
       return "";
-    } else if (amountPerSecond < 1) { // convert to minutes
-        return ("(" + prettify(amountPerSecond * 60) + " p/min)");
+    } else if (amountPerSecond < 0.1) { // convert to minutes if amount under 1 per 10 seconds
+        return ("(" + prettify(amountPerSecond * 60, 0) + " p/min)");
     } else { // present normally - per second
-        return ("(" + prettify(amountPerSecond) + " p/sec)");
+        return ("(" + prettify(amountPerSecond, 2) + " p/sec)");
     }
 }
 
@@ -99,6 +100,18 @@ function determineButtonLayout(building) {
     }
 }
 
-function prettify(input) {
-    return Math.round(input);
+/**
+ * Makes numbers look nicer for human eyes.
+ *
+ * @param input the number to prettify
+ * @param decimals the number of decimal places to show
+ * @returns {number} a cleaner number for display
+ */
+function prettify(input, decimals) {
+    if (decimals === 0) {
+        return Math.floor(input);
+    } else {
+        // parseFloat and toString remove trailing zeros
+        return parseFloat(input.toFixed(decimals).toString());
+    }
 }
