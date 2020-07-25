@@ -1,23 +1,69 @@
+body {
+    background-color: #eee1cc;
+    color: #08476b;
+}
+
+a {
+    color: #08476b;
+}
+
+a:hover {
+    color: #59859E;
+}
+
+h5 {
+    padding-top: .5rem;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #f8f3ea;
+    border-color: #292b2c #292b2c #f8f3ea;
+}
+
+.card {
+    background-color: #f6f0e5;
+    border-color: #292b2c;
+}
+
+.card-header {
+    background-color: #f3eadb;
+    border-color: #292b2c;
+}
+
 .card-deck {
     margin-top: 2rem;
     margin-bottom: 1rem;
 }
 
+.list-unstyled {
+    margin: .5rem;
+}
+
 [id*=col-desc] {
-    padding: 0.5rem;
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
+    padding: .5rem;
+    border: 1px solid #292b2c;
+    border-bottom-right-radius: 5px;
+}
+
+.flex-column {
+    border-top: 1px solid #292b2c;
+    border-left: 1px solid #292b2c;
+    border-bottom: 1px solid #292b2c;
+}
+
+.nav-pills > .nav-item {
+    background-color: #f8f3ea;
 }
 
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-    color: #212529;
+    color: #0f1215;
     background-color: rgba(0, 0, 0, 0.06);
 }
 
 .btn {
-    border: 1px solid #ddd;
+    background-color: #f0c886;
+    border: 1px solid #292b2c;
 }
 
 .btn[disabled], .btn[disabled]:hover, .btn[disabled]:focus, .btn[disabled]:active {
@@ -36,7 +82,14 @@
 /* Change styling for when columns stack (large and smaller)*/
 @media only screen and (max-width: 992px) {
     [id*=col-desc] {
-        border-top: 1px solid #ddd;
+        border: 1px solid #292b2c;
+        border-radius: 0 0 5px 5px;
+    }
+
+    .flex-column {
+        border-left: 1px solid #292b2c;
+        border-right: 1px solid #292b2c;
+        border-bottom: 0;
     }
 }
 

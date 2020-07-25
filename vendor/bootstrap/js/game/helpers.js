@@ -86,6 +86,9 @@ function determineButtonLayout(building) {
 
     if (purchasableVal === 0) {
         $noBuyButton.show();
+
+        // TODO: buttons at start and end of button group are rounded, we only want to round visible buttons
+
         $oneBuyButton.hide();
         $25BuyButton.hide();
         $100BuyButton.hide();
