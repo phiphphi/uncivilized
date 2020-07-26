@@ -34,33 +34,38 @@
   <!-- Page Content -->
   <div class="container">
     <div class="card-deck text-center">
+
+      <!-- resources card -->
       <div class="card">
         <div class="card-header">
           <span>Resources</span>
         </div>
-        <ul class="list-unstyled" id="r-header">
-          <i class="fa fa-male"></i> <span id="r-header-workers">Workers: 10 <br/></span>
-          <i class="fa fa-bars"></i> <span id="r-header-materials">Materials: 100 <br/></span>
-          <i class="fa fa-flask"></i> <span id="r-header-research">Research: 0 <br/></span>
+        <ul class="list-group" id="r-header">
         </ul>
       </div>
 
+      <!-- city status card -->
       <div class="card justify-content-center">
         <h5 id="pop-count"></h5>
         <h6 id="city-status"></h6>
       </div>
 
+      <!-- research card -->
       <div class="card">
         <div class="card-header">
           <span>Upgrades</span>
         </div>
       </div>
+
     </div>
     <div class="row">
       <div class="col-lg-12">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link active" id="infrastructure-tab" data-toggle="tab" href="#infrastructure">Infrastructure</a>
+            <a class="nav-link active" id="water-tab" data-toggle="tab" href="#water">Water</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="infrastructure-tab" data-toggle="tab" href="#infrastructure">Infrastructure</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" id="materials-tab" data-toggle="tab" href="#materials">Materials</a>
@@ -71,7 +76,7 @@
         </ul>
 
         <div class="tab-content">
-          <div class="tab-pane active" id="infrastructure">
+          <div class="tab-pane active" id="water">
             <div class="row no-gutters">
               <div class="col-lg-3 col-xs-2">
                 <ul class="nav nav-pills flex-column" id="b-col-name-0">
@@ -83,7 +88,7 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane" id="materials">
+          <div class="tab-pane" id="infrastructure">
             <div class="row no-gutters">
               <div class="col-lg-3 col-xs-2">
                 <ul class="nav nav-pills flex-column" id="b-col-name-1">
@@ -95,7 +100,7 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane" id="research">
+          <div class="tab-pane" id="materials">
             <div class="row no-gutters">
               <div class="col-lg-3 col-xs-2">
                 <ul class="nav nav-pills flex-column" id="b-col-name-2">
@@ -103,6 +108,18 @@
               </div>
               <div class="col-lg-9 col-xs-10">
                 <div class="tab-content" id="b-col-desc-2">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="research">
+            <div class="row no-gutters">
+              <div class="col-lg-3 col-xs-2">
+                <ul class="nav nav-pills flex-column" id="b-col-name-3">
+                </ul>
+              </div>
+              <div class="col-lg-9 col-xs-10">
+                <div class="tab-content" id="b-col-desc-3">
                 </div>
               </div>
             </div>

@@ -1,4 +1,10 @@
 resources = [
+    new Resource("water",
+        "fa fa-tint",
+        "Water",
+        "The lifeblood of your civilization - required for survival.",
+        0,
+        0),
     new Resource("workers",
         "fa fa-male",
         "Workers",
@@ -16,7 +22,7 @@ resources = [
         "Research",
         "The combined knowledge of your civilization.",
         0,
-        0.1)
+        0)
 ];
 
 /**
@@ -44,12 +50,12 @@ Resource.init = function() {
         let r = resources[i];
 
         // initializes resource header card
-        let desc = "<i class=" + r.image + "/> <span id=r-header-" + r.id + "></span>"
-        $("#r-header-" + r.id).append(desc);
+        let desc = "<li class=list-group-item><i class=\"" + r.image + "\"></i> <span id=r-header-" + r.id + "></span></li>"
+        $("#r-header").append(desc);
 
         // initializes resource description pills
         let pillName = "<li class=nav-item><a class=nav-link id=r-name-" + r.id + " data-toggle=pill href=#r-desc-" + r.id + ">" + r.name + "</a></li>";
-        let pillDesc = "<div class=\"tab-pane active\" id=r-desc-" + r.id + "><h3>" + r.name +"</h3><p id=r-desc-" + r.id + "-count></p></div>";
+        let pillDesc = "<div class=\"tab-pane active\" id=r-desc-" + r.id + "><h3>" + r.name +"</h3>" + r.description + "<p id=r-desc-" + r.id + "-count></p></div>";
         $("#b-col-name-" + i).append(pillName);
         $("#b-col-desc-" + i).append(pillDesc);
     }
@@ -60,11 +66,7 @@ Resource.update = function() {
         let r = resources[i];
 
         let header = r.name + ": " + prettify(r.amount, 0) + " " + getResourcesPerTime(r.production);
-        if (i === resources.length - 1) {
-            $("#r-header-" + r.id).html(header);
-        } else {
-            $("#r-header-" + r.id).html(header.concat("<br/>"));
-        }
+        $("#r-header-" + r.id).text(header);
 
         $("#r-desc-" + r.id + "-count").html("You currently have " + prettify(r.amount, 0) + " " + r.id + ".<br/>" +
         "Your available amount of " + r.id + " is increasing by " + prettify(r.production, 2) + " every second.")

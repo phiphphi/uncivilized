@@ -1,20 +1,30 @@
 buildings = [
+    [ // water
+        new Building("well",
+            "Well",
+            "Extracts water from underground sources to keep your people alive.",
+            [0, 0, 25, 0],
+            [0, 0, 25, 0],
+            [3, 0, 0, 0],
+            0,
+            0),
+    ],
     [ // infrastructure
         new Building( "tent",
             "Tent",
             "Primitive structures, providing shelter from the elements and predators.",
-            [0, 10, 0],
-            [0, 10, 0],
-            [0.0166, 0, 0], // 1 worker per min
+            [0, 0, 10, 0],
+            [0, 0, 10, 0],
+            [0, 0.0166, 0, 0], // 1 worker per min
             0,
             0),
         new Building( "hut",
             "Hut",
             "These dwellings constructed from local materials provide a better quality of " +
             "housing than tents.",
+            [0, 0, 100, 0],
             [0, 100, 0],
-            [0, 100, 0],
-            [0.1, 0, 0], // 1 worker per 10 seconds
+            [0, 0.1, 0, 0], // 1 worker per 10 seconds
             0,
             0)
     ],
@@ -22,9 +32,9 @@ buildings = [
         new Building("woodcutter",
             "Woodcutter",
             "Workers tasked with harvesting logs and branches to supply our stockpiles.",
-            [1, 5, 0],
-            [1, 5, 0],
-            [0, 0.5, 0],
+            [0, 1, 5, 0],
+            [0, 1, 5, 0],
+            [0, 0, 0.5, 0],
             0,
             0)
 
@@ -40,7 +50,7 @@ function Building(id, name, description, cost, currCost, production, amount, pur
     this.name = name;
     this.description = description;
 
-    // cost is an array of [workers, materials, research, ...]
+    // cost is an array of [water, workers, materials, research, ...]
     this.cost = cost;
     this.currCost = currCost;
 

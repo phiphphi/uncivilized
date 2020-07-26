@@ -1,14 +1,24 @@
+:root {
+    --main-theme: #eee1cc;
+    --text: #08476b;
+    --text-hover: #041f2f;
+    --card-header: #f3eadb;
+    --card-body: #f6f0e5;
+    --desert-orange: #f0c886;
+    --outline: #292b2c;
+}
+
 body {
-    background-color: #eee1cc;
-    color: #08476b;
+    background-color: var(--main-theme);
+    color: var(--text);
 }
 
 a {
-    color: #08476b;
+    color: var(--text);
 }
 
 a:hover {
-    color: #59859E;
+    color: var(--text-hover);
 }
 
 h5 {
@@ -17,7 +27,13 @@ h5 {
 
 .nav-tabs .nav-link.active {
     background-color: #f8f3ea;
-    border-color: #292b2c #292b2c #f8f3ea;
+    border-color: var(--outline) var(--outline) #f8f3ea;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+    border-color: var(--outline) var(--outline) rgba(0, 0, 0, 0.06);
+    color: var(--text-hover);
 }
 
 .card {
@@ -35,8 +51,15 @@ h5 {
     margin-bottom: 1rem;
 }
 
-.list-unstyled {
-    margin: .5rem;
+.card > .list-group {
+    border: 0 none;
+    border-radius: 0;
+}
+
+.list-group-item {
+    padding: 0.5rem;
+    background-color: #f8f3ea;
+
 }
 
 [id*=col-desc] {
@@ -58,6 +81,11 @@ h5 {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
     color: #0f1215;
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+.nav-pills .nav-link:hover {
+    color: var(--text-hover);
     background-color: rgba(0, 0, 0, 0.06);
 }
 
@@ -89,7 +117,7 @@ h5 {
     .flex-column {
         border-left: 1px solid #292b2c;
         border-right: 1px solid #292b2c;
-        border-bottom: 0;
+        border-bottom: 0 none;
     }
 }
 
