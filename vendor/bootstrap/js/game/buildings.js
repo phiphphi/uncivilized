@@ -146,7 +146,7 @@ Building.increment = function() {
             let b = buildings[i][j];
             for (let k = 0; k < b.production.length; k++) {
                 // also update population
-                if (k === 0) {
+                if (k === 1) {
                     stats.population += ((b.production[k] * b.amount) / divisor);
                 }
 

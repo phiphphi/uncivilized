@@ -35,7 +35,7 @@ function getResourcesPerTime(amountPerSecond) {
     if (amountPerSecond === 0) { // don't display anything if no production
       return "";
     } else if (amountPerSecond < 0.1) { // convert to minutes if amount under 1 per 10 seconds
-        return ("(" + prettify(amountPerSecond * 60, 0) + " p/min)");
+        return ("(" + prettify(amountPerSecond * 60, 2) + " p/min)");
     } else { // present normally - per second
         return ("(" + prettify(amountPerSecond, 2) + " p/sec)");
     }
@@ -123,5 +123,6 @@ function prettify(input, decimals) {
     } else {
         // parseFloat and toString remove trailing zeros
         return parseFloat(input.toFixed(decimals).toString());
+        // TODO: work out a better solution for displaying numbers when per minute
     }
 }
