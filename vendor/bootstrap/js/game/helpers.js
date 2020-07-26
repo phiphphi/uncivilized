@@ -11,21 +11,20 @@ function getCost(building) {
 
 function getCityStatus(pop) {
     if (pop <= 100) {
-        return "Settlement";
+        return "a desert settlement";
     } else if (pop <= 1000) {
-        return "Hamlet";
+        return "a desert hamlet";
     } else if (pop <= 10000) {
-        return "Village";
+        return "a desert village";
     } else if (pop <= 100000) {
-        return "Town";
+        return "a desert town";
     } else if (pop <= 1000000) {
-        return "County";
+        return "a desert county";
     } else if (pop <= 10000000) {
-        return "City";
+        return "a desert city";
     } else if (pop <= 100000000) {
-        return "Metropolis";
+        return "a desert metropolis";
     }
-
     else {
         return "Ecumenopolis";
     }
