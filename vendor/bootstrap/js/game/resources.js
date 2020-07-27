@@ -51,30 +51,9 @@ resources = {
         capacity: 0,
         unlocked: false
     }
-
-
 }
 
-    new Resource("research",
-        "fa fa-flask",
-        "Research",
-        "The combined knowledge of your civilization.",
-        0,
-        0,
-        0)
-];
-
-function Resource(id, image, name, description, amount, production, capacity) {
-    this.id = id;
-    this.image = image;
-    this.name = name;
-    this.description = description;
-    this.amount = amount;
-    this.production = production;
-    this.capacity = capacity;
-}
-
-Resource.init = function() {
+function resourceInit() {
     for (let i = 0; i < resources.length; i++) {
         let r = resources[i];
 
@@ -90,14 +69,20 @@ Resource.init = function() {
     }
 }
 
-Resource.update = function() {
+function resourceUpdate() {
     for (let i = 0; i < resources.length; i++) {
         let r = resources[i];
+        let amount, header;
 
-        let header = r.name + ": " + prettify(r.amount, 0) + " " + getResourcesPerTime(r.production);
-        $("#r-header-" + r.id).text(header);
+        if (i === 1) {
+            amount = prettify(r.amount, 0);
+            header = r.name + ": " + amount + " " + getWorkersPerTime(r.production);
+        } else {
+            amount = prettify(r.amount, 2);
+            header = r.name + ": " + amount + " " + getResourcesPerTime(r.production);
+        }
 
-        $("#r-desc-" + r.id + "-count").html("You currently have " + prettify(r.amount, 0) + " " + r.id + ".<br/>" +
+        $("#r-desc-" + r.id + "-count").html("You currently have " + amount + " " + r.id + ".<br/>" +
         "Your available amount of " + r.id + " is increasing by " + prettify(r.production, 2) + " every second.")
     }
 }

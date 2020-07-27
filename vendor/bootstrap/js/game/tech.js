@@ -14,8 +14,8 @@
  * @param techsUnlock:
  */
 techs = {
-    disassemble_caravan: {
-        id: "disassemble_caravan";
+    disassembleCaravan: {
+        id: "disassembleCaravan";
         name: "Disassemble Caravan",
         description: "Filler",
         cost: [],
@@ -24,11 +24,11 @@ techs = {
         capBoost: [100, 0, 50],
         purchaseStatus: 1,
         resourcesUnlock: [resources.water, resources.workers, resources.materials],
-        buildingsUnlock: [buildings.solar_still, buildings.tent, buildings.woodcutter],
-        techsUnlock: [techs.stonecutters, techs.researchers_camp]
+        buildingsUnlock: [buildings.solarStill, buildings.tent, buildings.woodrunner],
+        techsUnlock: [techs.stonecutters, techs.researchersCamp]
     },
     stonecutters: {
-        a: 3
+
     },
 
 };

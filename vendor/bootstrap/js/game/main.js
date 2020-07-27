@@ -16,22 +16,10 @@ let stats = {
 
 _city_statuses = {
 
-
 };
 
 _eras = [
-    {
-       name: "Ancient Era",
-       description: "",
-       requirements: {
-           population: 1000,
-           materials: 500
-       }
 
-    },
-    {
-
-    },
 ];
 
 
@@ -42,46 +30,41 @@ let version = "0.0.01";
 let init = false;
 
 // log
-function Log(text) { console.log("uncivilized v" + version + " : " + text); }
+function log(text) { console.log("uncivilized v" + version + " : " + text); }
 
-// update
-function Update() { Log("This is needed to make the other Update.() functions work."); }
-
-Update.gameInit = function() {
-    Log("Calling Update.gameInit() - loading game!");
+function gameInit() {
+    log("Calling Update.gameInit() - loading game!");
     // resource initializes before buildings to add resource descriptions
-    Resource.init();
-    Building.init();
+    resourceInit();
+    buildingInit();
     init = true;
-};
+}
 
 // Handles displaying the info for resources, population, city status...
-Update.cityData = function() {
+function updateCityData() {
     if (init === true) {
-        $("#pop-count").text("Population: " + prettify(stats.population));
+        $("#pop-count").text("Population: " + prettify(stats.population, 0));
         $("#city-status").text(getCityStatus(stats.population));
 
-        // updates resources
-        Resource.update();
-
-        // updates buildings
-        Building.update();
+        // update only changes ui - increment method updates actual numbers
+        resourceUpdate();
+        buildingUpdate();
     }
-};
+}
 
 // Game loop
 window.onload = function() {
-    Update.gameInit();
+    gameInit();
 };
 
 mainInterval = window.setInterval(function () {
-    Update.cityData();
+    updateCityData();
 }, interval);
 
 // note: set all producers internal stats as amount produced per 10 milliseconds, but described as per second
 // so if description says 1 worker per second, then internal reward is 0.01 - since this goes every 10 milliseconds
 rewardInterval = window.setInterval(function () {
-    Building.increment();
+    buildingIncrement();
 }, rewardIntervalTime);
 
-// TODO: add input bar for purchasing buildings, add material and research buildings, make materials appear first
+// TODO: add input bar for purchasing buildings

@@ -1,70 +1,95 @@
-buildings = [
-    [ // water
-        new Building("well",
-            "Well",
-            "Extracts water from underground sources to keep your people alive.",
-            [0, 0, 25, 0],
-            [0, 0, 25, 0],
-            [3, 0, 0, 0],
-            0,
-            0),
-    ],
-    [ // infrastructure
-        new Building( "tent",
-            "Tent",
-            "Primitive structures, providing shelter from the elements and predators.",
-            [0, 0, 10, 0],
-            [0, 0, 10, 0],
-            [0, 1/60, 0, 0], // 1 worker per min
-            0,
-            0),
-        new Building( "hut",
-            "Hut",
-            "These dwellings constructed from local materials provide a better quality of " +
-            "housing than tents.",
-            [0, 0, 100, 0],
-            [0, 100, 0],
-            [0, 0.1, 0, 0], // 1 worker per 10 seconds
-            0,
-            0)
-    ],
-    [ // materials
-        new Building("woodcutter",
-            "Woodcutter",
-            "Workers tasked with harvesting logs and branches to supply our stockpiles.",
-            [0, 1, 5, 0],
-            [0, 1, 5, 0],
-            [0, 0, 0.5, 0],
-            0,
-            0)
-
-    ],
-    [ // research
-
-    ]
-];
-
-// need to make javadoc for these
-function Building(id, name, description, cost, currCost, production, amount, purchasable) {
-    this.id = id;
-    this.name = name;
-    this.description = description;
-
-    // cost is an array of [water, workers, materials, research, ...]
-    this.cost = cost;
-    this.currCost = currCost;
-
-    // production is the same as cost array
-    // production is per second, but resources are incremented every 1/100th of a second
-    this.production = production;
-    this.amount = amount;
-
-    // how many currently buyable
-    this.purchasable = purchasable;
+/**
+ *
+ * @param id
+ * @param name
+ * @param description
+ * @param cost
+ * @param currCost
+ * @param production
+ * @param upkeep
+ * @param amount
+ * @param purchasable
+ * @param unlocked
+ */
+buildings = {
+    water: {
+        solarStill: {
+            id: "solarStill",
+            name: "Solar Still",
+            description: "These simple, inefficient stills produce meager amounts of potable water from their surroundings.",
+            cost: [0, 0, 5],
+            currCost: [0, 0, 5],
+            production: [1/3],
+            amount: 0,
+            purchasable: 0,
+            unlocked: false
+        }
+    },
+    infrastructure: {
+        tent: {
+            id: "tent",
+            name: "Tent",
+            description: "Primitive structures, providing shelter from the elements and predators.",
+            cost: [0, 0, 10],
+            currCost: [0, 0, 10],
+            production: [0, 1/60],
+            amount: 0,
+            purchasable: 0,
+            unlocked: false
+        },
+        hut: {
+            id: "hut",
+            name: "Hut",
+            description: "These dwellings constructed from local materials provide a better quality of housing than tents.",
+            cost: [0, 0, 100],
+            currCost: [0, 0, 100],
+            production: [0, 0.1],
+            amount: 0,
+            purchasable: 0,
+            unlocked: false
+        }
+    },
+    materials: {
+        woodrunner: {
+            id: "woodrunner",
+            name: "Woodrunner",
+            description: "Workers tasked with scouting the plains for logs and branches to supply our stockpiles.",
+            cost: [0, 1, 5],
+            currCost: [0, 1, 5],
+            production: [0, 0, 0.5],
+            amount: 0,
+            purchasable: 0,
+            unlocked: false
+        },
+        stonecutter: {
+            id: "stonecutter",
+            name: "Stonecutter",
+            description: "Workers tasked with scouting the plains for logs and branches to supply our stockpiles.",
+            cost: [0, 2, 25],
+            currCost: [0, 2, 25],
+            production: [0, 0, 2],
+            amount: 0,
+            purchasable: 0,
+            unlocked: false
+        }
+    },
+    research: {
+        researchersCamp: {
+            id: "researchersCamp",
+            name: "Researcher's Camp",
+            description: "Workers tasked with scouting the plains for logs and branches to supply our stockpiles.",
+            cost: [0, 1, 50],
+            currCost: [0, 2, 25],
+            production: [0, 0, 2],
+            amount: 0,
+            purchasable: 0,
+            unlocked: false
+        }
+    }
 }
 
-Building.init = function() {
-    Log("Calling Building.init()");
+function buildingInit() {
+    log("Calling buildingInit");
     for (let i = 0; i < buildings.length; i++) {
         for (let j = 0; j < buildings[i].length; j++) {
             let b = buildings[i][j];
@@ -94,7 +119,7 @@ Building.init = function() {
     }
 }
 
-Building.update = function() {
+function buildingUpdate() {
     for (let i = 0; i < buildings.length; i++) {
         for (let j = 0; j < buildings[i].length; j++) {
             let b = buildings[i][j];
@@ -121,7 +146,7 @@ Building.update = function() {
  * @param buildingIndex the specific building being purchased
  * @param amount the amount of buildings being purchased
  */
-Building.purchase = function(categoryIndex, buildingIndex, amount) {
+function buildingPurchase(categoryIndex, buildingIndex, amount) {
     let building = buildings[categoryIndex][buildingIndex];
 
     for (let i = 0; i < building.cost.length; i++) {
@@ -137,7 +162,7 @@ Building.purchase = function(categoryIndex, buildingIndex, amount) {
     // TODO: change building prices to use curr cost
 }
 
-Building.increment = function() {
+function buildingIncrement() {
     // number to divide building production by
     let divisor = 1000 / rewardIntervalTime;
 

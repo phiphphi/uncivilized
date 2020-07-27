@@ -3,7 +3,13 @@
 function getCost(building) {
     let newCost = [];
     for (let i = 0; i < building.cost.length; i++) {
-        newCost.push(building.cost[i] * Math.pow(1.1, building.amount));
+        let result = building.cost[i] * Math.pow(1.1, building.amount);
+
+        if (i === 1) { // only change worker costs when over next num
+            newCost.push(Math.floor(result));
+        } else {
+            newCost.push(result);
+        }
     }
     return newCost;
 }
@@ -30,14 +36,22 @@ function getCityStatus(pop) {
     }
 }
 
-// TODO: make different function for people per time since fractional people per second is weird
+// use for non-worker resources
 function getResourcesPerTime(amountPerSecond) {
     if (amountPerSecond === 0) { // don't display anything if no production
       return "";
-    } else if (amountPerSecond < 0.1) { // convert to minutes if amount under 1 per 10 seconds
-        return ("(" + prettify(amountPerSecond * 60, 2) + " p/min)");
     } else { // present normally - per second
         return ("(" + prettify(amountPerSecond, 2) + " p/sec)");
+    }
+}
+
+function getWorkersPerTime(amountPerSecond) {
+    if (amountPerSecond === 0) { // don't display anything if no production
+        return "";
+    } else if (amountPerSecond < 1) { // present per minute
+        return ("(" + Math.round(amountPerSecond * 60) + " p/sec)");
+    } else { // present normally - per second
+        return ("(" + prettify(amountPerSecond, 0) + " p/sec)");
     }
 }
 
@@ -123,6 +137,5 @@ function prettify(input, decimals) {
     } else {
         // parseFloat and toString remove trailing zeros
         return parseFloat(input.toFixed(decimals).toString());
-        // TODO: work out a better solution for displaying numbers when per minute
     }
 }
