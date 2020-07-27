@@ -1,35 +1,35 @@
-techs = [
-    new Tech("tech-0",
-        "Simple Tools",
-        "The discovery of crude stone tools will let us accomplish tasks our hands cannot.",
-        [0, 25, 0],
-        [0, 0, 0],
-        [1],
-        true,
-        false),
-]
-
-
 /**
- * Representables a technological advancement for your civilization.
+ * techs: Represents a technological advancement for your civilization.
  *
  * @param id the text used internally for HTML id
  * @param name the text presented on the UI
  * @param description a short sentence on function and uses of the resource
  * @param cost the price for the technology
- * @param boost the additive increase to the production of a resource (so 0.25 = extra 25% production)
- * @param unlocks the technologies unlocked by obtaining this one
- * @param available true if technology available to purchase, false if not
- * @param acquired true if technology owned, false if not
- * @constructor
+ * @param resourceBoost the amount of these resources to add to the stockpile
+ * @param prodBoost the additive increase to the production of a resource (so 0.25 = extra 25% production)
+ * @param capBoost the increase to the capacity of these resources
+ * @param purchaseStatus 0 if undiscovered, 1 if available to purchase, 2 if purchased
+ * @param resourcesUnlock
+ * @param buildingsUnloc
+ * @param techsUnlock:
  */
-function Tech(id, name, description, cost, boost, unlocks, available, acquired) {
-    this.id = id;
-    this.name = name;
-    this.description = description;
-    this.cost = cost;
-    this.boost = boost;
-    this.unlocks = unlocks;
-    this.available = available;
-    this.acquired = acquired;
-}
+techs = {
+    disassemble_caravan: {
+        id: "disassemble_caravan";
+        name: "Disassemble Caravan",
+        description: "Filler",
+        cost: [],
+        resourceBoost: [0, 5, 50],
+        prodBoost: [10],
+        capBoost: [100, 0, 50],
+        purchaseStatus: 1,
+        resourcesUnlock: [resources.water, resources.workers, resources.materials],
+        buildingsUnlock: [buildings.solar_still, buildings.tent, buildings.woodcutter],
+        techsUnlock: [techs.stonecutters, techs.researchers_camp]
+    },
+    stonecutters: {
+        a: 3
+    },
+
+};
+

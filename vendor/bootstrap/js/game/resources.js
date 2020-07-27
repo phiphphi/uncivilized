@@ -1,30 +1,3 @@
-resources = [
-    new Resource("water",
-        "fa fa-tint",
-        "Water",
-        "The lifeblood of your civilization - required for survival.",
-        0,
-        0),
-    new Resource("workers",
-        "fa fa-male",
-        "Workers",
-        "The hard working citizens that build your empire. Required for almost everything.",
-        5,
-        0),
-    new Resource("materials",
-        "fa fa-bars",
-        "Materials",
-        "The resources needed to build your cities.",
-        50,
-        0),
-    new Resource("research",
-        "fa fa-flask",
-        "Research",
-        "The combined knowledge of your civilization.",
-        0,
-        0)
-];
-
 /**
  * Represents a collectible resource.
  *
@@ -34,15 +7,71 @@ resources = [
  * @param description a short sentence on function and uses of the resource
  * @param amount current amount the player has
  * @param production how much of this resource is being produced over time
- * @constructor
+ * @param capacity the max amount of this resource that can be stored
+ * @unlocked true if unlocked and visible, false otherwise
  */
-function Resource(id, image, name, description, amount, production) {
+resources = {
+    water: {
+        id: "water",
+        image: "fa fa-tint",
+        name: "Water",
+        description: "The lifeblood of your civilization - required for survival.",
+        amount: 0,
+        production: 0,
+        capacity: 0,
+        unlocked: false
+    },
+    workers: {
+        id: "workers",
+        image: "fa fa-male",
+        name: "Workers",
+        description: "The hard working citizens that build your empire. Required for almost everything.",
+        amount: 0,
+        production: 0,
+        capacity: -1,
+        unlocked: false
+    },
+    materials: {
+        id: "materials",
+        image: "fa fa-bars",
+        name: "Materials",
+        description: "The resources needed to build your cities.",
+        amount: 0,
+        production: 0,
+        capacity: 0,
+        unlocked: false
+    },
+    research: {
+        id: "research",
+        image: "fa fa-flask",
+        name: "Research",
+        description: "The combined knowledge of your civilization.",
+        amount: 0,
+        production: 0,
+        capacity: 0,
+        unlocked: false
+    }
+
+
+}
+
+    new Resource("research",
+        "fa fa-flask",
+        "Research",
+        "The combined knowledge of your civilization.",
+        0,
+        0,
+        0)
+];
+
+function Resource(id, image, name, description, amount, production, capacity) {
     this.id = id;
     this.image = image;
     this.name = name;
     this.description = description;
     this.amount = amount;
     this.production = production;
+    this.capacity = capacity;
 }
 
 Resource.init = function() {

@@ -15,7 +15,7 @@ buildings = [
             "Primitive structures, providing shelter from the elements and predators.",
             [0, 0, 10, 0],
             [0, 0, 10, 0],
-            [0, 0.0166, 0, 0], // 1 worker per min
+            [0, 1/60, 0, 0], // 1 worker per min
             0,
             0),
         new Building( "hut",
