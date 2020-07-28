@@ -9,7 +9,7 @@ if (typeof jQuery === "undefined") {
 
 let stats = {
     name: "",
-    era: "exploration",
+    era: "unknown",
     population: 0,
     city_status: ""
 }
@@ -45,7 +45,7 @@ function updateCityData() {
     if (init === true) {
         $("#pop-count").text("Population: " + prettify(stats.population, 0));
         $("#city-status").text(getCityStatus(stats.population));
-        $("#era").text("era of " + stats.era);
+        $("#era").text("era " + stats.era);
 
         // update only changes ui - increment method updates actual numbers
         resourceUpdate();
