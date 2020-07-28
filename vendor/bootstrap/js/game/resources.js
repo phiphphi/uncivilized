@@ -36,7 +36,7 @@ resources = [
         image: "fa fa-bars",
         name: "Materials",
         description: "The matter from which our empire is built.",
-        amount: 0,
+        amount: 1000,
         production: 0,
         capacity: 0,
         unlocked: false

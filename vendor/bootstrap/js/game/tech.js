@@ -18,7 +18,7 @@ techs = {
         id: "disassembleCaravan",
         name: "Disassemble Caravan",
         description: "Converting our caravan into a camp will allow us to begin expanding and harvesting resources.",
-        cost: [10, 20, 30, 40],
+        cost: [10],
         resourceBoost: [0, 5, 50],
         prodBoost: [10],
         capBoost: [100, 0, 50],
@@ -49,33 +49,10 @@ function addTechCard(t) {
     if (t.purchaseStatus === 1) {
         let techCard =
             "<div class='card'>" +
-            "<h6>" + t.name + "</h6><hr class='tech-hr'>" + t.description + getTechCost(t) +
+            "<h6>" + t.name + "</h6><hr class='tech-hr'>" + t.description + "<div>Cost: " + getCostDisplay(t.cost, 1, null) + "</div>" +
             "<button type='button' class='btn tech-btn' id='t-button-'" + t.id + ">Buy</button>" +
             "</div>";
         $("#tech").append(techCard);
-    }
-}
-
-// might move this to helper functions later
-function getTechCost(t) {
-    if (t.cost.length === 0) {
-        return "";
-    } else {
-        let cost = "<div> Cost: ";
-        let firstCost = true; // deals with fencepost problem for listing cost
-
-        for (let i = 0; i < t.cost.length; i++) {
-            if (t.cost[i] !== 0) {
-                if (firstCost) {
-                    cost += "<i class=\"" + resources[i].image + "\"></i> " + t.cost[i];
-                    firstCost = false;
-                } else {
-                    cost += ", <i class=\"" + resources[i].image + "\"></i> " + t.cost[i];
-                }
-            }
-        }
-
-        return cost += "</div>";
     }
 }
 

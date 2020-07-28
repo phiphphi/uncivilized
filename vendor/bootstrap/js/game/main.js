@@ -19,6 +19,7 @@ let interval = (1000 / fps);
 let rewardIntervalTime = 10;
 let version = "0.0.01";
 let init = false;
+let growthExponent = 1.1;
 
 // log
 function log(text) { console.log("uncivilized v" + version + ": " + text); }
@@ -68,5 +69,4 @@ rewardInterval = window.setInterval(function () {
     buildingIncrement();
 }, rewardIntervalTime);
 
-// TODO: add input bar for purchasing buildings
 // TODO: add custom scroll bar for tech

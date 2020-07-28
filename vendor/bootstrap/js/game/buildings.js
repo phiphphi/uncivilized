@@ -3,7 +3,7 @@
  * @param id
  * @param name
  * @param description
- * @param cost
+ * @param baseCost
  * @param currCost
  * @param production
  * @param upkeep
@@ -17,7 +17,7 @@ buildings = {
             id: "solarStill",
             name: "Solar Still",
             description: "These simple, inefficient stills produce meager amounts of potable water from their surroundings.",
-            cost: [0, 0, 5],
+            baseCost: [0, 0, 5],
             currCost: [0, 0, 5],
             production: [1/3],
             upkeep: [],
@@ -31,7 +31,7 @@ buildings = {
             id: "tent",
             name: "Tent",
             description: "Primitive structures, providing shelter from the elements and predators.",
-            cost: [0, 0, 10],
+            baseCost: [0, 0, 10],
             currCost: [0, 0, 10],
             production: [0, 1/60],
             upkeep: [],
@@ -43,7 +43,7 @@ buildings = {
             id: "hut",
             name: "Hut",
             description: "These dwellings constructed from local materials provide a better quality of housing than tents.",
-            cost: [0, 0, 100],
+            baseCost: [0, 0, 100],
             currCost: [0, 0, 100],
             production: [0, 0.1],
             upkeep: [],
@@ -57,7 +57,7 @@ buildings = {
             id: "woodrunner",
             name: "Woodrunner",
             description: "Workers tasked with scouting the plains for logs and branches to supply our stockpiles.",
-            cost: [0, 1, 5],
+            baseCost: [0, 1, 5],
             currCost: [0, 1, 5],
             production: [0, 0, 0.5],
             upkeep: [0.5],
@@ -69,7 +69,7 @@ buildings = {
             id: "stonecutter",
             name: "Stonecutter",
             description: "The desert stones can be shaped into more workable forms by our workers, if they can bear the heat.",
-            cost: [0, 2, 25],
+            baseCost: [0, 2, 25],
             currCost: [0, 2, 25],
             production: [0, 0, 2],
             upkeep: [1],
@@ -83,7 +83,7 @@ buildings = {
             id: "researchersCamp",
             name: "Researcher's Camp",
             description: "",
-            cost: [0, 1, 50],
+            baseCost: [0, 1, 50],
             currCost: [0, 1, 50],
             production: [0, 0, 2],
             upkeep: [],
@@ -100,6 +100,8 @@ function buildingInit() {
         for (let i = 0; i < buildings[category].length; i++) {
             let b = buildings[category][i];
 
+            log("initializing id " + b.id + ", name: " + b.name);
+
             // initialize pills
             $("#b-col-name-" + category).prepend("<li class=nav-item><a class=nav-link id=b-name-" + b.id + " data-toggle=pill " +
                 "href=#b-desc-" + b.id + ">" + b.name + "</a></li>")
@@ -107,20 +109,23 @@ function buildingInit() {
 
             // initialize pill descriptions
             let desc = "<h3>" + b.name + "</h3>" + b.description +
-                "<p id=b-count-" + b.id + ">" + "You currently have " + b.amount + " " + String(b.name).toLowerCase() + "s. <br/> </p> <hr/> " +
-                "<div class=\"btn-group btn-block\" id=b-buttons-" + b.id + "> " +
-                    "<button type=button class=btn disabled id=b-button-" + b.id + "-0>Can't build</button> " +
+                "<p id=b-count-" + b.id + ">" + "You currently have " + b.amount + " " + String(b.name).toLowerCase() + "s. <br/> </p> <hr> " +
+                "<form class='form-inline'>" +
+                    "Building<input type='number' id='b-input-" + b.id + "' placeholder='1' class='form-control'>will cost" +
+                    "<span id='b-cost-display-" + b.id + "'>"+ getCostDisplay(b.currCost, 1, b) + "</span>." +
+                "</form>" +
+                "<div class=\"btn-group btn-block\" id=b-buttons-" + b.id + ">" +
+                    "<button type=button class=btn disabled id=b-button-" + b.id + "-0>Can't build</button>" +
                     "<button type=button class=btn id=b-button-" + b.id + "-1>Buy 1</button>" +
                     "<button type=button class=btn id=b-button-" + b.id + "-2>Buy 25</button>" +
                     "<button type=button class=btn id=b-button-" + b.id + "-3>Buy 100</button></div>";
 
             $("#b-desc-" + b.id).html(desc);
-            // attach onClick attr to buy 1 button since amount will never change
-            $("#b-button-" + b.id + "-1").attr("onclick", "buildingPurchase(buildings." + category + "." + b + ", 1);");
+
+            // attach onClick attr to Buy 1 button for form input
+            $("#b-button-" + b.id + "-1").attr("onclick", "buildingPurchase(buildings." + category + "[" + i + "], 1);");
             
             determineButtonLayout(b);
-            
-            log("initializing id " + b.id + ", name: " + b.name);
         }
     }
 }
@@ -140,8 +145,13 @@ function buildingUpdate() {
                 $("#b-count-" + b.id).text("You currently have " + b.amount + " " + name + "s.");
             }
 
-            $("#b-button-" + b.id + "-2").attr("onclick", "buildingPurchase(buildings." + category + "." + b + ", " + Math.floor(b.purchasable / 4) + ");");
-            $("#b-button-" + b.id + "-3").attr("onclick", "buildingPurchase(buildings." + category + "." + b + ", " + b.purchasable + ");");
+            let formInput = $("#b-input-" + b.id).val();
+            if (formInput === "") {
+                formInput = 1;
+            }
+            $("#b-button-" + b.id + "-1").attr("onclick", "buildingPurchase(buildings." + category + "[" + i + "], " + formInput + ");");
+            $("#b-button-" + b.id + "-2").attr("onclick", "buildingPurchase(buildings." + category + "[" + i + "], " + Math.floor(b.purchasable / 4) + ");");
+            $("#b-button-" + b.id + "-3").attr("onclick", "buildingPurchase(buildings." + category + "[" + i + "], " + b.purchasable + ");");
         }
     }
 }
@@ -153,8 +163,8 @@ function buildingUpdate() {
  * @param amount the amount of buildings being purchased
  */
 function buildingPurchase(building, amount) {
-    for (let i = 0; i < building.cost.length; i++) {
-        resources[i].amount -= building.cost[i] * amount;
+    for (let i = 0; i < building.currCost.length; i++) {
+        resources[i].amount -= getBuildingAmountBuyable(building, i, amount);
     }
 
     for (let j = 0; j < building.production.length; j++) {
@@ -163,7 +173,6 @@ function buildingPurchase(building, amount) {
 
     building.amount += amount;
     building.currCost = getCost(building);
-    // TODO: change building prices to use curr cost
 }
 
 function buildingIncrement() {

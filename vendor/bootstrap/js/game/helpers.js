@@ -2,8 +2,8 @@
 
 function getCost(building) {
     let newCost = [];
-    for (let i = 0; i < building.cost.length; i++) {
-        let result = building.cost[i] * Math.pow(1.1, building.amount);
+    for (let i = 0; i < building.baseCost.length; i++) {
+        let result = building.baseCost[i] * Math.pow(1.1, building.amount);
 
         if (i === 1) { // only change worker costs when over next num
             newCost.push(Math.floor(result));
@@ -72,12 +72,27 @@ function determineButtonLayout(building) {
     let purchasableVal = 3;
     let maxAmount = Number.MAX_VALUE;
 
-    for (let i = 0; i < building.cost.length; i++) {
+    // set buy 1 button to input text if exists, otherwise 1
+    let formInput = $("#b-input-" + building.id).val();
+    if (formInput === "") {
+        formInput = 1;
+    }
+
+    for (let i = 0; i < building.currCost.length; i++) {
         let resourceCount = resources[i].amount;
-        let buildingResCost = building.cost[i];
+        let buildingResCost = building.currCost[i];
 
         if (buildingResCost !== 0) {
-            let maxBuyable = Math.floor(resourceCount / buildingResCost);
+            let maxBuyable = Math.floor(
+                Math.log(
+                    (
+                        (resourceCount * (growthExponent - 1)) /
+                        (building.baseCost[i] * Math.pow(growthExponent, building.amount))
+                    )
+                    + 1
+                ) / Math.log(growthExponent)
+            );
+
             if (maxBuyable < maxAmount) {
                 maxAmount = maxBuyable;
             }
@@ -85,9 +100,9 @@ function determineButtonLayout(building) {
             if (buildingResCost > resourceCount) { // if we can't afford one, then break
                 purchasableVal = 0;
                 break;
-            } else if (buildingResCost * 2 > resourceCount) { // show buy 1
+            } else if (getBuildingAmountBuyable(building, i, 2) > resourceCount) { // show buy 1
                 purchasableVal = 1;
-            } else if (buildingResCost * 8 > resourceCount) { // show buy 1 and 100%
+            } else if (getBuildingAmountBuyable(building, i, 8) > resourceCount) { // show buy 1 and 100%
                 if (purchasableVal > 2) {
                     purchasableVal = 2;
                 }
@@ -96,6 +111,9 @@ function determineButtonLayout(building) {
     }
 
     building.purchasable = maxAmount;
+    if (formInput > maxAmount) {
+        formInput = maxAmount;
+    }
 
     let $noBuyButton = $("#b-button-" + building.id + "-0");
     let $oneBuyButton = $("#b-button-" + building.id + "-1");
@@ -112,20 +130,80 @@ function determineButtonLayout(building) {
         $100BuyButton.hide();
     } else {
         $noBuyButton.hide();
+
+        $oneBuyButton.html("Buy " + formInput + "<br/>" + getCostDisplay(building.currCost, formInput, building));
         $oneBuyButton.show();
 
         $25BuyButton.hide();
         $100BuyButton.hide();
 
         if (purchasableVal >= 2) {
-            $100BuyButton.text("Buy " + maxAmount);
+            $100BuyButton.html("Buy " + maxAmount + "<br/>" + getCostDisplay(building.currCost, maxAmount, building));
             $100BuyButton.show();
 
             if (purchasableVal === 3) {
-                $25BuyButton.text("Buy " + Math.floor(maxAmount / 4));
+                let quarter = Math.floor(maxAmount / 4);
+                $25BuyButton.html("Buy " + quarter + "<br/>" + getCostDisplay(building.currCost, quarter, building));
                 $25BuyButton.show();
             }
         }
+    }
+}
+
+function getBuildingAmountBuyable(building, index, amountWanted) {
+    return (
+        building.baseCost[index] * (
+          (
+              Math.pow(growthExponent, building.amount) * (
+                  Math.pow(growthExponent, amountWanted) - 1
+              )
+          ) / (growthExponent - 1)
+        )
+    );
+}
+
+/**
+ * Lists price in resources of this purchase, comma separated.
+ *
+ * @param purchaseCost the cost array of the object being purchased
+ * @param multiplier amount to multiply cost by
+ * @param building if non-null, then represents a building object to calculate expotential pricing for
+ * @returns {string} representation of purchase, comma separated
+ */
+function getCostDisplay(purchaseCost, multiplier, building) {
+    if (purchaseCost.length === 0) {
+        return "";
+    }
+
+    let cost = "";
+    let firstCost = true; // deals with fencepost problem for listing cost
+
+    if (building === null) { // use for displaying tech costs
+        for (let i = 0; i < purchaseCost.length; i++) {
+            if (purchaseCost[i] !== 0) {
+                if (firstCost) {
+                    cost += "<i class=\"" + resources[i].image + "\"></i> " + purchaseCost[i];
+                    firstCost = false;
+                } else {
+                    cost += ", <i class=\"" + resources[i].image + "\"></i> " + purchaseCost[i];
+                }
+            }
+        }
+
+        return cost;
+    } else { // use for displaying building costs
+        for (let i = 0; i < purchaseCost.length; i++) {
+            if (purchaseCost[i] !== 0) {
+                if (firstCost) {
+                    cost += "<i class=\"" + resources[i].image + "\"></i> " + prettify(getBuildingAmountBuyable(building, i, multiplier), 2);
+                    firstCost = false;
+                } else {
+                    cost += ", <i class=\"" + resources[i].image + "\"></i> " + prettify(getBuildingAmountBuyable(building, i, multiplier), 2);
+                }
+            }
+        }
+
+        return cost;
     }
 }
 
