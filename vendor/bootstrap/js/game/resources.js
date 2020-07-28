@@ -84,11 +84,13 @@ function resourceUpdate() {
 
         if (i === 1) {
             amount = prettify(r.amount, 0);
-            header = r.name + ": " + amount + " " + getWorkersPerTime(r.production);
+            header = amount + " " + getWorkersPerTime(r.production);
         } else {
             amount = prettify(r.amount, 2);
-            header = r.name + ": " + amount + " " + getResourcesPerTime(r.production);
+            header = amount + " " + getResourcesPerTime(r.production);
         }
+
+        $("#r-header-" + r.id).text(header);
 
         $("#r-desc-" + r.id + "-count").html("You currently have " + amount + " " + r.id + ".<br/>" +
         "Your available amount of " + r.id + " is increasing by " + prettify(r.production, 2) + " every second.")

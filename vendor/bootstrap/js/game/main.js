@@ -77,3 +77,4 @@ rewardInterval = window.setInterval(function () {
 }, rewardIntervalTime);
 
 // TODO: add input bar for purchasing buildings
+// TODO: add custom scroll bar for tech
