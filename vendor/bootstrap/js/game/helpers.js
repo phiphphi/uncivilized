@@ -54,7 +54,7 @@ function getWorkersPerTime(amountPerSecond) {
     if (amountPerSecond === 0) { // don't display anything if no production
         return "";
     } else if (amountPerSecond < 1) { // present per minute
-        return ("(" + Math.round(amountPerSecond * 60) + " p/sec)");
+        return ("(" + Math.round(amountPerSecond * 60) + " p/min)");
     } else { // present normally - per second
         return ("(" + prettify(amountPerSecond, 0) + " p/sec)");
     }
@@ -178,20 +178,20 @@ function getCostDisplay(purchaseCost, multiplier, building) {
     let cost = "";
     let firstCost = true; // deals with fencepost problem for listing cost
 
-    if (building === null) { // use for displaying tech costs
+    if (building === null) { // use for displaying tech costs and production - flat costs/production
         for (let i = 0; i < purchaseCost.length; i++) {
             if (purchaseCost[i] !== 0) {
                 if (firstCost) {
-                    cost += "<i class=\"" + resources[i].image + "\"></i> " + purchaseCost[i];
+                    cost += "<i class=\"" + resources[i].image + "\"></i> " + prettify((purchaseCost[i] * multiplier), 2);
                     firstCost = false;
                 } else {
-                    cost += ", <i class=\"" + resources[i].image + "\"></i> " + purchaseCost[i];
+                    cost += ", <i class=\"" + resources[i].image + "\"></i> " + prettify((purchaseCost[i] * multiplier), 2);
                 }
             }
         }
 
         return cost;
-    } else { // use for displaying building costs
+    } else { // use for displaying building costs - expotential costs
         for (let i = 0; i < purchaseCost.length; i++) {
             if (purchaseCost[i] !== 0) {
                 if (firstCost) {
@@ -218,7 +218,10 @@ function prettify(input, decimals) {
     if (decimals === 0) {
         return Math.floor(input);
     } else {
-        // parseFloat and toString remove trailing zeros
-        return parseFloat(input.toFixed(decimals).toString());
+        if (input === 0) {
+            return 0;
+        }
+
+        return input.toFixed(decimals);
     }
 }

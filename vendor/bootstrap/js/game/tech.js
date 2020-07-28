@@ -10,8 +10,9 @@
  * @param capBoost the increase to the capacity of these resources
  * @param purchaseStatus 0 if undiscovered, 1 if available to purchase, 2 if purchased
  * @param resourcesUnlock
- * @param buildingsUnloc
- * @param techsUnlock:
+ * @param buildingsUnlock
+ * @param techsUnlock
+ * @param otherUnlock
  */
 techs = {
     disassembleCaravan: {
@@ -26,7 +27,8 @@ techs = {
         resourcesUnlock: [resources.water, resources.workers, resources.materials],
         // still, tent, woodcutter
         buildingsUnlock: [buildings.water[0], buildings.infrastructure[0], buildings.materials[0]],
-        techsUnlock: ["stonecutters", "researchersCamp"] // stored as strings instead because unlocked techs haven't loaded
+        techsUnlock: ["stonecutters", "researchersCamp"], // stored as strings instead because unlocked techs haven't loaded (use brackets to get, like techs[var])
+        otherUnlock: [""]
     },
     stonecutters: {
 
@@ -57,7 +59,7 @@ function addTechCard(t) {
 }
 
 function applyTech(t) {
-
+    // TODO: implement applying tech upgrades, removing current tech card and adding new ones
 }
 
 

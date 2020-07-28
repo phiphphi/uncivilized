@@ -11,10 +11,14 @@ let stats = {
     name: "",
     era: "unknown",
     population: 0,
-    city_status: ""
+    cityStatus: "",
+    // might want to move this later
+    introText: "As you hurdle the crest of the dune, your eyes are met by a glimmering oasis in the desert. For the first " +
+        "time in a long while, you feel hope. It may not be much, but it's enough for your people to survive - and maybe " +
+        "someday rebuild civilization."
 }
 
-let fps = 60;
+let fps = 30;
 let interval = (1000 / fps);
 let rewardIntervalTime = 10;
 let version = "0.0.01";
@@ -34,7 +38,7 @@ function gameInit() {
     techInit();
 
     if (!init) {
-        $("#alert-container").html("<div class='alert alert-warning alert-dismissible fade show'>Test" +
+        $("#alert-container").html("<div class='alert alert-warning alert-dismissible fade show'>" + stats.introText +
             "<button type='button' class='close' data-dismiss='alert'>&times;</button></div>");
     }
 

@@ -59,20 +59,23 @@ function resourceInit() {
     for (let i = 0; i < resources.length; i++) {
         let r = resources[i];
 
-        // initializes resource header card
-        let desc = "<li class=list-group-item><i class=\"" + r.image + "\"></i> <span id=r-header-" + r.id + "></span></li>"
-        $("#r-header").append(desc);
+        // TODO: add capacity to UI
+        if (r.unlocked) {
+            // initializes resource header card
+            let desc = "<li class=list-group-item><i class=\"" + r.image + "\"></i> <span id=r-header-" + r.id + "></span></li>"
+            $("#r-header").append(desc);
 
-        // initializes resource description pills
-        let pillName = "<li class=nav-item><a class=nav-link id=r-name-" + r.id + " data-toggle=pill href=#r-desc-" + r.id + ">" + r.name + "</a></li>";
-        let pillDesc = "<div class=\"tab-pane active\" id=r-desc-" + r.id + "><h3>" + r.name +"</h3>" + r.description + "<p id=r-desc-" + r.id + "-count></p></div>";
+            // initializes resource description pills
+            let pillName = "<li class=nav-item><a class=nav-link id=r-name-" + r.id + " data-toggle=pill href=#r-desc-" + r.id + ">" + r.name + "</a></li>";
+            let pillDesc = "<div class=\"tab-pane active\" id=r-desc-" + r.id + "><h3>" + r.name +"</h3>" + r.description + "<p id=r-desc-" + r.id + "-count></p></div>";
 
-        if (i === 1) { // add workers to infrastructure tab
-            $("#b-col-name-infrastructure").append(pillName);
-            $("#b-col-desc-infrastructure").append(pillDesc);
-        } else {
-            $("#b-col-name-" + r.id).append(pillName);
-            $("#b-col-desc-" + r.id).append(pillDesc);
+            if (i === 1) { // add workers to infrastructure tab
+                $("#b-col-name-infrastructure").append(pillName);
+                $("#b-col-desc-infrastructure").append(pillDesc);
+            } else {
+                $("#b-col-name-" + r.id).append(pillName);
+                $("#b-col-desc-" + r.id).append(pillDesc);
+            }
         }
     }
 }
