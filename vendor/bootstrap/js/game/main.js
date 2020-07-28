@@ -9,19 +9,10 @@ if (typeof jQuery === "undefined") {
 
 let stats = {
     name: "",
-    era: 0,
-    population: 10,
+    era: "exploration",
+    population: 0,
     city_status: ""
 }
-
-_city_statuses = {
-
-};
-
-_eras = [
-
-];
-
 
 let fps = 60;
 let interval = (1000 / fps);
@@ -54,6 +45,7 @@ function updateCityData() {
     if (init === true) {
         $("#pop-count").text("Population: " + prettify(stats.population, 0));
         $("#city-status").text(getCityStatus(stats.population));
+        $("#era").text("era of " + stats.era);
 
         // update only changes ui - increment method updates actual numbers
         resourceUpdate();

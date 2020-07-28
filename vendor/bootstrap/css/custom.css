@@ -21,11 +21,12 @@ a:hover {
     color: var(--text-hover);
 }
 
-h5 {
+h4 {
     padding-top: .5rem;
+    margin-bottom: 0rem;
 }
 
-h6 {
+h5 {
     margin: 0.25rem;
 }
 
