@@ -15,7 +15,7 @@
  */
 techs = {
     disassembleCaravan: {
-        id: "disassembleCaravan";
+        id: "disassembleCaravan",
         name: "Disassemble Caravan",
         description: "Filler",
         cost: [],
@@ -24,12 +24,35 @@ techs = {
         capBoost: [100, 0, 50],
         purchaseStatus: 1,
         resourcesUnlock: [resources.water, resources.workers, resources.materials],
-        buildingsUnlock: [buildings.solarStill, buildings.tent, buildings.woodrunner],
+        // still, tent, woodcutter
+        buildingsUnlock: [buildings.water[0], buildings.infrastructure[0], buildings.materials[0]],
         techsUnlock: [techs.stonecutters, techs.researchersCamp]
     },
     stonecutters: {
 
     },
+    researchersCamp: {
 
+    }
 };
+
+function techInit() {
+    log("Calling techInit");
+
+    for (let tech in techs) {
+        if (tech.purchaseStatus === 1) {
+            let techCard =
+                "<div class='card'>" +
+                "<h6 class='align-left'>" + tech.name +
+                "</h6><button type='button' class='btn align-right' id='t-button-'" + tech.id + ">Buy</button>" +
+                "</div>";
+            $("#tech").append(techCard);
+        }
+    }
+}
+
+function applyTech(tech) {
+
+}
+
 

@@ -30,13 +30,22 @@ let version = "0.0.01";
 let init = false;
 
 // log
-function log(text) { console.log("uncivilized v" + version + " : " + text); }
+function log(text) { console.log("uncivilized v" + version + ": " + text); }
 
 function gameInit() {
     log("Calling Update.gameInit() - loading game!");
+    // set init to true here when local storage is implemented
+
     // resource initializes before buildings to add resource descriptions
     resourceInit();
     buildingInit();
+    techInit();
+
+    if (!init) {
+        $("#alert-container").html("<div class='alert alert-warning alert-dismissible fade show'>Test" +
+            "<button type='button' class='close' data-dismiss='alert'>&times;</button></div>");
+    }
+
     init = true;
 }
 

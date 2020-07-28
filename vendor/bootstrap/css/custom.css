@@ -25,6 +25,14 @@ h5 {
     padding-top: .5rem;
 }
 
+.align-left {
+    float: left;
+}
+
+.align-right {
+    float: right;
+}
+
 .nav-tabs .nav-link.active {
     background-color: #f8f3ea;
     border-color: var(--outline) var(--outline) #f8f3ea;
