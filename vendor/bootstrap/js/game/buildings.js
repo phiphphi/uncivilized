@@ -100,65 +100,73 @@ function buildingInit() {
         for (let i = 0; i < buildings[category].length; i++) {
             let b = buildings[category][i];
 
-            if (b.unlocked) {
-                log("initializing id " + b.id + ", name: " + b.name);
+            log("initializing building, id " + b.id + ", name: " + b.name);
+            addBuilding(b, category, i);
 
-                // initialize pills
-                $("#b-col-name-" + category).prepend("<li class=nav-item><a class=nav-link id=b-name-" + b.id + " data-toggle=pill " +
-                    "href=#b-desc-" + b.id + ">" + b.name + "</a></li>")
-                $("#b-col-desc-" + category).prepend("<div class=tab-pane id=b-desc-" + b.id + "></div>");
-
-                // What a message! there's gotta be a way to clean this up
-                // initialize pill descriptions
-                let desc = "<h3>" + b.name + "</h3>" + b.description + "</br>" +
-                    "<span id='b-count-" + b.id + "'>You currently have " + b.amount + " " + String(b.name).toLowerCase() + "s. </span><br/>" +
-                    "<span id='b-prod-" + b.id + "'>Each " + String(b.name).toLowerCase() + " produces " + getCostDisplay(b.production, 1, null) + " per second.</span> <hr> " +
-                    "<form class='form-inline'>" +
-                    "Building<input type='number' id='b-input-" + b.id + "' placeholder='1' class='form-control'>will cost" +
-                    "<span id='b-cost-display-" + b.id + "'>"+ getCostDisplay(b.currCost, 1, b) + "</span>." +
-                    "</form>" +
-                    "<div class=\"btn-group btn-block\" id=b-buttons-" + b.id + ">" +
-                    "<button type=button class=btn disabled id=b-button-" + b.id + "-0>Can't build</button>" +
-                    "<button type=button class=btn id=b-button-" + b.id + "-1>Buy 1</button>" +
-                    "<button type=button class=btn id=b-button-" + b.id + "-2>Buy 25</button>" +
-                    "<button type=button class=btn id=b-button-" + b.id + "-3>Buy 100</button></div>";
-
-                $("#b-desc-" + b.id).html(desc);
-
-                // attach onClick attr to Buy 1 button for form input
-                $("#b-button-" + b.id + "-1").attr("onclick", "buildingPurchase(buildings." + category + "[" + i + "], 1);");
-
-                determineButtonLayout(b);
+            if (!b.unlocked) {
+                $("#b-name-" + b.id).hide();
             }
         }
     }
+}
+
+function addBuilding(b, category, index) {
+    // initialize pills
+    $("#b-col-name-" + category).prepend("<li class=nav-item><a class=nav-link id=b-name-" + b.id + " data-toggle=pill " +
+        "href=#b-desc-" + b.id + ">" + b.name + "</a></li>")
+    $("#b-col-desc-" + category).prepend("<div class=tab-pane id=b-desc-" + b.id + "></div>");
+
+    // What a message! there's gotta be a way to clean this up
+    // initialize pill descriptions
+    let desc = "<h3>" + b.name + "</h3>" + b.description + "</br>" +
+        "<span id='b-count-" + b.id + "'>You currently have " + b.amount + " " + String(b.name).toLowerCase() + "s. </span><br/>" +
+        "<span id='b-prod-" + b.id + "'>Each " + String(b.name).toLowerCase() + " produces " + getCostDisplay(b.production, 1, null) + " per second.</span> <hr> " +
+        "<form class='form-inline'>" +
+        "Building<input type='number' id='b-input-" + b.id + "' placeholder='1' class='form-control'>will cost" +
+        "<span id='b-cost-display-" + b.id + "'>"+ getCostDisplay(b.currCost, 1, b) + "</span>." +
+        "</form>" +
+        "<div class=\"btn-group btn-block\" id=b-buttons-" + b.id + ">" +
+        "<button type=button class=btn disabled id=b-button-" + b.id + "-0>Can't build</button>" +
+        "<button type=button class=btn id=b-button-" + b.id + "-1>Buy 1</button>" +
+        "<button type=button class=btn id=b-button-" + b.id + "-2>Buy 25</button>" +
+        "<button type=button class=btn id=b-button-" + b.id + "-3>Buy 100</button></div>";
+
+    $("#b-desc-" + b.id).html(desc);
+
+    // attach onClick attr to Buy 1 button for form input
+    $("#b-button-" + b.id + "-1").attr("onclick", "buildingPurchase(buildings." + category + "[" + index + "], 1);");
+
+    determineButtonLayout(b);
 }
 
 function buildingUpdate() {
     for (const category in buildings) {
         for (let i = 0; i < buildings[category].length; i++) {
             let b = buildings[category][i];
-            determineButtonLayout(b);
 
-            let name = String(b.name).toLowerCase();
-            if (b.amount === 0) {
-                $("#b-count-" + b.id).text("You currently have no "  + name + "s.");
-            } else if (b.amount === 1) {
-                $("#b-count-" + b.id).text("You currently have 1 " + name + ".");
-            } else {
-                $("#b-count-" + b.id).text("You currently have " + b.amount + " " + name + "s.");
+            if (b.unlocked) {
+                determineButtonLayout(b);
+
+                let name = String(b.name).toLowerCase();
+                if (b.amount === 0) {
+                    $("#b-count-" + b.id).text("You currently have no "  + name + "s.");
+                } else if (b.amount === 1) {
+                    $("#b-count-" + b.id).text("You currently have 1 " + name + ".");
+                } else {
+                    $("#b-count-" + b.id).text("You currently have " + b.amount + " " + name + "s.");
+                }
+
+                // Not currently necessary to update - only update when production multiplier changes
+                //$("#b-prod-" + b.id).text("Each " + b.name + " produces " + getCostDisplay(b.production, 1, null) + ".");
+
+                let formInput = $("#b-input-" + b.id).val();
+                if (formInput === "") {
+                    formInput = 1;
+                }
+                $("#b-button-" + b.id + "-1").attr("onclick", "buildingPurchase(buildings." + category + "[" + i + "], " + formInput + ");");
+                $("#b-button-" + b.id + "-2").attr("onclick", "buildingPurchase(buildings." + category + "[" + i + "], " + Math.floor(b.purchasable / 4) + ");");
+                $("#b-button-" + b.id + "-3").attr("onclick", "buildingPurchase(buildings." + category + "[" + i + "], " + b.purchasable + ");");
             }
-
-            // Not currently necessary to update - only update when production multiplier changes
-            //$("#b-prod-" + b.id).text("Each " + b.name + " produces " + getCostDisplay(b.production, 1, null) + ".");
-
-            let formInput = $("#b-input-" + b.id).val();
-            if (formInput === "") {
-                formInput = 1;
-            }
-            $("#b-button-" + b.id + "-1").attr("onclick", "buildingPurchase(buildings." + category + "[" + i + "], " + formInput + ");");
-            $("#b-button-" + b.id + "-2").attr("onclick", "buildingPurchase(buildings." + category + "[" + i + "], " + Math.floor(b.purchasable / 4) + ");");
-            $("#b-button-" + b.id + "-3").attr("onclick", "buildingPurchase(buildings." + category + "[" + i + "], " + b.purchasable + ");");
         }
     }
 }

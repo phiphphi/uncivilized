@@ -28,7 +28,7 @@ resources = [
         description: "The laborers of your city, carrying your civilization into the future.",
         amount: 0,
         production: 0,
-        capacity: -1,
+        capacity: 0,
         unlocked: false
     },
     {
@@ -59,24 +59,30 @@ function resourceInit() {
     for (let i = 0; i < resources.length; i++) {
         let r = resources[i];
 
-        // TODO: add capacity to UI
-        if (r.unlocked) {
-            // initializes resource header card
-            let desc = "<li class=list-group-item><i class=\"" + r.image + "\"></i> <span id=r-header-" + r.id + "></span></li>"
-            $("#r-header").append(desc);
+        log("initializing resource, id " + r.id + ", name: " + r.name);
+        addResource(r, i);
 
-            // initializes resource description pills
-            let pillName = "<li class=nav-item><a class=nav-link id=r-name-" + r.id + " data-toggle=pill href=#r-desc-" + r.id + ">" + r.name + "</a></li>";
-            let pillDesc = "<div class=\"tab-pane active\" id=r-desc-" + r.id + "><h3>" + r.name +"</h3>" + r.description + "<p id=r-desc-" + r.id + "-count></p></div>";
-
-            if (i === 1) { // add workers to infrastructure tab
-                $("#b-col-name-infrastructure").append(pillName);
-                $("#b-col-desc-infrastructure").append(pillDesc);
-            } else {
-                $("#b-col-name-" + r.id).append(pillName);
-                $("#b-col-desc-" + r.id).append(pillDesc);
-            }
+        if (!r.unlocked) {
+            $("#r-" + r.id).hide();
         }
+    }
+}
+
+function addResource(r, index) {
+    // initializes resource header card
+    let desc = "<div id='r-" + r.id + "'><li class=list-group-item><i class=\"" + r.image + "\"></i> <span id=r-header-" + r.id + "></span></li></div>"
+    $("#r-header").append(desc);
+
+    // initializes resource description pills
+    let pillName = "<li class=nav-item><a class=nav-link id=r-name-" + r.id + " data-toggle=pill href=#r-desc-" + r.id + ">" + r.name + "</a></li>";
+    let pillDesc = "<div class=\"tab-pane active\" id=r-desc-" + r.id + "><h3>" + r.name +"</h3>" + r.description + "<p id=r-desc-" + r.id + "-count></p></div>";
+
+    if (index === 1) { // add workers to infrastructure tab
+        $("#b-col-name-infrastructure").append(pillName);
+        $("#b-col-desc-infrastructure").append(pillDesc);
+    } else {
+        $("#b-col-name-" + r.id).append(pillName);
+        $("#b-col-desc-" + r.id).append(pillDesc);
     }
 }
 
@@ -87,15 +93,17 @@ function resourceUpdate() {
 
         if (i === 1) {
             amount = prettify(r.amount, 0);
-            header = amount + " " + getWorkersPerTime(r.production);
+            header = amount + "/" + r.capacity + " " + getWorkersPerTime(r.production);
         } else {
             amount = prettify(r.amount, 2);
-            header = amount + " " + getResourcesPerTime(r.production);
+            header = amount + "/" + r.capacity + " " + getResourcesPerTime(r.production);
         }
 
         $("#r-header-" + r.id).text(header);
 
-        $("#r-desc-" + r.id + "-count").html("You currently have " + amount + " " + r.id + ".<br/>" +
-        "Your available amount of " + r.id + " is increasing by " + prettify(r.production, 2) + " every second.")
+        $("#r-desc-" + r.id + "-count").html(
+            "You currently have " + amount + " " + r.id + ".<br/>" +
+            "Your capacity of " + r.id + " is " + r.capacity + ".<br/>" +
+            "Your available amount of " + r.id + " is increasing by " + prettify(r.production, 2) + " every second.")
     }
 }
