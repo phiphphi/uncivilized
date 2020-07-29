@@ -36,7 +36,7 @@ resources = [
         image: "fa fa-bars",
         name: "Materials",
         description: "The matter from which our empire is built.",
-        amount: 1000,
+        amount: 0,
         production: 0,
         capacity: 0,
         unlocked: false
@@ -86,24 +86,57 @@ function addResource(r, index) {
     }
 }
 
+// TODO: clean this function up
 function resourceUpdate() {
     for (let i = 0; i < resources.length; i++) {
         let r = resources[i];
         let amount, header;
 
+
         if (i === 1) {
             amount = prettify(r.amount, 0);
             header = amount + "/" + r.capacity + " " + getWorkersPerTime(r.production);
         } else {
+            // TODO: change to show net production
             amount = prettify(r.amount, 2);
             header = amount + "/" + r.capacity + " " + getResourcesPerTime(r.production);
         }
 
         $("#r-header-" + r.id).text(header);
 
-        $("#r-desc-" + r.id + "-count").html(
-            "You currently have " + amount + " " + r.id + ".<br/>" +
-            "Your capacity of " + r.id + " is " + r.capacity + ".<br/>" +
-            "Your available amount of " + r.id + " is increasing by " + prettify(r.production, 2) + " every second.")
+        let desc = "You currently have " + amount + " " + r.id + ".<br/>" +
+            "Your capacity of " + r.id + " is " + r.capacity + ".<br/>";
+
+        if (i === 0) {
+            // only used for water - might use for others later, add consumption stat to resources
+            let netProd = prettify(r.production - resources[1].amount, 2);
+            desc += "Your available amount of " + r.id + " is increasing by " + netProd + " every second.<br/>" +
+                "Your workers consume " + resources[1].amount + " water per second, making your net water gain " + netProd + " per second.";
+        } else if (i === 1) {
+            desc += "Your available amount of " + r.id + " is increasing by " + prettify(r.production, 2) + " every second.<br/>" +
+                "Each worker requires 1 water per second. In total, they consume " + r.amount + " water per second.";
+        } else {
+            desc += "Your available amount of " + r.id + " is increasing by " + prettify(r.production, 2) + " every second.";
+        }
+
+        $("#r-desc-" + r.id + "-count").html(desc);
+    }
+}
+
+function resourceIncrement() {
+    let divisor = 1000 / rewardIntervalTime;
+
+    for (let i = 0; i < resources.length; i++) {
+        let r = resources[i];
+
+        if (i === 0) { // worker water consumption
+            r.amount -= (resources[1].amount / divisor);
+        }
+
+        r.amount += (r.production / divisor);
+
+        if (r.amount > r.capacity) {
+            r.amount = r.capacity;
+        }
     }
 }

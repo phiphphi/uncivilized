@@ -63,7 +63,7 @@ function addTechCard(t) {
 
         let techCard =
             "<div class='card' id='t-" + t.id + "'>" +
-            "<h6>" + t.name + "</h6><hr class='tech-hr'>" + t.description + "<div>Cost: " + getCostDisplay(t.cost, 1, null) + "</div>" +
+            "<h6>" + t.name + "</h6><hr class='tech-hr'>" + t.description + "<br/> Cost: " + getCostDisplay(t.cost, 1, null) + "<br/>" + getTechReward(t) +
             "<button type='button' class='btn tech-btn disabled' id='t-button-" + t.id + "-disabled'>Can't research</button>" +
             "<button type='button' class='btn tech-btn' id='t-button-" + t.id + "'>Research</button>" +
             "</div>";
@@ -127,6 +127,107 @@ function applyTech(t) {
     }
 
     $("#t-" + t.id).remove();
+}
+
+function getTechReward(t) {
+    let reward = "Reward: ";
+    let firstReward = true;
+
+    if (t.hasOwnProperty("resourceBoost")) {
+        reward += "<span>"
+        for (let i = 0; i < t.resourceBoost.length; i++) {
+            if (t.resourceBoost[i] !== 0) {
+                if (firstReward) {
+                    reward += "+" + t.resourceBoost[i] + " " + "<i class='" + resources[i].image + "'></i>";
+                    firstReward = false;
+                } else {
+                    reward += ", +" + t.resourceBoost[i] + " " + "<i class='" + resources[i].image + "'></i>";
+                }
+            }
+        }
+        reward += "</span>";
+        firstReward = true;
+    }
+
+    if (t.hasOwnProperty("prodBoost")) {
+        reward += "<span>"
+        for (let i = 0; i < t.prodBoost.length; i++) {
+            if (t.prodBoost[i] !== 0) {
+                if (firstReward) {
+                    reward += "+" + t.prodBoost[i] + " " + "<i class='" + resources[i].image + "'></i>" + "/sec";
+                    firstReward = false;
+                } else {
+                    reward += ", +" + t.prodBoost[i] + " " + "<i class='" + resources[i].image + "'></i>" + "/sec";
+                }
+            }
+        }
+        reward += "</span>";
+        firstReward = true;
+    }
+
+    if (t.hasOwnProperty("capBoost")) {
+        reward += "<span>"
+        for (let i = 0; i < t.capBoost.length; i++) {
+            if (t.capBoost[i] !== 0) {
+                if (firstReward) {
+                    reward += "+" + t.capBoost[i] + " " + "<i class='" + resources[i].image + "'></i>" + " cap";
+                    firstReward = false;
+                } else {
+                    reward += ", +" + t.capBoost[i] + " " + "<i class='" + resources[i].image + "'></i>" + " cap";
+                }
+            }
+        }
+        reward += "</span>";
+        firstReward = true;
+    }
+
+    if (t.hasOwnProperty("resourcesUnlock")) {
+        reward += "<span>Unlock resources: "
+        for (let i = 0; i < t.resourcesUnlock.length; i++) {
+            if (firstReward) {
+                reward += t.resourcesUnlock[i].id;
+                firstReward = false;
+            } else {
+                reward += ", " + t.resourcesUnlock[i].id;
+            }
+        }
+        reward += "</span>";
+        firstReward = true;
+    }
+
+    if (t.hasOwnProperty("buildingsUnlock")) {
+        reward += "<span>Unlock buildings: "
+        for (let i = 0; i < t.buildingsUnlock.length; i++) {
+            if (firstReward) {
+                reward += t.buildingsUnlock[i].name.toLowerCase();
+                firstReward = false;
+            } else {
+                reward += ", " + t.buildingsUnlock[i].name.toLowerCase();
+            }
+        }
+        reward += "</span>";
+        firstReward = true;
+    }
+
+    /* remove for now - overwhelming info at start
+    if (t.hasOwnProperty("techsUnlock")) {
+        reward += "<span>Unlock technologies: "
+        for (let i = 0; i < t.techsUnlock.length; i++) {
+            if (firstReward) {
+                reward += techs[t.techsUnlock[i]].id;
+                firstReward = false;
+            } else {
+                reward += ", " + techs[t.techsUnlock[i]].id;
+            }
+        }
+        reward += "</span>";
+        firstReward = true;
+    }
+    *
+     */
+
+    log(reward);
+    return reward;
 }
 
 /**

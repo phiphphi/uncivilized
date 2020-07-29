@@ -14,8 +14,7 @@ let stats = {
     cityStatus: "",
     // might want to move this later
     introText: "As you hurdle the crest of the dune, your eyes are met by a glimmering oasis in the desert. For the first " +
-        "time in a long while, you feel hope. It may not be much, but it's enough for your people to survive - and maybe " +
-        "someday rebuild civilization."
+        "time in a long while, you feel hope. It may not be much, but it's enough for your people to survive - for now."
 }
 
 let fps = 30;
@@ -79,6 +78,7 @@ mainInterval = window.setInterval(function () {
 // so if description says 1 worker per second, then internal reward is 0.01 - since this goes every 10 milliseconds
 rewardInterval = window.setInterval(function () {
     buildingIncrement();
+    resourceIncrement();
 }, rewardIntervalTime);
 
 // TODO: add custom scroll bar for tech

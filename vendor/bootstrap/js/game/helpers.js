@@ -172,7 +172,7 @@ function getBuildingAmountBuyable(building, index, amountWanted) {
  */
 function getCostDisplay(purchaseCost, multiplier, building) {
     if (purchaseCost.length === 0) {
-        return "";
+        return "Free!";
     }
 
     let cost = "";
@@ -182,10 +182,10 @@ function getCostDisplay(purchaseCost, multiplier, building) {
         for (let i = 0; i < purchaseCost.length; i++) {
             if (purchaseCost[i] !== 0) {
                 if (firstCost) {
-                    cost += "<i class=\"" + resources[i].image + "\"></i> " + prettify((purchaseCost[i] * multiplier), 2);
+                    cost += "<i class='" + resources[i].image + "'/> " + prettify((purchaseCost[i] * multiplier), 2);
                     firstCost = false;
                 } else {
-                    cost += ", <i class=\"" + resources[i].image + "\"></i> " + prettify((purchaseCost[i] * multiplier), 2);
+                    cost += ", <i class='" + resources[i].image + "'/> " + prettify((purchaseCost[i] * multiplier), 2);
                 }
             }
         }
@@ -195,10 +195,10 @@ function getCostDisplay(purchaseCost, multiplier, building) {
         for (let i = 0; i < purchaseCost.length; i++) {
             if (purchaseCost[i] !== 0) {
                 if (firstCost) {
-                    cost += "<i class=\"" + resources[i].image + "\"></i> " + prettify(getBuildingAmountBuyable(building, i, multiplier), 2);
+                    cost += "<i class='" + resources[i].image + "'/> " + prettify(getBuildingAmountBuyable(building, i, multiplier), 2);
                     firstCost = false;
                 } else {
-                    cost += ", <i class=\"" + resources[i].image + "\"></i> " + prettify(getBuildingAmountBuyable(building, i, multiplier), 2);
+                    cost += ", <i class='" + resources[i].image + "'/> " + prettify(getBuildingAmountBuyable(building, i, multiplier), 2);
                 }
             }
         }

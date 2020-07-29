@@ -204,6 +204,10 @@ function buildingIncrement() {
                 }
 
                 resources[k].amount += ((b.production[k] * b.amount) / divisor);
+
+                if (resources[k].amount > resources[k].capacity) {
+                    resources[k].amount = resources[k].capacity;
+                }
             }
         }
     }
