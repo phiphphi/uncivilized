@@ -36,7 +36,7 @@
     <div class="card-deck text-center">
 
       <!-- resources card -->
-      <div class="card">
+      <div class="card" id="resources-card">
         <div class="card-header">
           <span>Resources</span>
         </div>
@@ -45,14 +45,14 @@
       </div>
 
       <!-- city status card -->
-      <div class="card justify-content-center">
+      <div class="card justify-content-center" id="city-card">
         <h4 id="pop-count"></h4>
         <h5 id="city-status"></h5>
         <span id="era"></span>
       </div>
 
       <!-- research card -->
-      <div class="card">
+      <div class="card" id="research-card">
         <div class="card-header">
           <span>Upgrades</span>
         </div>
@@ -144,6 +144,7 @@
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- game core Javascript -->
+  <script src="vendor/bootstrap/js/game/intro.js"></script>
   <script src="vendor/bootstrap/js/game/helpers.js"></script>
   <script src="vendor/bootstrap/js/game/resources.js"></script>
   <script src="vendor/bootstrap/js/game/buildings.js"></script>

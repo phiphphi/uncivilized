@@ -35,6 +35,12 @@ hr {
     border-color: darkgray;
 }
 
+.alert-custom {
+    background-color: var(--card-header);
+    border-color: var(--outline);
+    color: var(--text);
+}
+
 .tech-hr {
     margin: 0.25rem;
 }

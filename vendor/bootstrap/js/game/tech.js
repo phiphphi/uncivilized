@@ -63,7 +63,7 @@ function addTechCard(t) {
 
         let techCard =
             "<div class='card' id='t-" + t.id + "'>" +
-            "<h6>" + t.name + "</h6><hr class='tech-hr'>" + t.description + "<br/> Cost: " + getCostDisplay(t.cost, 1, null) + "<br/>" + getTechReward(t) +
+            "<h6>" + t.name + "</h6><hr class='tech-hr'>" + t.description + "<br/> Cost: " + getCostDisplay(t.cost, 1, null) + getTechReward(t) +
             "<button type='button' class='btn tech-btn disabled' id='t-button-" + t.id + "-disabled'>Can't research</button>" +
             "<button type='button' class='btn tech-btn' id='t-button-" + t.id + "'>Research</button>" +
             "</div>";
@@ -77,6 +77,10 @@ function applyTech(t) {
     if (t.hasOwnProperty("resourceBoost")) {
         for (let i = 0; i < t.resourceBoost.length; i++) {
             resources[i].amount += t.resourceBoost[i];
+
+            if (i === 1) {
+                stats.population += t.resourceBoost[i];
+            }
         }
     }
 

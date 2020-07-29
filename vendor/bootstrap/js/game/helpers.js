@@ -172,37 +172,37 @@ function getBuildingAmountBuyable(building, index, amountWanted) {
  */
 function getCostDisplay(purchaseCost, multiplier, building) {
     if (purchaseCost.length === 0) {
-        return "Free!";
+        return "Free! <br/>";
     }
 
-    let cost = "";
+    let cost = "<span>";
     let firstCost = true; // deals with fencepost problem for listing cost
 
     if (building === null) { // use for displaying tech costs and production - flat costs/production
         for (let i = 0; i < purchaseCost.length; i++) {
             if (purchaseCost[i] !== 0) {
                 if (firstCost) {
-                    cost += "<i class='" + resources[i].image + "'/> " + prettify((purchaseCost[i] * multiplier), 2);
+                    cost += prettify((purchaseCost[i] * multiplier), 2) + " <i class='" + resources[i].image + "'></i>";
                     firstCost = false;
                 } else {
-                    cost += ", <i class='" + resources[i].image + "'/> " + prettify((purchaseCost[i] * multiplier), 2);
+                    cost += ", " + prettify((purchaseCost[i] * multiplier), 2) + "<i class='" + resources[i].image + "'></i>";
                 }
             }
         }
-
+        cost += "</span>";
         return cost;
     } else { // use for displaying building costs - expotential costs
         for (let i = 0; i < purchaseCost.length; i++) {
             if (purchaseCost[i] !== 0) {
                 if (firstCost) {
-                    cost += "<i class='" + resources[i].image + "'/> " + prettify(getBuildingAmountBuyable(building, i, multiplier), 2);
+                    cost += prettify(getBuildingAmountBuyable(building, i, multiplier), 2) + " <i class='" + resources[i].image + "'></i>";
                     firstCost = false;
                 } else {
-                    cost += ", <i class='" + resources[i].image + "'/> " + prettify(getBuildingAmountBuyable(building, i, multiplier), 2);
+                    cost += ", " + prettify(getBuildingAmountBuyable(building, i, multiplier), 2) + " <i class='" + resources[i].image + "'></i>";
                 }
             }
         }
-
+        cost += "</span>";
         return cost;
     }
 }

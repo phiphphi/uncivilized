@@ -13,8 +13,9 @@ let stats = {
     population: 0,
     cityStatus: "",
     // might want to move this later
-    introText: "As you hurdle the crest of the dune, your eyes are met by a glimmering oasis in the desert. For the first " +
-        "time in a long while, you feel hope. It may not be much, but it's enough for your people to survive - for now."
+    introText: "As you hurdle the crest of the dune, your find a glimmering oasis in the desert - a mystical sight to " +
+        "your party's parched throats. For the first time in a long while, you feel hope. It may not be much, but it's " +
+        "enough for your people to survive - for now."
 }
 
 let fps = 30;
@@ -36,6 +37,10 @@ function gameInit() {
     $("#resources-content").hide();
     for (let i = 0; i < resources.length; i++) {
         $("#" + resources[i].id + "-nav-item").hide();
+
+        $("#resources-card").hide();
+        $("#city-card").hide();
+        $("#research-card").hide();
     }
 
     // resource initializes before buildings to add resource descriptions
@@ -44,8 +49,7 @@ function gameInit() {
     techInit();
 
     if (!init) {
-        $("#alert-container").html("<div class='alert alert-warning alert-dismissible fade show'>" + stats.introText +
-            "<button type='button' class='close' data-dismiss='alert'>&times;</button></div>");
+        introInit();
     }
 
     init = true;
