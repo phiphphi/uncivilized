@@ -39,6 +39,7 @@ hr {
     background-color: var(--card-header);
     border-color: var(--outline);
     color: var(--text);
+    margin: 0.5rem;
 }
 
 .tech-hr {
@@ -59,6 +60,7 @@ hr {
 .card {
     background-color: #f6f0e5;
     border-color: #292b2c;
+    display: none;
 }
 
 .card-header {
@@ -94,6 +96,15 @@ hr {
     padding: 0.5rem;
     background-color: #f8f3ea;
 
+}
+
+[id=alert-container] {
+    text-align: center;
+    justify-content: center;
+}
+
+.intro-text {
+    margin: 1rem;
 }
 
 [id*=col-desc] {

@@ -32,17 +32,6 @@ function gameInit() {
     log("Calling Update.gameInit() - loading game!");
     // set init to true here when local storage is implemented
 
-    // hide certain game elements before they're unlocked
-    // TODO: move UI to own file and optimize
-    $("#resources-content").hide();
-    for (let i = 0; i < resources.length; i++) {
-        $("#" + resources[i].id + "-nav-item").hide();
-
-        $("#resources-card").hide();
-        $("#city-card").hide();
-        $("#research-card").hide();
-    }
-
     // resource initializes before buildings to add resource descriptions
     resourceInit();
     buildingInit();

@@ -22,10 +22,10 @@ techs = {
         cost: [],
         resourceBoost: [0, 5, 50],
         prodBoost: [10],
-        capBoost: [100, 5, 50],
+        capBoost: [240, 5, 100],
         purchaseStatus: 1,
-        // water, workers, materials
-        resourcesUnlock: [resources[0], resources[1], resources[2]],
+        // workers, materials
+        resourcesUnlock: [resources[1], resources[2]],
         // still, tent, woodcutter
         buildingsUnlock: [buildings.water[0], buildings.infrastructure[0], buildings.materials[0]],
         techsUnlock: ["stonecutters"], // stored as strings instead because unlocked techs haven't loaded (use brackets to get, like techs[var])

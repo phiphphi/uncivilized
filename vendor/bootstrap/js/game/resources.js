@@ -16,10 +16,10 @@ resources = [
         image: "fa fa-tint",
         name: "Water",
         description: "The lifeblood of your civilization - required for survival.",
-        amount: 0,
+        amount: 10,
         production: 0,
-        capacity: 0,
-        unlocked: false
+        capacity: 10,
+        unlocked: true
     },
     {
         id: "workers",
@@ -98,7 +98,7 @@ function resourceUpdate() {
             header = amount + "/" + r.capacity + " " + getWorkersPerTime(r.production);
         } else {
             // TODO: change to show net production
-            amount = prettify(r.amount, 2);
+            amount = prettify(r.amount, 0);
             header = amount + "/" + r.capacity + " " + getResourcesPerTime(r.production);
         }
 
