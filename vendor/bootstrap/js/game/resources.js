@@ -16,7 +16,7 @@ resources = [
         image: "fa fa-tint",
         name: "Water",
         description: "The lifeblood of your civilization - required for survival.",
-        amount: 5,
+        amount: 7,
         production: 0,
         capacity: 50,
         unlocked: true

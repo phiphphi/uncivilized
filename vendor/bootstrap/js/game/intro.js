@@ -6,7 +6,10 @@ intro = {
         "The sand burns your feet.",
         "You feel what little water you have in your canteen slosh around.",
         "The sun beats down on your caravan with an unrelenting heat.",
-        "There are only drops left, and the sand dunes ahead strech to eternity."
+        "There are only drops left, and the sand dunes ahead stretch to eternity.",
+        "The others fall one by one, into the embrace of the desert.",
+        "Unable to stand any longer, you fall to the ground.",
+        "The crest of the dune lies within an arm's reach away."
     ]
 }
 
@@ -43,17 +46,33 @@ function getWalkText() {
             $alerts.append("<div class='alert alert-custom' id='intro-text-" + walkButtonClicks + "' style='display: none'>" + intro.text[currentText] + "</div>");
             currentText++;
             break;
-        case 3:
+        case 4:
             $alerts.append("<p class='intro-text' id='intro-text-" + walkButtonClicks + "' style='display: none'><i>" + intro.text[currentText] +"</i></div>");
             currentText++;
             break;
-        case 4:
+        case 6:
             $alerts.append("<div class='alert alert-custom' id='intro-text-" + walkButtonClicks + "' style='display: none'>" + intro.text[currentText] + "</div>");
             currentText++;
+            $("#walk-btn").text("Walk");
             break;
         case 8:
+            $alerts.append("<p class='intro-text' id='intro-text-" + walkButtonClicks + "' style='display: none'><i>" + intro.text[currentText] +"</i></div>");
+            currentText++;
+            break;
+        case 10:
+            $alerts.append("<div class='alert alert-custom' id='intro-text-" + walkButtonClicks + "' style='display: none'>" + intro.text[currentText] + "</div>");
+            currentText++;
+            $("#walk-btn").text("crawl");
+            break;
+        case 11:
+            $alerts.append("<p class='intro-text' id='intro-text-" + walkButtonClicks + "' style='display: none'><i>" + intro.text[currentText] +"</i></div>");
+            currentText++;
+            break;
+        case 12:
             $alerts.append("<div class='alert alert-custom alert-dismissible fade show' id='intro-text-" + walkButtonClicks + "'>" +
                 stats.introText + "<button type='button' class='close' data-dismiss='alert'>&times;</button></div>");
+
+            // TODO: add start game button here
             break;
     }
 
