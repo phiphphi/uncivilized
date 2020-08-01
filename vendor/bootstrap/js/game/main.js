@@ -12,10 +12,6 @@ let stats = {
     era: "unknown",
     population: 0,
     cityStatus: "",
-    // might want to move this later
-    introText: "As you hurdle the crest of the dune, your find a glimmering oasis in the desert - a mystical sight to " +
-        "your party's parched throats. For the first time in a long while, you feel hope. It may not be much, but it's " +
-        "enough for your people to survive - for now."
 }
 
 let fps = 30;
