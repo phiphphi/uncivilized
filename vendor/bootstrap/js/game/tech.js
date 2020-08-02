@@ -59,17 +59,19 @@ function techInit() {
 function addTechCard(t) {
     if (t.purchaseStatus === 1) {
 
-        log("adding card: " + t.id);
+        log("initializing tech: " + t.id);
 
         let techCard =
             "<div class='card' id='t-" + t.id + "'>" +
-            "<h6>" + t.name + "</h6><hr class='tech-hr'>" + t.description + "<br/> Cost: " + getCostDisplay(t.cost, 1, null) + getTechReward(t) +
+            "<h6>" + t.name + "</h6><hr class='tech-hr'>" + t.description + "<br/> Cost: " + getCostDisplay(t.cost, 1, null) +
+            "<br/>" + getTechReward(t) +
             "<button type='button' class='btn tech-btn disabled' id='t-button-" + t.id + "-disabled'>Can't research</button>" +
             "<button type='button' class='btn tech-btn' id='t-button-" + t.id + "'>Research</button>" +
             "</div>";
         $("#tech").append(techCard);
 
         $("#t-button-" + t.id).attr("onclick", "applyTech(techs." + t.id + ");");
+        $("#t-" + t.id).show();
     }
 }
 
@@ -134,11 +136,10 @@ function applyTech(t) {
 }
 
 function getTechReward(t) {
-    let reward = "Reward: ";
+    let reward = "Reward: <br/>";
     let firstReward = true;
 
     if (t.hasOwnProperty("resourceBoost")) {
-        reward += "<span>"
         for (let i = 0; i < t.resourceBoost.length; i++) {
             if (t.resourceBoost[i] !== 0) {
                 if (firstReward) {
@@ -149,12 +150,11 @@ function getTechReward(t) {
                 }
             }
         }
-        reward += "</span>";
+        reward += "<br/>";
         firstReward = true;
     }
 
     if (t.hasOwnProperty("prodBoost")) {
-        reward += "<span>"
         for (let i = 0; i < t.prodBoost.length; i++) {
             if (t.prodBoost[i] !== 0) {
                 if (firstReward) {
@@ -165,12 +165,11 @@ function getTechReward(t) {
                 }
             }
         }
-        reward += "</span>";
+        reward += "<br/>";
         firstReward = true;
     }
 
     if (t.hasOwnProperty("capBoost")) {
-        reward += "<span>"
         for (let i = 0; i < t.capBoost.length; i++) {
             if (t.capBoost[i] !== 0) {
                 if (firstReward) {
@@ -181,12 +180,12 @@ function getTechReward(t) {
                 }
             }
         }
-        reward += "</span>";
+        reward += "<br/>";
         firstReward = true;
     }
 
     if (t.hasOwnProperty("resourcesUnlock")) {
-        reward += "<span>Unlock resources: "
+        reward += "Unlock resources: "
         for (let i = 0; i < t.resourcesUnlock.length; i++) {
             if (firstReward) {
                 reward += t.resourcesUnlock[i].id;
@@ -195,12 +194,12 @@ function getTechReward(t) {
                 reward += ", " + t.resourcesUnlock[i].id;
             }
         }
-        reward += "</span>";
+        reward += "<br/>";
         firstReward = true;
     }
 
     if (t.hasOwnProperty("buildingsUnlock")) {
-        reward += "<span>Unlock buildings: "
+        reward += "Unlock buildings: "
         for (let i = 0; i < t.buildingsUnlock.length; i++) {
             if (firstReward) {
                 reward += t.buildingsUnlock[i].name.toLowerCase();
@@ -209,13 +208,13 @@ function getTechReward(t) {
                 reward += ", " + t.buildingsUnlock[i].name.toLowerCase();
             }
         }
-        reward += "</span>";
+        reward += "<br/>";
         firstReward = true;
     }
 
     /* remove for now - overwhelming info at start
     if (t.hasOwnProperty("techsUnlock")) {
-        reward += "<span>Unlock technologies: "
+        reward += "Unlock technologies: "
         for (let i = 0; i < t.techsUnlock.length; i++) {
             if (firstReward) {
                 reward += techs[t.techsUnlock[i]].id;
@@ -224,13 +223,12 @@ function getTechReward(t) {
                 reward += ", " + techs[t.techsUnlock[i]].id;
             }
         }
-        reward += "</span>";
+        reward += "<br/>";
         firstReward = true;
     }
     *
      */
 
-    log(reward);
     return reward;
 }
 

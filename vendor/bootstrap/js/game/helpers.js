@@ -172,10 +172,10 @@ function getBuildingAmountBuyable(building, index, amountWanted) {
  */
 function getCostDisplay(purchaseCost, multiplier, building) {
     if (purchaseCost.length === 0) {
-        return "Free! <br/>";
+        return "Free!";
     }
 
-    let cost = "<span>";
+    let cost = "";
     let firstCost = true; // deals with fencepost problem for listing cost
 
     if (building === null) { // use for displaying tech costs and production - flat costs/production
@@ -189,7 +189,6 @@ function getCostDisplay(purchaseCost, multiplier, building) {
                 }
             }
         }
-        cost += "</span>";
         return cost;
     } else { // use for displaying building costs - expotential costs
         for (let i = 0; i < purchaseCost.length; i++) {
@@ -202,7 +201,6 @@ function getCostDisplay(purchaseCost, multiplier, building) {
                 }
             }
         }
-        cost += "</span>";
         return cost;
     }
 }

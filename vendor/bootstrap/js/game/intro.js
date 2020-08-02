@@ -34,7 +34,7 @@ function introInit() {
     // some style and animations for the intro
     $("#resources-card").css("margin", "0 auto").css("max-width", "20rem");
     $("#resources-card").show(1000);
-    $("#walk-btn").delay(500).show(1000);
+    $("#walk-btn").delay(500).fadeIn(1000);
 }
 
 function getWalkText() {
@@ -116,7 +116,6 @@ function updateWalkButton() {
         } else {
             progressBarCount++;
             $("#walk-progress-bar").css("width", progressBarCount + "%");
-            log(progressBarCount + "%");
         }
     }
 
@@ -132,6 +131,11 @@ function startGame() {
     }
     $("#intro-start-btn").fadeOut(2500);
 
+    $("#resources-card").fadeOut(2500);
+    $("#walk-btn").fadeOut(2500);
+    // stop cancels any in progress animations
+    $("#walk-bar").stop(true).fadeOut(2500);
+
     // timeout lets animations play before removing the elements
     setTimeout(function() {
         for (let i = 0; i < 13; i++) {
@@ -140,9 +144,16 @@ function startGame() {
         $("#intro-start-btn").remove();
     }, 2500);
 
-    $("#resources-card").css("margin", "0 15px").css("max-width", "none");
-    $("#city-card").delay(50000).show(2500);
-    $("#research-card").delay(100000).show(2500);
+    setTimeout(function() {
+        $("#walk-btn").remove();
+        $("#walk-bar").remove();
+
+        $("#resources-card").css("max-width", "none").css("margin", "").addClass("card-main");
+        $("#resources-card").show(2500);
+        $("#city-card").show(2500);
+        $("#city-card").css("display", "flex");
+        $("#research-card").show(2500);
+    }, 2500);
 }
 
 

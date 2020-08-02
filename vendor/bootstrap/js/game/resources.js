@@ -110,7 +110,7 @@ function resourceUpdate() {
         if (i === 0) {
             // only used for water - might use for others later, add consumption stat to resources
             let netProd = prettify(r.production - resources[1].amount, 2);
-            desc += "Your available amount of " + r.id + " is increasing by " + netProd + " every second.<br/>" +
+            desc += "Your available amount of " + r.id + " is increasing by " + prettify(r.production, 2) + " every second.<br/>" +
                 "Your workers consume " + resources[1].amount + " water per second, making your net water gain " + netProd + " per second.";
         } else if (i === 1) {
             desc += "Your available amount of " + r.id + " is increasing by " + prettify(r.production, 2) + " every second.<br/>" +
