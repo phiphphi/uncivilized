@@ -17,9 +17,7 @@ intro = {
 }
 
 function introInit() {
-
     // hide certain game elements before they're unlocked
-    // TODO: move UI to own file and optimize
     for (let i = 0; i < resources.length; i++) {
         $("#" + resources[i].id + "-nav-item").hide();
     }
@@ -46,11 +44,19 @@ function getWalkText() {
         addIntroAlert($alerts, intro.text[currentText], walkButtonClicks);
     }
 
-    if (walkButtonClicks === 12) { // add start game button
+    if (walkButtonClicks === 12) { // add start game button and remove walk button
         $alerts.append(
             "<button type=button class=btn id='intro-start-btn' onClick=startGame() style='display: none'><b>Begin</b></button>"
         );
         $("#intro-start-btn").fadeIn(1000);
+
+        $("#walk-btn").fadeOut(2500);
+        // stop cancels any in progress animations
+        $("#walk-bar").stop(true).fadeOut(2500);
+        setTimeout(function() {
+            $("#walk-btn").remove();
+            $("#walk-bar").remove();
+        }, 2500);
     }
 
     if (resources[0].amount > 0) {
@@ -100,7 +106,7 @@ function updateWalkButton() {
     }
 
     // longer timeouts on additional clicks give player feeling of tiring out
-    let btnTimeout = 10//1500 + (walkButtonClicks * 500);
+    let btnTimeout = 1//1500 + (walkButtonClicks * 500);
     let progressBarCount = 0;
     let progressBarIncrement = btnTimeout / 100;
 
@@ -126,15 +132,16 @@ function updateWalkButton() {
 }
 
 function startGame() {
-    for (let i = 0; i < 13; i++) {
-        $("#intro-text-" + i).fadeOut(2500);
-    }
-    $("#intro-start-btn").fadeOut(2500);
+    let initialFadeOutTime = 1500;
+    let titleFadeinTime = 3000;
+    let titleShowTime = 5000;
+    let gameFadeinTime = 10000;
 
-    $("#resources-card").fadeOut(2500);
-    $("#walk-btn").fadeOut(2500);
-    // stop cancels any in progress animations
-    $("#walk-bar").stop(true).fadeOut(2500);
+    for (let i = 0; i < 13; i++) {
+        $("#intro-text-" + i).fadeOut(initialFadeOutTime);
+    }
+    $("#intro-start-btn").fadeOut(initialFadeOutTime);
+    $("#resources-card").fadeOut(initialFadeOutTime);
 
     // timeout lets animations play before removing the elements
     setTimeout(function() {
@@ -142,18 +149,36 @@ function startGame() {
             $("#intro-text-" + i).remove();
         }
         $("#intro-start-btn").remove();
-    }, 2500);
+
+
+        let titleText = "<div class='title-text' id='title-text' style='position: fixed'>" +
+            "<span class='title-start' id='title-start'>un</span>" +
+            "<span class='title-end' id='title-end'>civilized.</span>" +
+            "</div>"
+
+        $("body").append(titleText);
+    }, initialFadeOutTime);
+
+    // handles the title fadein and fadeout animations
+    setTimeout(function() {
+        $("#title-end").fadeTo(250, 1);
+
+        setTimeout(function() {
+            $("#title-start").fadeTo(1000, 1);
+        }, 1000);
+
+        setTimeout(function() {
+            $("#title-text").fadeOut(1500);
+        }, titleShowTime);
+    }, titleFadeinTime);
 
     setTimeout(function() {
-        $("#walk-btn").remove();
-        $("#walk-bar").remove();
-
         $("#resources-card").css("max-width", "none").css("margin", "").addClass("card-main");
         $("#resources-card").show(2500);
         $("#city-card").show(2500);
         $("#city-card").css("display", "flex");
         $("#research-card").show(2500);
-    }, 2500);
+    }, gameFadeinTime);
 }
 
 

@@ -26,8 +26,8 @@ techs = {
         purchaseStatus: 1,
         // workers, materials
         resourcesUnlock: [resources[1], resources[2]],
-        // still, tent, woodcutter
-        buildingsUnlock: [buildings.water[0], buildings.infrastructure[0], buildings.materials[0]],
+        // tent, woodcutter
+        buildingsUnlock: [buildings.infrastructure[0], buildings.materials[0]],
         techsUnlock: ["stonecutters"], // stored as strings instead because unlocked techs haven't loaded (use brackets to get, like techs[var])
         otherUnlock: ["resources-content", "water-nav-item", "infrastructure-nav-item", "materials-nav-item"],
         erasUnlock: ["of establishment"]

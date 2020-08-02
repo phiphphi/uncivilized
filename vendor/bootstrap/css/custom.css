@@ -47,6 +47,29 @@ hr {
     margin: 0.25rem;
 }
 
+.title-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+
+    /* Legacy by Steve Stead */
+    font-family: 'Enriqueta', arial, serif; line-height: 1.25; font-size: 10vw; font-weight: bold;
+}
+
+.title-start {
+    display: none;
+    /* carrot orange */
+    color: #ef8922;
+}
+
+.title-end {
+    display: none;
+    /* limed spruce */
+    color: #384c50;
+}
+
 .nav-tabs .nav-link.active {
     background-color: #f8f3ea;
     border-color: var(--outline) var(--outline) #f8f3ea;
