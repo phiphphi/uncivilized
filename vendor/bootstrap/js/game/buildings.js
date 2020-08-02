@@ -6,6 +6,7 @@
  * @param baseCost
  * @param currCost
  * @param production
+ * @param productionMod
  * @param upkeep
  * @param amount
  * @param purchasable
@@ -20,6 +21,7 @@ buildings = {
             baseCost: [0, 0, 5],
             currCost: [0, 0, 5],
             production: [1/3],
+            productionMod: 1,
             upkeep: [],
             amount: 0,
             purchasable: 0,
@@ -34,6 +36,7 @@ buildings = {
             baseCost: [0, 0, 10],
             currCost: [0, 0, 10],
             production: [0, 1/60],
+            productionMod: 1,
             upkeep: [],
             amount: 0,
             purchasable: 0,
@@ -46,6 +49,7 @@ buildings = {
             baseCost: [0, 0, 100],
             currCost: [0, 0, 100],
             production: [0, 0.1],
+            productionMod: 1,
             upkeep: [],
             amount: 0,
             purchasable: 0,
@@ -60,6 +64,7 @@ buildings = {
             baseCost: [0, 1, 0],
             currCost: [0, 1, 0],
             production: [0, 0, 0.5],
+            productionMod: 1,
             upkeep: [0.5],
             amount: 0,
             purchasable: 0,
@@ -72,6 +77,7 @@ buildings = {
             baseCost: [0, 2, 25],
             currCost: [0, 2, 25],
             production: [0, 0, 2],
+            productionMod: 1,
             upkeep: [1],
             amount: 0,
             purchasable: 0,
@@ -86,7 +92,8 @@ buildings = {
             baseCost: [0, 1, 50],
             currCost: [0, 1, 50],
             production: [0, 0, 0, 2],
-            upkeep: [],
+            productionMod: 1,
+            upkeep: [1],
             amount: 0,
             purchasable: 0,
             unlocked: false
@@ -122,8 +129,8 @@ function addBuilding(b, category, index) {
         "<span id='b-count-" + b.id + "'>You currently have " + b.amount + " " + String(b.name).toLowerCase() + "s. </span><br/>" +
         "<span id='b-prod-" + b.id + "'>Each " + String(b.name).toLowerCase() + " produces " + getCostDisplay(b.production, 1, null) + " per second.</span> <hr> " +
         "<form class='form-inline'>" +
-        "Building<input type='number' id='b-input-" + b.id + "' placeholder='1' class='form-control'>will cost" +
-        "<span id='b-cost-display-" + b.id + "'>"+ getCostDisplay(b.currCost, 1, b) + "</span>." +
+            "Building<input type='number' id='b-input-" + b.id + "' placeholder='1' class='form-control'>will cost" +
+            "<span id='b-cost-display-" + b.id + "'>"+ getCostDisplay(b.currCost, 1, b) + "</span>." +
         "</form>" +
         "<div class=\"btn-group btn-block\" id=b-buttons-" + b.id + ">" +
         "<button type=button class=btn disabled id=b-button-" + b.id + "-0>Can't build</button>" +

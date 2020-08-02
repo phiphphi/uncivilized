@@ -7,6 +7,7 @@
  * @param description a short sentence on function and uses of the resource
  * @param amount current amount the player has
  * @param production how much of this resource is being produced over time
+ * @param netProduction ((production * productionMod) * amount) - (upkeep * amount) for each building
  * @param capacity the max amount of this resource that can be stored
  * @unlocked true if unlocked and visible, false otherwise
  */

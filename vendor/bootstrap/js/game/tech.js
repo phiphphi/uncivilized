@@ -25,8 +25,8 @@ techs = {
         prodBoost: [10],
         capBoost: [240, 5, 100],
         purchaseStatus: 1,
-        // workers, materials
-        resourcesUnlock: [resources[1], resources[2]],
+        // water workers, materials
+        resourcesUnlock: [resources[0], resources[1], resources[2]],
         // tent, woodcutter
         buildingsUnlock: [buildings.infrastructure[0], buildings.materials[0]],
         techsUnlock: ["stonecutters"], // stored as strings instead because unlocked techs haven't loaded (use brackets to get, like techs[var])
@@ -36,7 +36,7 @@ techs = {
     stonecutters: {
         id: "stonecutters",
         name: "Stonecutters",
-        description: "Stonecutters description",
+        description: "Improved tools will let us extract stone from the local hills for building materials.",
         cost: [0, 0, 25],
         capBoost: [0, 0, 25],
         purchaseStatus: 0,
@@ -47,7 +47,7 @@ techs = {
     researchersCamp: {
         id: "researchersCamp",
         name: "Researcher's Camp",
-        description: "research camp description",
+        description: "Tasking some of our workers with gathering insights will allow us to improve our crude level of technology.",
         cost: [0, 0, 30],
         capBoost: [0, 0, 0, 100],
         purchaseStatus: 0,
@@ -80,19 +80,19 @@ techs = {
     permanentConstructions: {
         id: "permanentConstructions",
         name: "Permanent Constructions",
-        description: "The development of more advanc",
-        cost: [0, 0, 30],
-        capBoost: [0, 0, 0, 100],
+        description: "The development of stronger homes will provide more room for workers.",
+        cost: [0, 0, 30, 30],
+        capBoost: [100, 0, 50],
         purchaseStatus: 0,
-        // research
-        resourcesUnlock: [resources[3]],
-        // researcher's camp
-        buildingsUnlock: [buildings.research[0]],
-        techsUnlock: ["permanentConstructions", "longTermStorage"],
-        otherUnlock: ["research-nav-item"]
+        // hut
+        buildingsUnlock: [buildings.infrastructure[1]],
+        //techsUnlock: ["deepWaterExtraction", "exploration"],
     },
+
+    // TODO: add tech requirements for when techs require multiple techs
+    /*
     longTermStorage: {
-        id: "researchersCamp",
+        id: "longTermStorage",
         name: "Researcher's Camp",
         description: "research camp description",
         cost: [0, 0, 30],
@@ -105,6 +105,8 @@ techs = {
         techsUnlock: ["permanentConstructions", "longTermStorage"],
         otherUnlock: ["research-nav-item"]
     }
+
+     */
 }
 
 function techInit() {
