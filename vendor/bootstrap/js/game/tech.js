@@ -71,7 +71,7 @@ function addTechCard(t) {
         $("#tech").append(techCard);
 
         $("#t-button-" + t.id).attr("onclick", "applyTech(techs." + t.id + ");");
-        $("#t-" + t.id).show();
+        $("#t-" + t.id).slideDown(1000);
     }
 }
 
@@ -102,7 +102,7 @@ function applyTech(t) {
         for (let i = 0; i < t.resourcesUnlock.length; i++) {
             let unlockedResource = t.resourcesUnlock[i];
             unlockedResource.unlocked = true;
-            $("#r-" + unlockedResource.id).show();
+            $("#r-" + unlockedResource.id).slideDown(500);
         }
     }
 
@@ -110,7 +110,7 @@ function applyTech(t) {
         for (let i = 0; i < t.buildingsUnlock.length; i++) {
             let unlockedBuilding = t.buildingsUnlock[i];
             unlockedBuilding.unlocked = true;
-            $("#b-name-" + unlockedBuilding.id).show();
+            $("#b-name-" + unlockedBuilding.id).show(500);
         }
     }
 
@@ -124,7 +124,7 @@ function applyTech(t) {
 
     if (t.hasOwnProperty("otherUnlock")) {
         for (let i = 0; i < t.otherUnlock.length; i++) {
-            $("#" + t.otherUnlock[i]).show();
+            $("#" + t.otherUnlock[i]).show(1000);
         }
     }
 

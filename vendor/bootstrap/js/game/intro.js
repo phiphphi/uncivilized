@@ -50,13 +50,13 @@ function getWalkText() {
         );
         $("#intro-start-btn").fadeIn(1000);
 
-        $("#walk-btn").fadeOut(2500);
+        $("#walk-btn").fadeOut(1000);
         // stop cancels any in progress animations
-        $("#walk-bar").stop(true).fadeOut(2500);
+        $("#walk-bar").stop(true).fadeOut(1000);
         setTimeout(function() {
             $("#walk-btn").remove();
             $("#walk-bar").remove();
-        }, 2500);
+        }, 1000);
     }
 
     if (resources[0].amount > 0) {
