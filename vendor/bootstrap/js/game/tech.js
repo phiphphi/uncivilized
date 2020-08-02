@@ -6,7 +6,8 @@
  * @param description a short sentence on function and uses of the resource
  * @param cost the price for the technology
  * @param resourceBoost the amount of these resources to add to the stockpile
- * @param prodBoost the additive increase to the production of a resource (so 0.25 = extra 25% production)
+ * @param prodBoost the flat bonus to the production of a resource
+ * @param prodMultBoost the multiplative increase to the production of a resource (so 3 means x3 bonus)
  * @param capBoost the increase to the capacity of these resources
  * @param purchaseStatus 0 if undiscovered, 1 if available to purchase, 2 if purchased
  * @param resourcesUnlock
@@ -29,7 +30,7 @@ techs = {
         // tent, woodcutter
         buildingsUnlock: [buildings.infrastructure[0], buildings.materials[0]],
         techsUnlock: ["stonecutters"], // stored as strings instead because unlocked techs haven't loaded (use brackets to get, like techs[var])
-        otherUnlock: ["resources-content", "water-nav-item", "infrastructure-nav-item", "materials-nav-item"],
+        otherUnlock: ["resources-content", "infrastructure-nav-item", "materials-nav-item"],
         erasUnlock: ["of establishment"]
     },
     stonecutters: {
@@ -41,9 +42,68 @@ techs = {
         purchaseStatus: 0,
         // stonecutter
         buildingsUnlock: [buildings.materials[1]],
+        techsUnlock: ["sharpenedAxes", "solarStills"]
     },
     researchersCamp: {
-
+        id: "researchersCamp",
+        name: "Researcher's Camp",
+        description: "research camp description",
+        cost: [0, 0, 30],
+        capBoost: [0, 0, 0, 100],
+        purchaseStatus: 0,
+        // research
+        resourcesUnlock: [resources[3]],
+        // researcher's camp
+        buildingsUnlock: [buildings.research[0]],
+        techsUnlock: ["permanentConstructions", "longTermStorage"],
+        otherUnlock: ["research-nav-item"]
+    },
+    sharpenedAxes: {
+        id: "sharpenedAxes",
+        name: "Sharpened Axes",
+        description: "With a steady supply of stone, we can fashion whetstones to keep our axes sharp.",
+        cost: [10, 0, 50],
+        prodMultBoost: [0, 0, 2],
+        purchaseStatus: 0,
+        // techsUnlock: ["duneSleds"]
+    },
+    solarStills: {
+        id: "solarStills",
+        name: "Solar Stills",
+        description: "To support growth beyond the oasis, we must look for any way to produce extra water.",
+        cost: [0, 0, 35],
+        purchaseStatus: 0,
+        // still
+        buildingsUnlock: [buildings.water[0]],
+        // techsUnlock: ["reinforcedStills"]
+    },
+    permanentConstructions: {
+        id: "permanentConstructions",
+        name: "Permanent Constructions",
+        description: "The development of more advanc",
+        cost: [0, 0, 30],
+        capBoost: [0, 0, 0, 100],
+        purchaseStatus: 0,
+        // research
+        resourcesUnlock: [resources[3]],
+        // researcher's camp
+        buildingsUnlock: [buildings.research[0]],
+        techsUnlock: ["permanentConstructions", "longTermStorage"],
+        otherUnlock: ["research-nav-item"]
+    },
+    longTermStorage: {
+        id: "researchersCamp",
+        name: "Researcher's Camp",
+        description: "research camp description",
+        cost: [0, 0, 30],
+        capBoost: [0, 0, 0, 100],
+        purchaseStatus: 0,
+        // research
+        resourcesUnlock: [resources[3]],
+        // researcher's camp
+        buildingsUnlock: [buildings.research[0]],
+        techsUnlock: ["permanentConstructions", "longTermStorage"],
+        otherUnlock: ["research-nav-item"]
     }
 }
 
