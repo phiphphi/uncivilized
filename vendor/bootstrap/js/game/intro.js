@@ -29,6 +29,11 @@ function introInit() {
     $("#alert-container").append(walkButton);
     $("#walk-btn").html("<b>Walk</b> <br/> -1<i class='" + resources[0].image + "'></i>");
 
+
+    // add skip button
+    let skipButton = "<button type=button class=btn id=skip-intro-btn onClick='skipIntro();'>Skip Intro</button>";
+    $("#dev-tools").append(skipButton);
+
     // some style and animations for the intro
     $("#resources-card").css("margin", "0 auto").css("max-width", "20rem");
     $("#resources-card").show(1000);
@@ -179,6 +184,24 @@ function startGame() {
         $("#city-card").css("display", "flex");
         $("#research-card").show(2500);
     }, gameFadeinTime);
+}
+
+// dev use for skipping straight to gameplay
+function skipIntro() {
+    $("#walk-btn").remove();
+    $("#walk-bar").remove();
+
+    for (let i = 0; i < 13; i++) {
+        $("#intro-text-" + i).remove();
+    }
+    $("#intro-start-btn").remove();
+    $("#skip-intro-btn").remove();
+
+    $("#resources-card").css("max-width", "none").css("margin", "").addClass("card-main");
+    $("#resources-card").show();
+    $("#city-card").show();
+    $("#city-card").css("display", "flex");
+    $("#research-card").show();
 }
 
 

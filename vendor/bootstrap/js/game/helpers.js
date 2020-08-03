@@ -190,7 +190,7 @@ function getCostDisplay(purchaseCost, multiplier, building) {
             }
         }
         return cost;
-    } else { // use for displaying building costs - expotential costs
+    } else { // use for displaying building costs - exponential costs
         for (let i = 0; i < purchaseCost.length; i++) {
             if (purchaseCost[i] !== 0) {
                 if (firstCost) {
@@ -202,6 +202,26 @@ function getCostDisplay(purchaseCost, multiplier, building) {
             }
         }
         return cost;
+    }
+}
+
+
+
+/**
+ * Increments a given resource by the given amount, and also increments pop if the stat is workers.
+ *
+ * @param amount
+ * @param resource
+ */
+function addResource(amount, resource) {
+    if (resource.id === "workers") {
+        stats.population += amount;
+    }
+
+    if (resource.amount + amount > resource.capacity) {
+        resource.amount = resource.capacity;
+    } else {
+        resource.amount += amount;
     }
 }
 

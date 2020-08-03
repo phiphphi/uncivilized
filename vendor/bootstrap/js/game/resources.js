@@ -7,6 +7,7 @@
  * @param description a short sentence on function and uses of the resource
  * @param amount current amount the player has
  * @param production how much of this resource is being produced over time
+ * @param upkeep how much of this resource is being consumed over time
  * @param netProduction ((production * productionMod) * amount) - (upkeep * amount) for each building
  * @param capacity the max amount of this resource that can be stored
  * @unlocked true if unlocked and visible, false otherwise
@@ -19,6 +20,7 @@ resources = [
         description: "The lifeblood of your civilization - required for survival.",
         amount: 7,
         production: 0,
+        upkeep: 0,
         capacity: 50,
         unlocked: true
     },
@@ -29,6 +31,7 @@ resources = [
         description: "The laborers of your city, carrying your civilization into the future.",
         amount: 0,
         production: 0,
+        upkeep: 0,
         capacity: 0,
         unlocked: false
     },
@@ -39,6 +42,7 @@ resources = [
         description: "The matter from which our empire is built.",
         amount: 0,
         production: 0,
+        upkeep: 0,
         capacity: 0,
         unlocked: false
     },
@@ -49,6 +53,7 @@ resources = [
         description: "The combined knowledge of your civilization.",
         amount: 0,
         production: 0,
+        upkeep: 0,
         capacity: 0,
         unlocked: false
     }
@@ -61,7 +66,7 @@ function resourceInit() {
         let r = resources[i];
 
         log("initializing resource, id " + r.id + ", name: " + r.name);
-        addResource(r, i);
+        addResourceDisplay(r, i);
 
         if (!r.unlocked) {
             $("#r-" + r.id).hide();
@@ -69,18 +74,43 @@ function resourceInit() {
     }
 }
 
-function addResource(r, index) {
+function addResourceDisplay(r, index) {
     // initializes resource header card
-    let desc = "<div id='r-" + r.id + "'><li class=list-group-item><i class=\"" + r.image + "\"></i> <span id=r-header-" + r.id + "></span></li></div>"
+    let desc =
+        "<div id='r-" + r.id + "'>" +
+            "<li class=list-group-item>" +
+                "<i class='" + r.image + "'></i> " +
+                "<span id=r-header-" + r.id + "></span>" +
+            "</li>" +
+        "</div>"
     $("#r-header").append(desc);
 
     // initializes resource description pills
-    let pillName = "<li class=nav-item><a class=nav-link id=r-name-" + r.id + " data-toggle=pill href=#r-desc-" + r.id + ">" + r.name + "</a></li>";
-    let pillDesc = "<div class=\"tab-pane active\" id=r-desc-" + r.id + "><h3>" + r.name +"</h3>" + r.description + "<p id=r-desc-" + r.id + "-count></p></div>";
+    let pillName = "" +
+        "<li class=nav-item>" +
+            "<a class=nav-link id=r-name-" + r.id + " data-toggle=pill href=#r-desc-" + r.id + ">" + r.name + "</a>" +
+        "</li>";
+    let pillDesc =
+        "<div class='tab-pane active' id=r-desc-" + r.id + ">" +
+            "<h3>" + r.name +"</h3>" + r.description + "<p id=r-desc-" + r.id + "-count></p>" +
+        "</div>";
 
     if (index === 1) { // add workers to infrastructure tab
         $("#b-col-name-infrastructure").append(pillName);
         $("#b-col-desc-infrastructure").append(pillDesc);
+
+        // TODO: add buttons to buy workers with water
+        $("#r-desc-" + r.id).append(
+            "<hr><form class='form-inline'>" +
+            "Recruiting <input type='number' id='r-input-" + r.id + "' placeholder='1' class='form-control'>will cost" +
+            "<span id='r-cost-display-" + r.id + "'> 25 water </span>." +
+            "</form>" +
+            "<div class='btn-group btn-block' id=r-buttons-" + r.id + ">" +
+            "<button type=button class=btn disabled id=r-button-" + r.id + "-0>Can't build</button>" +
+            "<button type=button class=btn id=r-button-" + r.id + "-1>Buy 1</button>" +
+            "<button type=button class=btn id=r-button-" + r.id + "-2>Buy 25</button>" +
+            "<button type=button class=btn id=r-button-" + r.id + "-3>Buy 100</button></div>"
+        );
     } else {
         $("#b-col-name-" + r.id).append(pillName);
         $("#b-col-desc-" + r.id).append(pillDesc);
@@ -92,7 +122,6 @@ function resourceUpdate() {
     for (let i = 0; i < resources.length; i++) {
         let r = resources[i];
         let amount, header;
-
 
         if (i === 1) {
             amount = prettify(r.amount, 0);

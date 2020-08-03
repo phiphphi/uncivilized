@@ -7,6 +7,8 @@
  * @param currCost
  * @param production
  * @param productionMod
+ * @param capBoost
+ * @param capMod
  * @param upkeep
  * @param amount
  * @param purchasable
@@ -21,7 +23,7 @@ buildings = {
             baseCost: [0, 0, 5],
             currCost: [0, 0, 5],
             production: [1/3],
-            productionMod: 1,
+            productionMod: 1.00,
             upkeep: [],
             amount: 0,
             purchasable: 0,
@@ -35,8 +37,8 @@ buildings = {
             description: "Primitive structures, providing shelter from the elements and predators.",
             baseCost: [0, 0, 10],
             currCost: [0, 0, 10],
-            production: [0, 1/60],
-            productionMod: 1,
+            capBoost: [0, 1],
+            capMod: 1.00,
             upkeep: [],
             amount: 0,
             purchasable: 0,
@@ -48,8 +50,8 @@ buildings = {
             description: "These dwellings constructed from local materials provide a better quality of housing than tents.",
             baseCost: [0, 0, 100],
             currCost: [0, 0, 100],
-            production: [0, 0.1],
-            productionMod: 1,
+            capBoost: [0, 5],
+            capMod: 1.00,
             upkeep: [],
             amount: 0,
             purchasable: 0,
@@ -64,7 +66,7 @@ buildings = {
             baseCost: [0, 1, 0],
             currCost: [0, 1, 0],
             production: [0, 0, 0.5],
-            productionMod: 1,
+            productionMod: 1.00,
             upkeep: [0.5],
             amount: 0,
             purchasable: 0,
@@ -77,7 +79,7 @@ buildings = {
             baseCost: [0, 2, 25],
             currCost: [0, 2, 25],
             production: [0, 0, 2],
-            productionMod: 1,
+            productionMod: 1.00,
             upkeep: [1],
             amount: 0,
             purchasable: 0,
@@ -92,7 +94,7 @@ buildings = {
             baseCost: [0, 1, 50],
             currCost: [0, 1, 50],
             production: [0, 0, 0, 2],
-            productionMod: 1,
+            productionMod: 1.00,
             upkeep: [1],
             amount: 0,
             purchasable: 0,
@@ -125,14 +127,31 @@ function addBuilding(b, category, index) {
 
     // What a message! there's gotta be a way to clean this up
     // initialize pill descriptions
-    let desc = "<h3>" + b.name + "</h3>" + b.description + "</br>" +
-        "<span id='b-count-" + b.id + "'>You currently have " + b.amount + " " + String(b.name).toLowerCase() + "s. </span><br/>" +
-        "<span id='b-prod-" + b.id + "'>Each " + String(b.name).toLowerCase() + " produces " + getCostDisplay(b.production, 1, null) + " per second.</span> <hr> " +
+    let desc =
+        "<h3>" + b.name + "</h3>" + b.description + "</br>" +
+        "<span id='b-count-" + b.id + "'>" +
+        "   You currently have " + b.amount + " " + String(b.name).toLowerCase() + "s. " +
+        "</span><br/>";
+
+    // for infrastructure, add capacity instead
+    if (category === "infrastructure") {
+        desc +=
+            "<span id='b-prod-" + b.id + "'>" +
+            "Each " + String(b.name).toLowerCase() + " produces " + b.capBoost + " capacity. (" + b.capMod + "x bonus)" +
+            "</span> <hr> ";
+    } else {
+        desc +=
+            "<span id='b-prod-" + b.id + "'>" +
+            "Each " + String(b.name).toLowerCase() + " produces " + getCostDisplay(b.production, 1, null) + " per second. (" + b.prodBoost + "x bonus)" +
+            "</span> <hr> ";
+    }
+
+    desc +=
         "<form class='form-inline'>" +
-            "Building<input type='number' id='b-input-" + b.id + "' placeholder='1' class='form-control'>will cost" +
-            "<span id='b-cost-display-" + b.id + "'>"+ getCostDisplay(b.currCost, 1, b) + "</span>." +
+        "Building<input type='number' id='b-input-" + b.id + "' placeholder='1' class='form-control'>will cost" +
+        "<span id='b-cost-display-" + b.id + "'>"+ getCostDisplay(b.currCost, 1, b) + "</span>." +
         "</form>" +
-        "<div class=\"btn-group btn-block\" id=b-buttons-" + b.id + ">" +
+        "<div class='btn-group btn-block' id=b-buttons-" + b.id + ">" +
         "<button type=button class=btn disabled id=b-button-" + b.id + "-0>Can't build</button>" +
         "<button type=button class=btn id=b-button-" + b.id + "-1>Buy 1</button>" +
         "<button type=button class=btn id=b-button-" + b.id + "-2>Buy 25</button>" +
@@ -162,9 +181,6 @@ function buildingUpdate() {
                 } else {
                     $("#b-count-" + b.id).text("You currently have " + b.amount + " " + name + "s.");
                 }
-
-                // Not currently necessary to update - only update when production multiplier changes
-                //$("#b-prod-" + b.id).text("Each " + b.name + " produces " + getCostDisplay(b.production, 1, null) + ".");
 
                 let formInput = $("#b-input-" + b.id).val();
                 if (formInput === "") {
@@ -204,16 +220,14 @@ function buildingIncrement() {
     for (const category in buildings) {
         for (let i = 0; i < buildings[category].length; i++) {
             let b = buildings[category][i];
-            for (let k = 0; k < b.production.length; k++) {
-                // also update population
-                if (k === 1) {
-                    stats.population += ((b.production[k] * b.amount) / divisor);
-                }
 
-                resources[k].amount += ((b.production[k] * b.amount) / divisor);
+            if (b.hasOwnProperty("production")) {
+                for (let k = 0; k < b.production.length; k++) {
+                    let amount = (b.production[k] * b.amount) / divisor;
 
-                if (resources[k].amount > resources[k].capacity) {
-                    resources[k].amount = resources[k].capacity;
+                    if (amount !== 0) {
+                        addResource(amount, resources[k]);
+                    }
                 }
             }
         }

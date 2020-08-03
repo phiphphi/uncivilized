@@ -25,12 +25,12 @@ techs = {
         prodBoost: [10],
         capBoost: [240, 5, 100],
         purchaseStatus: 1,
-        // water workers, materials
+        // water, workers, materials
         resourcesUnlock: [resources[0], resources[1], resources[2]],
         // tent, woodcutter
         buildingsUnlock: [buildings.infrastructure[0], buildings.materials[0]],
         techsUnlock: ["stonecutters"], // stored as strings instead because unlocked techs haven't loaded (use brackets to get, like techs[var])
-        otherUnlock: ["resources-content", "infrastructure-nav-item", "materials-nav-item"],
+        otherUnlock: ["resources-content", "water-nav-item", "infrastructure-nav-item", "materials-nav-item"],
         erasUnlock: ["of establishment"]
     },
     stonecutters: {
@@ -138,13 +138,9 @@ function addTechCard(t) {
 }
 
 function applyTech(t) {
-    if (t.hasOwnProperty("resourceBoost")) {
-        for (let i = 0; i < t.resourceBoost.length; i++) {
-            resources[i].amount += t.resourceBoost[i];
-
-            if (i === 1) {
-                stats.population += t.resourceBoost[i];
-            }
+    if (t.hasOwnProperty("cost")) {
+        for (let i = 0; i < t.cost.length; i++) {
+            resources[i].amount -= t.cost[i];
         }
     }
 
@@ -157,6 +153,13 @@ function applyTech(t) {
     if (t.hasOwnProperty("capBoost")) {
         for (let i = 0; i < t.capBoost.length; i++) {
             resources[i].capacity += t.capBoost[i];
+        }
+    }
+
+    // has to go after capBoost so can add resources to increased capacity
+    if (t.hasOwnProperty("resourceBoost")) {
+        for (let i = 0; i < t.resourceBoost.length; i++) {
+            addResource(t.resourceBoost[i], resources[i]);
         }
     }
 
