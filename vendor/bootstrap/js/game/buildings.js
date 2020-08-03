@@ -137,12 +137,12 @@ function addBuilding(b, category, index) {
     if (category === "infrastructure") {
         desc +=
             "<span id='b-prod-" + b.id + "'>" +
-            "Each " + String(b.name).toLowerCase() + " produces " + b.capBoost + " capacity. (" + b.capMod + "x bonus)" +
+            "Each " + String(b.name).toLowerCase() + " provides " + getCapBoostDisplay(b, 1) + " capacity. (" + b.capMod.toFixed(2) + "x bonus)" +
             "</span> <hr> ";
     } else {
         desc +=
             "<span id='b-prod-" + b.id + "'>" +
-            "Each " + String(b.name).toLowerCase() + " produces " + getCostDisplay(b.production, 1, null) + " per second. (" + b.prodBoost + "x bonus)" +
+            "Each " + String(b.name).toLowerCase() + " produces " + getCostDisplay(b.production, 1, null) + " per second. (" + b.productionMod.toFixed(2) + "x bonus)" +
             "</span> <hr> ";
     }
 
@@ -205,8 +205,14 @@ function buildingPurchase(building, amount) {
         resources[i].amount -= getBuildingAmountBuyable(building, i, amount);
     }
 
-    for (let j = 0; j < building.production.length; j++) {
-        resources[j].production += building.production[j] * amount;
+    if (building.hasOwnProperty("production")) {
+        for (let j = 0; j < building.production.length; j++) {
+            resources[j].production += building.production[j] * amount;
+        }
+    } else if (building.hasOwnProperty("capBoost")) {
+        for (let j = 0; j < building.capBoost.length; j++) {
+            resources[j].capacity += building.capBoost[j] * amount;
+        }
     }
 
     building.amount += amount;

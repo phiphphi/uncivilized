@@ -50,16 +50,6 @@ function getResourcesPerTime(amountPerSecond) {
     }
 }
 
-function getWorkersPerTime(amountPerSecond) {
-    if (amountPerSecond === 0) { // don't display anything if no production
-        return "";
-    } else if (amountPerSecond < 1) { // present per minute
-        return ("(" + Math.round(amountPerSecond * 60) + " p/min)");
-    } else { // present normally - per second
-        return ("(" + prettify(amountPerSecond, 0) + " p/sec)");
-    }
-}
-
 /**
  * Determines how many purchase buttons to show: 1 if only 1 purchasable,
  * 2 if 2-7 purchasable (1 and 100%) and 3 if 8+ purchasable (1, 25%, 100%).
@@ -150,6 +140,71 @@ function determineButtonLayout(building) {
     }
 }
 
+function determineWorkersButtonLayout() {
+    // stores code for how many we can buy (0 for none, 1 for 1, 2 for 2-7, 3 for 8+)
+    let purchasableVal = 3;
+    let workers = resources[1];
+
+    // set buy 1 button to input text if exists, otherwise 1
+    let formInput = $("#r-input-workers").val();
+    if (formInput === "") {
+        formInput = 1;
+    }
+
+    let maxPurchasable = Math.floor(resources[0].amount / workers.price);
+
+    if (maxPurchasable > workers.capacity) {
+        maxPurchasable = workers.capacity;
+    }
+
+    workers.purchasable = maxPurchasable;
+
+    if (formInput > maxPurchasable) {
+        formInput = maxPurchasable;
+    }
+
+    let $noBuyButton = $("#r-button-workers-0");
+    let $oneBuyButton = $("#r-button-workers-1");
+    let $25BuyButton = $("#r-button-workers-2");
+    let $100BuyButton = $("#r-button-workers-3");
+
+    if (maxPurchasable === 0) {
+        $noBuyButton.show();
+        $oneBuyButton.hide();
+        $25BuyButton.hide();
+        $100BuyButton.hide();
+    } else {
+        let waterImage = "<i class='" + resources[0].image + "'></i>";
+
+        $noBuyButton.hide();
+
+        $oneBuyButton.html(
+            "Recruit " + formInput + "<br/>" +
+            (formInput * workers.price) + waterImage + ", -" + formInput + waterImage + "/sec"
+        );
+        $oneBuyButton.show();
+
+        $25BuyButton.hide();
+        $100BuyButton.hide();
+
+        if (maxPurchasable >= 2) {
+            $100BuyButton.html(
+                "Recruit " + maxPurchasable + "<br/>" +
+                (maxPurchasable * workers.price) + waterImage + ", -" + maxPurchasable + waterImage + "/sec"
+            );
+            $100BuyButton.show();
+
+            if (maxPurchasable >= 8) {
+                let quarter = Math.floor(maxPurchasable / 4);
+                $25BuyButton.html("Recruit " + maxPurchasable + "<br/>" +
+                    (quarter * workers.price) + waterImage + ", -" + quarter + waterImage + "/sec"
+                );
+                $25BuyButton.show();
+            }
+        }
+    }
+}
+
 function getBuildingAmountBuyable(building, index, amountWanted) {
     return (
         building.baseCost[index] * (
@@ -203,6 +258,31 @@ function getCostDisplay(purchaseCost, multiplier, building) {
         }
         return cost;
     }
+}
+
+/**
+ * Displays the boost in resource capacities for this building.
+ *
+ * @param building
+ * @param multiplier
+ */
+function getCapBoostDisplay(building, multiplier) {
+    let boost = "";
+    let firstBoost = true; // deals with fencepost problem for listing boost
+
+    for (let i = 0; i < building.capBoost.length; i++) {
+        if (building.capBoost[i] !== 0) {
+            if (firstBoost) {
+                boost += "+" + (building.capBoost[i] * multiplier) + " <i class='" + resources[i].image + "'></i>";
+                firstBoost = false;
+            } else {
+                boost += ", +" + (building.capBoost[i] * multiplier) + "<i class='" + resources[i].image + "'></i>";
+            }
+        }
+    }
+
+    log(boost);
+    return boost;
 }
 
 
