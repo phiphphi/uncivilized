@@ -110,6 +110,7 @@ function updateWalkButton() {
         $walkBtn.text("crawl");
     }
 
+    // TODO: revert button timeout when done with testing
     // longer timeouts on additional clicks give player feeling of tiring out
     let btnTimeout = 1//1500 + (walkButtonClicks * 500);
     let progressBarCount = 0;

@@ -200,6 +200,7 @@ function applyTech(t) {
     $("#t-" + t.id).remove();
 }
 
+// TODO: change tech reward for disassemble caravan to reduce new player shock
 function getTechReward(t) {
     let reward = "Reward: <br/>";
     let firstReward = true;
