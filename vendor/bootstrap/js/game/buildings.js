@@ -212,6 +212,7 @@ function buildingPurchase(building, amount) {
     } else if (building.hasOwnProperty("capBoost")) {
         for (let j = 0; j < building.capBoost.length; j++) {
             resources[j].capacity += building.capBoost[j] * amount;
+            resources[j].netCapacity += building.capBoost[j] * amount;
         }
     }
 

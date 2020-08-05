@@ -32,12 +32,14 @@ resources = [
         amount: 0,
         production: 0,
         upkeep: 0,
-        capacity: 5,
+        capacity: 0,
+        unlocked: false,
 
         // extra stats for workers that tracks price and how many can be bought
         price: 25,
         purchasable: 0,
-        unlocked: false
+        // tracks room for more workers - goes down when workers are bought, but not up when they are used in jobs
+        netCapacity: 5,
     },
     {
         id: "materials",
@@ -103,14 +105,13 @@ function addResourceDisplay(r, index) {
         $("#b-col-name-infrastructure").append(pillName);
         $("#b-col-desc-infrastructure").append(pillDesc);
 
-        // TODO: add buttons to buy workers with water
         $("#r-desc-" + r.id).append(
             "<hr><form class='form-inline'>" +
             "Recruiting <input type='number' id='r-input-" + r.id + "' placeholder='1' class='form-control'>will cost" +
             "<span id='r-cost-display-" + r.id + "'></span>" +
             "</form>" +
             "<div class='btn-group btn-block' id=r-buttons-" + r.id + ">" +
-            "<button type=button class=btn disabled id=r-button-" + r.id + "-0>Can't build</button>" +
+            "<button type=button class=btn disabled id=r-button-" + r.id + "-0>Can't recruit</button>" +
             "<button type=button class=btn id=r-button-" + r.id + "-1>Buy 1</button>" +
             "<button type=button class=btn id=r-button-" + r.id + "-2>Buy 25</button>" +
             "<button type=button class=btn id=r-button-" + r.id + "-3>Buy 100</button></div>"
@@ -129,11 +130,11 @@ function resourceUpdate() {
 
         if (i === 1) {
             amount = prettify(r.amount, 0);
-            header = amount + "/" + r.capacity;
+            header = "Available: " + amount + " | Capacity: " + r.netCapacity;
         } else {
             // TODO: change to show net production
             amount = prettify(r.amount, 0);
-            header = amount + "/" + r.capacity + " " + getResourcesPerTime(r.production);
+            header = amount + "/" + r.capacity + " " + getResourcesPerTime(r.production - r.upkeep);
         }
 
         $("#r-header-" + r.id).text(header);
@@ -143,9 +144,9 @@ function resourceUpdate() {
 
         if (i === 0) {
             // only used for water - might use for others later, add consumption stat to resources
-            let netProd = prettify(r.production - resources[1].amount, 2);
+            let netProd = prettify(r.production - r.upkeep, 2);
             desc += "Your available amount of " + r.id + " is increasing by " + prettify(r.production, 2) + " every second.<br/>" +
-                "Your workers consume " + resources[1].amount + " water per second, making your net water gain " + netProd + " per second.";
+                "Your workers consume " + stats.population + " water per second, making your net water gain " + netProd + " per second.";
         } else if (i === 1) {
             desc += "Each worker requires 1 water per second. In total, they consume " + r.amount + " water per second.";
 
@@ -163,12 +164,9 @@ function resourceUpdate() {
                 (formInput * r.price) + " <i class='" + resources[0].image + "'></i>."
             );
 
-            // TODO: implement recruit buttons
-            /*
-            $("#r-button-" + r.id + "-1").attr("onclick", "addResource(buildings." + category + "[" + i + "], " + formInput + ");");
-            $("#r-button-" + r.id + "-2").attr("onclick", "buildingPurchase(buildings." + category + "[" + i + "], " + Math.floor(b.purchasable / 4) + ");");
-            $("#r-button-" + r.id + "-3").attr("onclick", "buildingPurchase(buildings." + category + "[" + i + "], " + b.purchasable + ");");
-             */
+            $("#r-button-" + r.id + "-1").attr("onclick", "addResource(" + formInput + ", resources[1]);");
+            $("#r-button-" + r.id + "-2").attr("onclick", "addResource(" + Math.floor(r.purchasable / 4) + ", resources[1]);");
+            $("#r-button-" + r.id + "-3").attr("onclick", "addResource(" + r.purchasable + ", resources[1]);");
         } else {
             desc += "Your available amount of " + r.id + " is increasing by " + prettify(r.production, 2) + " every second.";
         }
@@ -184,10 +182,11 @@ function resourceIncrement() {
         let r = resources[i];
 
         if (i === 0) { // worker water consumption
-            r.amount -= (resources[1].amount / divisor);
+            r.upkeep = resources[1].amount;
         }
 
         r.amount += (r.production / divisor);
+        r.amount -= (r.upkeep / divisor);
 
         if (r.amount > r.capacity) {
             r.amount = r.capacity;

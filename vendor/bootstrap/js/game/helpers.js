@@ -152,9 +152,10 @@ function determineWorkersButtonLayout() {
     }
 
     let maxPurchasable = Math.floor(resources[0].amount / workers.price);
+    let capacity = workers.capacity - workers.amount;
 
-    if (maxPurchasable > workers.capacity) {
-        maxPurchasable = workers.capacity;
+    if (maxPurchasable > capacity) {
+        maxPurchasable = capacity;
     }
 
     workers.purchasable = maxPurchasable;
@@ -168,7 +169,7 @@ function determineWorkersButtonLayout() {
     let $25BuyButton = $("#r-button-workers-2");
     let $100BuyButton = $("#r-button-workers-3");
 
-    if (maxPurchasable === 0) {
+    if (maxPurchasable === 0 || workers.capacity === 0) {
         $noBuyButton.show();
         $oneBuyButton.hide();
         $25BuyButton.hide();
@@ -205,6 +206,14 @@ function determineWorkersButtonLayout() {
     }
 }
 
+/**
+ * Function that calculates how many of this building can be bought with the exponential cost formula.
+ *
+ * @param building
+ * @param index
+ * @param amountWanted
+ * @returns {number}
+ */
 function getBuildingAmountBuyable(building, index, amountWanted) {
     return (
         building.baseCost[index] * (
@@ -249,11 +258,18 @@ function getCostDisplay(purchaseCost, multiplier, building) {
         for (let i = 0; i < purchaseCost.length; i++) {
             if (purchaseCost[i] !== 0) {
                 if (firstCost) {
-                    cost += prettify(getBuildingAmountBuyable(building, i, multiplier), 2) + " <i class='" + resources[i].image + "'></i>";
                     firstCost = false;
                 } else {
-                    cost += ", " + prettify(getBuildingAmountBuyable(building, i, multiplier), 2) + " <i class='" + resources[i].image + "'></i>";
+                    cost += ", ";
                 }
+
+                if (i === 1) { // round for workers
+                    cost += prettify(getBuildingAmountBuyable(building, i, multiplier), 0);
+                } else {
+                    cost += prettify(getBuildingAmountBuyable(building, i, multiplier), 2);
+                }
+
+                cost += " <i class='" + resources[i].image + "'></i>";
             }
         }
         return cost;
@@ -295,7 +311,10 @@ function getCapBoostDisplay(building, multiplier) {
  */
 function addResource(amount, resource) {
     if (resource.id === "workers") {
+        // add to population and water upkeep
         stats.population += amount;
+        resources[0].upkeep += amount;
+        resource.netCapacity -= amount;
     }
 
     if (resource.amount + amount > resource.capacity) {
