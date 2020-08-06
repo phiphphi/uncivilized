@@ -114,7 +114,7 @@ function updateWalkButton() {
     }
 
     // longer timeouts on additional clicks give player feeling of tiring out
-    let btnTimeout = 1500 + (walkButtonClicks * 500);
+    let btnTimeout = 1000 + (walkButtonClicks * 333);
     let progressBarCount = 0;
     let progressBarIncrement = btnTimeout / 100;
 
@@ -133,10 +133,11 @@ function updateWalkButton() {
         }
     }
 
+    // add delay to timeout to let bar complete
     setTimeout(function() {
         $walkBtn.removeAttr("disabled");
         $("#walk-bar").fadeTo(500, 0);
-    }, btnTimeout);
+    }, btnTimeout + 50);
 }
 
 function startGame() {
