@@ -23,13 +23,13 @@ techs = {
         cost: [],
         resourceBoost: [0, 5, 50],
         prodBoost: [10],
-        capBoost: [240, 5, 100],
+        capBoost: [200, 5, 100],
         purchaseStatus: 1,
         // water, workers, materials
         resourcesUnlock: [resources[0], resources[1], resources[2]],
         // tent, woodcutter
         buildingsUnlock: [buildings.infrastructure[0], buildings.materials[0]],
-        techsUnlock: ["stonecutters"], // stored as strings instead because unlocked techs haven't loaded (use brackets to get, like techs[var])
+        techsUnlock: ["stonecutters", "researchersCamp"], // stored as strings instead because unlocked techs haven't loaded (use brackets to get, like techs[var])
         otherUnlock: ["resources-content", "water-nav-item", "infrastructure-nav-item", "materials-nav-item"],
         erasUnlock: ["of establishment"]
     },
@@ -37,7 +37,7 @@ techs = {
         id: "stonecutters",
         name: "Stonecutters",
         description: "Improved tools will let us extract stone from the local hills for building materials.",
-        cost: [0, 0, 25],
+        cost: [0, 0, 75],
         capBoost: [0, 0, 25],
         purchaseStatus: 0,
         // stonecutter
@@ -48,7 +48,7 @@ techs = {
         id: "researchersCamp",
         name: "Researcher's Camp",
         description: "Tasking some of our workers with gathering insights will allow us to improve our crude level of technology.",
-        cost: [0, 0, 30],
+        cost: [0, 0, 100],
         capBoost: [0, 0, 0, 100],
         purchaseStatus: 0,
         // research
@@ -62,7 +62,7 @@ techs = {
         id: "sharpenedAxes",
         name: "Sharpened Axes",
         description: "With a steady supply of stone, we can fashion whetstones to keep our axes sharp.",
-        cost: [10, 0, 50],
+        cost: [10, 0, 80],
         prodMultBoost: [0, 0, 2],
         purchaseStatus: 0,
         // techsUnlock: ["duneSleds"]
@@ -71,7 +71,7 @@ techs = {
         id: "solarStills",
         name: "Solar Stills",
         description: "To support growth beyond the oasis, we must look for any way to produce extra water.",
-        cost: [0, 0, 35],
+        cost: [0, 0, 100],
         purchaseStatus: 0,
         // still
         buildingsUnlock: [buildings.water[0]],
@@ -81,7 +81,7 @@ techs = {
         id: "permanentConstructions",
         name: "Permanent Constructions",
         description: "The development of stronger homes will provide more room for workers.",
-        cost: [0, 0, 30, 30],
+        cost: [0, 0, 75, 75],
         capBoost: [100, 0, 50],
         purchaseStatus: 0,
         // hut
@@ -209,6 +209,11 @@ function applyTech(t) {
 function getTechReward(t) {
     let reward = "Reward: <br/>";
     let firstReward = true;
+
+    // Special case for first tech - simple description
+    if (t.id === "disassembleCaravan") {
+        return (reward += "Unlock workers, materials, and building tabs");
+    }
 
     if (t.hasOwnProperty("resourceBoost")) {
         for (let i = 0; i < t.resourceBoost.length; i++) {
