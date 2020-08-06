@@ -198,6 +198,11 @@ function applyTech(t) {
     }
 
     $("#t-" + t.id).remove();
+
+    // Special case for first tech - run tutorial
+    if (t.id === "disassembleCaravan") {
+        introTour.start();
+    }
 }
 
 // TODO: change tech reward for disassemble caravan to reduce new player shock

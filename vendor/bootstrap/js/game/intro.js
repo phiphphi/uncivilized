@@ -5,14 +5,17 @@ intro = {
     text: [
         "The sand burns your feet.",
         "You feel what little water you have in your canteen slosh around.",
-        "The sun beats down on your caravan with an unrelenting heat.",
-        "There are only drops left, and the sand dunes ahead stretch to eternity.",
+        "As you walk, the sun beats down on your caravan with an unrelenting heat.",
+        "As your last drops run out, the sand dunes ahead seem to stretch to eternity.",
         "The others fall one by one, into the embrace of the desert.",
         "Unable to stand any longer, you fall to the ground.",
         "The crest of the dune lies within an arm's reach away.",
         "As you hurdle the crest of the dune, your find a glimmering oasis in the desert - a mystical sight to " +
         "your party's parched throats. For the first time in a long while, you feel hope. It may not be much, but it's " +
         "enough for your people to survive - for now."
+    ],
+    tutorial: [
+
     ]
 }
 
@@ -110,9 +113,8 @@ function updateWalkButton() {
         $walkBtn.text("crawl");
     }
 
-    // TODO: revert button timeout when done with testing
     // longer timeouts on additional clicks give player feeling of tiring out
-    let btnTimeout = 1//1500 + (walkButtonClicks * 500);
+    let btnTimeout = 1500 + (walkButtonClicks * 500);
     let progressBarCount = 0;
     let progressBarIncrement = btnTimeout / 100;
 
@@ -179,6 +181,7 @@ function startGame() {
     }, titleFadeinTime);
 
     setTimeout(function() {
+        // show main ui cards
         $("#resources-card").css("max-width", "none").css("margin", "").addClass("card-main");
         $("#resources-card").show(2500);
         $("#city-card").show(2500);

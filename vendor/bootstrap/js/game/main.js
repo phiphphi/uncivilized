@@ -14,6 +14,50 @@ let stats = {
     cityStatus: "",
 }
 
+let introTour = new Tour({
+    steps: [
+        {
+            element: "#city-card",
+            title: "Welcome to uncivilized!",
+            content: "This quick tour will guide you through the basics of the game."
+        },
+        {
+            element: "#resources-card",
+            title: "Resources, human and not",
+            content: "Your currently unlocked resources, their max capacity, and net production per second. Note that " +
+                "your workers are a bit different - the left count tracks how many you have available, and the right count " +
+                "tracks how much available room you have to recruit more."
+        },
+        {
+            element: "#city-card",
+            title: "Your city's status",
+            content: "This keeps track of your total amount of workers and size overall."
+        },
+        {
+            element: "#research-card",
+            title: "Knowledge is power",
+            content: "Over here you can research technologies that unlock new buildings and bonuses for your civilization."
+        },
+        {
+            element: "#infrastructure-tab",
+            title: "The foundation of society",
+            content: "Of note is the infrastructure tab, which is different than the others - instead of providing resource " +
+                "production, these buildings provide capacity for extra workers, which you can also hire under the workers tab."
+        },
+        {
+            element: "#city-card",
+            title: "Wrap it up",
+            content: "That's all you need for now! I recommend buying some woodcutters to start producing materials and some " +
+                "tents to hire new workers, as well as researching new technologies - you'll need to find a way to produce extra " +
+                "water, since that oasis can only support so many. Good luck!"
+        },
+    ],
+    framework: 'bootstrap4',
+    storage: false,
+    showProgressBar: false,
+
+});
+
 let fps = 30;
 let interval = (1000 / fps);
 let rewardIntervalTime = 10;

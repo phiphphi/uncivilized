@@ -4,6 +4,7 @@
     --text-hover: #041f2f;
     --card-header: #f3eadb;
     --card-body: #f6f0e5;
+    --card-highlight: #f8f3ea;
     --btn-orange: #f0c886;
     --btn-orange-hover: #f7e0bb;
     --outline: #292b2c;
@@ -81,8 +82,8 @@ footer {
 }
 
 .nav-tabs .nav-link.active {
-    background-color: #f8f3ea;
-    border-color: var(--outline) var(--outline) #f8f3ea;
+    background-color: var(--card-highlight);
+    border-color: var(--outline) var(--outline) var(--card-highlight);
 }
 
 .nav-tabs .nav-link:hover {
@@ -136,7 +137,7 @@ footer {
 
 .list-group-item {
     padding: 0.5rem;
-    background-color: #f8f3ea;
+    background-color: var(--card-highlight);
 
 }
 
@@ -178,7 +179,7 @@ footer {
 }
 
 .nav-pills > .nav-item {
-    background-color: #f8f3ea;
+    background-color: var(--card-highlight);
 }
 
 .nav-pills .nav-link.active,
