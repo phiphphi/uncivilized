@@ -55,7 +55,7 @@ techs = {
         resourcesUnlock: [resources[3]],
         // researcher's camp
         buildingsUnlock: [buildings.research[0]],
-        techsUnlock: ["permanentConstructions", "longTermStorage"],
+        techsUnlock: ["permanentConstructions"/*, "longTermStorage"*/],
         otherUnlock: ["research-nav-item"]
     },
     sharpenedAxes: {

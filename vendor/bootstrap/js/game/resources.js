@@ -107,7 +107,7 @@ function addResourceDisplay(r, index) {
 
         $("#r-desc-" + r.id).append(
             "<hr><form class='form-inline'>" +
-            "Recruiting <input type='number' id='r-input-" + r.id + "' placeholder='1' class='form-control'>will cost" +
+            "Recruiting <input type='number' min='1' id='r-input-" + r.id + "' placeholder='1' class='form-control'>will cost" +
             "<span id='r-cost-display-" + r.id + "'></span>" +
             "</form>" +
             "<div class='btn-group btn-block' id=r-buttons-" + r.id + ">" +

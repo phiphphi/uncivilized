@@ -90,7 +90,7 @@ buildings = {
         researchersCamp = {
             id: "researchersCamp",
             name: "Researcher's Camp",
-            description: "Establishing camps at points of interest",
+            description: "Establishing camps at points of interest will give us valuable insights into new research.",
             baseCost: [0, 1, 50],
             currCost: [0, 1, 50],
             production: [0, 0, 0, 2],
@@ -148,7 +148,7 @@ function addBuilding(b, category, index) {
 
     desc +=
         "<form class='form-inline'>" +
-        "Building<input type='number' id='b-input-" + b.id + "' placeholder='1' class='form-control'>will cost" +
+        "Building<input type='number' min='1' id='b-input-" + b.id + "' placeholder='1' class='form-control'>will cost" +
         "<span id='b-cost-display-" + b.id + "'>"+ getCostDisplay(b.currCost, 1, b) + "</span>." +
         "</form>" +
         "<div class='btn-group btn-block' id=b-buttons-" + b.id + ">" +
@@ -183,9 +183,15 @@ function buildingUpdate() {
                 }
 
                 let formInput = $("#b-input-" + b.id).val();
-                if (formInput === "") {
+                if (formInput === "" || formInput < 1) {
                     formInput = 1;
                 }
+
+                // update formInput display
+                $("#b-cost-display-" + b.id).html(
+                    getCostDisplay(b.currCost, formInput, b)
+                );
+
                 $("#b-button-" + b.id + "-1").attr("onclick", "buildingPurchase(buildings." + category + "[" + i + "], " + formInput + ");");
                 $("#b-button-" + b.id + "-2").attr("onclick", "buildingPurchase(buildings." + category + "[" + i + "], " + Math.floor(b.purchasable / 4) + ");");
                 $("#b-button-" + b.id + "-3").attr("onclick", "buildingPurchase(buildings." + category + "[" + i + "], " + b.purchasable + ");");

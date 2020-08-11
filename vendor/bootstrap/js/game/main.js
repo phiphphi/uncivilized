@@ -68,6 +68,9 @@ let version = "0.0.01";
 let init = false;
 let growthExponent = 1.1;
 
+// TODO: worker rounding error
+
+
 // log
 function log(text) { console.log("uncivilized v" + version + ": " + text); }
 

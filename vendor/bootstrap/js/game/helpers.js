@@ -7,6 +7,7 @@ function getCost(building) {
 
         if (i === 1) { // only change worker costs when over next num
             newCost.push(Math.floor(result));
+            // TODO: not scale worker costs?
         } else {
             newCost.push(result);
         }
@@ -46,7 +47,7 @@ function getResourcesPerTime(amountPerSecond) {
     if (amountPerSecond === 0) { // don't display anything if no production
       return "";
     } else { // present normally - per second
-        return ("(" + prettify(amountPerSecond, 2) + " p/sec)");
+        return ("(" + prettify(amountPerSecond, 2) + "/sec)");
     }
 }
 
@@ -65,6 +66,8 @@ function determineButtonLayout(building) {
     // set buy 1 button to input text if exists, otherwise 1
     let formInput = $("#b-input-" + building.id).val();
     if (formInput === "") {
+        formInput = 1;
+    } else if (formInput < 1) {
         formInput = 1;
     }
 
@@ -149,27 +152,32 @@ function determineWorkersButtonLayout() {
     let formInput = $("#r-input-workers").val();
     if (formInput === "") {
         formInput = 1;
+    } else if (formInput < 1) {
+        formInput = 1;
     }
 
     let maxPurchasable = Math.floor(resources[0].amount / workers.price);
-    let capacity = workers.capacity - workers.amount;
+    let capacity = workers.netCapacity;
 
+    // limit purchasable to max capacity
     if (maxPurchasable > capacity) {
         maxPurchasable = capacity;
     }
 
     workers.purchasable = maxPurchasable;
 
+    // limit forminput to purchasable amounts
     if (formInput > maxPurchasable) {
         formInput = maxPurchasable;
     }
+
 
     let $noBuyButton = $("#r-button-workers-0");
     let $oneBuyButton = $("#r-button-workers-1");
     let $25BuyButton = $("#r-button-workers-2");
     let $100BuyButton = $("#r-button-workers-3");
 
-    if (maxPurchasable === 0 || workers.capacity === 0) {
+    if (maxPurchasable === 0) {
         $noBuyButton.show();
         $oneBuyButton.hide();
         $25BuyButton.hide();
@@ -197,7 +205,7 @@ function determineWorkersButtonLayout() {
 
             if (maxPurchasable >= 8) {
                 let quarter = Math.floor(maxPurchasable / 4);
-                $25BuyButton.html("Recruit " + maxPurchasable + "<br/>" +
+                $25BuyButton.html("Recruit " + quarter + "<br/>" +
                     (quarter * workers.price) + waterImage + ", -" + quarter + waterImage + "/sec"
                 );
                 $25BuyButton.show();
@@ -215,6 +223,7 @@ function determineWorkersButtonLayout() {
  * @returns {number}
  */
 function getBuildingAmountBuyable(building, index, amountWanted) {
+    // TODO: fix buying workers here
     return (
         building.baseCost[index] * (
           (
