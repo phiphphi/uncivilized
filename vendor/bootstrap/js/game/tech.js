@@ -109,24 +109,26 @@ techs = {
      */
 }
 
-function techInit() {
+function Tech() {}
+
+Tech.init = function() {
     log("Calling techInit");
 
     for (let tech in techs) {
         let t = techs[tech];
-        addTechCard(t);
+        Tech.addTechCard(t);
     }
 }
 
-function addTechCard(t) {
+Tech.addTechCard = function(t) {
     if (t.purchaseStatus === 1) {
 
         log("initializing tech: " + t.id);
 
         let techCard =
             "<div class='card' id='t-" + t.id + "'>" +
-            "<h6>" + t.name + "</h6><hr class='tech-hr'>" + t.description + "<br/> Cost: " + getCostDisplay(t.cost, 1, null) +
-            "<br/>" + getTechReward(t) +
+            "<h6>" + t.name + "</h6><hr class='tech-hr'>" + t.description + "<br/> Cost: " + Helpers.getCostDisplay(t.cost, 1, null) +
+            "<br/>" + Tech.getReward(t) +
             "<button type='button' class='btn tech-btn disabled' id='t-button-" + t.id + "-disabled'>Can't research</button>" +
             "<button type='button' class='btn tech-btn' id='t-button-" + t.id + "'>Research</button>" +
             "</div>";
@@ -137,7 +139,7 @@ function addTechCard(t) {
     }
 }
 
-function applyTech(t) {
+Tech.applyTech = function(t) {
     if (t.hasOwnProperty("cost")) {
         for (let i = 0; i < t.cost.length; i++) {
             resources[i].amount -= t.cost[i];
@@ -159,7 +161,7 @@ function applyTech(t) {
     // has to go after capBoost so can add resources to increased capacity
     if (t.hasOwnProperty("resourceBoost")) {
         for (let i = 0; i < t.resourceBoost.length; i++) {
-            addResource(t.resourceBoost[i], resources[i]);
+            Resources.addResource(t.resourceBoost[i], resources[i]);
         }
     }
 
@@ -183,7 +185,7 @@ function applyTech(t) {
         for (let i = 0; i < t.techsUnlock.length; i++) {
             let unlockedTech = techs[t.techsUnlock[i]];
             unlockedTech.purchaseStatus = 1;
-            addTechCard(unlockedTech);
+            Tech.addTechCard(unlockedTech);
         }
     }
 
@@ -205,14 +207,14 @@ function applyTech(t) {
     }
 }
 
-// TODO: change tech reward for disassemble caravan to reduce new player shock
-function getTechReward(t) {
+Tech.getReward = function(t) {
     let reward = "Reward: <br/>";
     let firstReward = true;
 
     // Special case for first tech - simple description
     if (t.id === "disassembleCaravan") {
-        return (reward += "Unlock workers, materials, and building tabs");
+        reward += "Unlock workers, materials, and building tabs";
+        return reward;
     }
 
     if (t.hasOwnProperty("resourceBoost")) {
@@ -288,7 +290,6 @@ function getTechReward(t) {
         firstReward = true;
     }
 
-    /* remove for now - overwhelming info at start
     if (t.hasOwnProperty("techsUnlock")) {
         reward += "Unlock technologies: "
         for (let i = 0; i < t.techsUnlock.length; i++) {
@@ -302,8 +303,6 @@ function getTechReward(t) {
         reward += "<br/>";
         firstReward = true;
     }
-    *
-     */
 
     return reward;
 }
@@ -311,7 +310,7 @@ function getTechReward(t) {
 /**
  * Updates UI buttons for purchasing techs
  */
-function techUpdate() {
+Tech.update = function() {
     for (let tech in techs) {
         let t = techs[tech];
 

@@ -103,14 +103,16 @@ buildings = {
     ]
 }
 
-function buildingInit() {
+function Buildings() {}
+
+Buildings.init = function() {
     log("Calling buildingInit");
     for (const category in buildings) {
         for (let i = 0; i < buildings[category].length; i++) {
             let b = buildings[category][i];
 
             log("initializing building, id " + b.id + ", name: " + b.name);
-            addBuilding(b, category, i);
+            Buildings.addBuilding(b, category, i);
 
             if (!b.unlocked) {
                 $("#b-name-" + b.id).hide();
@@ -119,7 +121,7 @@ function buildingInit() {
     }
 }
 
-function addBuilding(b, category, index) {
+Buildings.addBuilding = function(b, category, index) {
     // initialize pills
     $("#b-col-name-" + category).prepend("<li class=nav-item><a class=nav-link id=b-name-" + b.id + " data-toggle=pill " +
         "href=#b-desc-" + b.id + ">" + b.name + "</a></li>")
@@ -137,19 +139,19 @@ function addBuilding(b, category, index) {
     if (category === "infrastructure") {
         desc +=
             "<span id='b-prod-" + b.id + "'>" +
-            "Each " + String(b.name).toLowerCase() + " provides " + getCapBoostDisplay(b, 1) + " capacity. (" + b.capMod.toFixed(2) + "x bonus)" +
+            "Each " + String(b.name).toLowerCase() + " provides " + Helpers.getCapBoostDisplay(b, 1) + " capacity. (" + b.capMod.toFixed(2) + "x bonus)" +
             "</span> <hr> ";
     } else {
         desc +=
             "<span id='b-prod-" + b.id + "'>" +
-            "Each " + String(b.name).toLowerCase() + " produces " + getCostDisplay(b.production, 1, null) + " per second. (" + b.productionMod.toFixed(2) + "x bonus)" +
+            "Each " + String(b.name).toLowerCase() + " produces " + Helpers.getCostDisplay(b.production, 1, null) + " per second. (" + b.productionMod.toFixed(2) + "x bonus)" +
             "</span> <hr> ";
     }
 
     desc +=
         "<form class='form-inline'>" +
         "Building<input type='number' min='1' id='b-input-" + b.id + "' placeholder='1' class='form-control'>will cost" +
-        "<span id='b-cost-display-" + b.id + "'>"+ getCostDisplay(b.currCost, 1, b) + "</span>." +
+        "<span id='b-cost-display-" + b.id + "'>"+ Helpers.getCostDisplay(b.currCost, 1, b) + "</span>." +
         "</form>" +
         "<div class='btn-group btn-block' id=b-buttons-" + b.id + ">" +
         "<button type=button class=btn disabled id=b-button-" + b.id + "-0>Can't build</button>" +
@@ -162,16 +164,16 @@ function addBuilding(b, category, index) {
     // attach onClick attr to Buy 1 button for form input
     $("#b-button-" + b.id + "-1").attr("onclick", "buildingPurchase(buildings." + category + "[" + index + "], 1);");
 
-    determineButtonLayout(b);
+    Helpers.determineButtonLayout(b);
 }
 
-function buildingUpdate() {
+Buildings.update = function() {
     for (const category in buildings) {
         for (let i = 0; i < buildings[category].length; i++) {
             let b = buildings[category][i];
 
             if (b.unlocked) {
-                determineButtonLayout(b);
+                Helpers.determineButtonLayout(b);
 
                 let name = String(b.name).toLowerCase();
                 if (b.amount === 0) {
@@ -189,7 +191,7 @@ function buildingUpdate() {
 
                 // update formInput display
                 $("#b-cost-display-" + b.id).html(
-                    getCostDisplay(b.currCost, formInput, b)
+                    Helpers.getCostDisplay(b.currCost, formInput, b)
                 );
 
                 $("#b-button-" + b.id + "-1").attr("onclick", "buildingPurchase(buildings." + category + "[" + i + "], " + formInput + ");");
@@ -206,9 +208,9 @@ function buildingUpdate() {
  * @param building the building to purchase
  * @param amount the amount of buildings being purchased
  */
-function buildingPurchase(building, amount) {
+Buildings.purchase = function(building, amount) {
     for (let i = 0; i < building.currCost.length; i++) {
-        resources[i].amount -= getBuildingAmountBuyable(building, i, amount);
+        resources[i].amount -= Helpers.getBuildingAmountBuyable(building, i, amount);
     }
 
     if (building.hasOwnProperty("production")) {
@@ -223,10 +225,10 @@ function buildingPurchase(building, amount) {
     }
 
     building.amount += amount;
-    building.currCost = getCost(building);
+    building.currCost = Helpers.getCost(building);
 }
 
-function buildingIncrement() {
+Buildings.increment = function() {
     // number to divide building production by
     let divisor = 1000 / rewardIntervalTime;
 
@@ -239,7 +241,7 @@ function buildingIncrement() {
                     let amount = (b.production[k] * b.amount) / divisor;
 
                     if (amount !== 0) {
-                        addResource(amount, resources[k]);
+                        Helpers.addResource(amount, resources[k]);
                     }
                 }
             }

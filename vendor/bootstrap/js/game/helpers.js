@@ -1,6 +1,8 @@
 // Helper utility functions for other scripts
 
-function getCost(building) {
+function Helpers() {}
+
+Helpers.getCost = function(building) {
     let newCost = [];
     for (let i = 0; i < building.baseCost.length; i++) {
         let result = building.baseCost[i] * Math.pow(1.1, building.amount);
@@ -16,7 +18,7 @@ function getCost(building) {
 }
 
 
-function getCityStatus(pop) {
+Helpers.getCityStatus = function(pop) {
     status = "a desert";
     if (pop === 0) {
         return status;
@@ -43,11 +45,11 @@ function getCityStatus(pop) {
 }
 
 // use for non-worker resources
-function getResourcesPerTime(amountPerSecond) {
+Helpers.getResourcesPerTime = function(amountPerSecond) {
     if (amountPerSecond === 0) { // don't display anything if no production
       return "";
     } else { // present normally - per second
-        return ("(" + prettify(amountPerSecond, 2) + "/sec)");
+        return ("(" + Helpers.prettify(amountPerSecond, 2) + "/sec)");
     }
 }
 
@@ -58,7 +60,7 @@ function getResourcesPerTime(amountPerSecond) {
  *
  * @param building the building's purchase buttons we want to calculate
  */
-function determineButtonLayout(building) {
+Helpers.determineButtonLayout = function(building) {
     // stores code for how many we can buy (0 for none, 1 for 1, 2 for 2-7, 3 for 8+)
     let purchasableVal = 3;
     let maxAmount = Number.MAX_VALUE;
@@ -93,9 +95,9 @@ function determineButtonLayout(building) {
             if (buildingResCost > resourceCount) { // if we can't afford one, then break
                 purchasableVal = 0;
                 break;
-            } else if (getBuildingAmountBuyable(building, i, 2) > resourceCount) { // show buy 1
+            } else if (Helpers.getBuildingAmountBuyable(building, i, 2) > resourceCount) { // show buy 1
                 purchasableVal = 1;
-            } else if (getBuildingAmountBuyable(building, i, 8) > resourceCount) { // show buy 1 and 100%
+            } else if (Helpers.getBuildingAmountBuyable(building, i, 8) > resourceCount) { // show buy 1 and 100%
                 if (purchasableVal > 2) {
                     purchasableVal = 2;
                 }
@@ -124,28 +126,26 @@ function determineButtonLayout(building) {
     } else {
         $noBuyButton.hide();
 
-        $oneBuyButton.html("Buy " + formInput + "<br/>" + getCostDisplay(building.currCost, formInput, building));
+        $oneBuyButton.html("Buy " + formInput + "<br/>" + Helpers.getCostDisplay(building.currCost, formInput, building));
         $oneBuyButton.show();
 
         $25BuyButton.hide();
         $100BuyButton.hide();
 
         if (purchasableVal >= 2) {
-            $100BuyButton.html("Buy " + maxAmount + "<br/>" + getCostDisplay(building.currCost, maxAmount, building));
+            $100BuyButton.html("Buy " + maxAmount + "<br/>" + Helpers.getCostDisplay(building.currCost, maxAmount, building));
             $100BuyButton.show();
 
             if (purchasableVal === 3) {
                 let quarter = Math.floor(maxAmount / 4);
-                $25BuyButton.html("Buy " + quarter + "<br/>" + getCostDisplay(building.currCost, quarter, building));
+                $25BuyButton.html("Buy " + quarter + "<br/>" + Helpers.getCostDisplay(building.currCost, quarter, building));
                 $25BuyButton.show();
             }
         }
     }
 }
 
-function determineWorkersButtonLayout() {
-    // stores code for how many we can buy (0 for none, 1 for 1, 2 for 2-7, 3 for 8+)
-    let purchasableVal = 3;
+Helpers.determineWorkersButtonLayout = function() {
     let workers = resources[1];
 
     // set buy 1 button to input text if exists, otherwise 1
@@ -222,7 +222,7 @@ function determineWorkersButtonLayout() {
  * @param amountWanted
  * @returns {number}
  */
-function getBuildingAmountBuyable(building, index, amountWanted) {
+Helpers.getBuildingAmountBuyable = function(building, index, amountWanted) {
     // TODO: fix buying workers here
     return (
         building.baseCost[index] * (
@@ -243,7 +243,7 @@ function getBuildingAmountBuyable(building, index, amountWanted) {
  * @param building if non-null, then represents a building object to calculate expotential pricing for
  * @returns {string} representation of purchase, comma separated
  */
-function getCostDisplay(purchaseCost, multiplier, building) {
+Helpers.getCostDisplay = function(purchaseCost, multiplier, building) {
     if (purchaseCost.length === 0) {
         return "Free!";
     }
@@ -255,10 +255,10 @@ function getCostDisplay(purchaseCost, multiplier, building) {
         for (let i = 0; i < purchaseCost.length; i++) {
             if (purchaseCost[i] !== 0) {
                 if (firstCost) {
-                    cost += prettify((purchaseCost[i] * multiplier), 2) + " <i class='" + resources[i].image + "'></i>";
+                    cost += Helpers.prettify((purchaseCost[i] * multiplier), 2) + " <i class='" + resources[i].image + "'></i>";
                     firstCost = false;
                 } else {
-                    cost += ", " + prettify((purchaseCost[i] * multiplier), 2) + "<i class='" + resources[i].image + "'></i>";
+                    cost += ", " + Helpers.prettify((purchaseCost[i] * multiplier), 2) + "<i class='" + resources[i].image + "'></i>";
                 }
             }
         }
@@ -273,9 +273,9 @@ function getCostDisplay(purchaseCost, multiplier, building) {
                 }
 
                 if (i === 1) { // round for workers
-                    cost += prettify(getBuildingAmountBuyable(building, i, multiplier), 0);
+                    cost += Helpers.prettify(Helpers.getBuildingAmountBuyable(building, i, multiplier), 0);
                 } else {
-                    cost += prettify(getBuildingAmountBuyable(building, i, multiplier), 2);
+                    cost += Helpers.prettify(Helpers.getBuildingAmountBuyable(building, i, multiplier), 2);
                 }
 
                 cost += " <i class='" + resources[i].image + "'></i>";
@@ -291,7 +291,7 @@ function getCostDisplay(purchaseCost, multiplier, building) {
  * @param building
  * @param multiplier
  */
-function getCapBoostDisplay(building, multiplier) {
+Helpers.getCapBoostDisplay = function(building, multiplier) {
     let boost = "";
     let firstBoost = true; // deals with fencepost problem for listing boost
 
@@ -318,7 +318,7 @@ function getCapBoostDisplay(building, multiplier) {
  * @param amount
  * @param resource
  */
-function addResource(amount, resource) {
+Helpers.addResource = function(amount, resource) {
     if (resource.id === "workers") {
         // add to population and water upkeep
         stats.population += amount;
@@ -340,7 +340,7 @@ function addResource(amount, resource) {
  * @param decimals the number of decimal places to show
  * @returns {number} a cleaner number for display
  */
-function prettify(input, decimals) {
+Helpers.prettify = function(input, decimals) {
     if (decimals === 0) {
         return Math.floor(input);
     } else {

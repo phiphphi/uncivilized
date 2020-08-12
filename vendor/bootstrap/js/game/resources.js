@@ -65,14 +65,15 @@ resources = [
     }
 ]
 
+function Resources() {}
 
-function resourceInit() {
+Resources.init = function() {
     log("Calling resourceInit");
     for (let i = 0; i < resources.length; i++) {
         let r = resources[i];
 
         log("initializing resource, id " + r.id + ", name: " + r.name);
-        addResourceDisplay(r, i);
+        Resources.addDisplay(r, i);
 
         if (!r.unlocked) {
             $("#r-" + r.id).hide();
@@ -80,7 +81,7 @@ function resourceInit() {
     }
 }
 
-function addResourceDisplay(r, index) {
+Resources.addDisplay = function(r, index) {
     // initializes resource header card
     let desc =
         "<div id='r-" + r.id + "'>" +
@@ -123,18 +124,18 @@ function addResourceDisplay(r, index) {
 }
 
 // TODO: clean this function up
-function resourceUpdate() {
+Resources.update = function() {
     for (let i = 0; i < resources.length; i++) {
         let r = resources[i];
         let amount, header;
 
         if (i === 1) {
-            amount = prettify(r.amount, 0);
+            amount = Helpers.prettify(r.amount, 0);
             header = "Available: " + amount + " | Capacity: " + r.netCapacity;
         } else {
             // TODO: change to show net production
-            amount = prettify(r.amount, 0);
-            header = amount + "/" + r.capacity + " " + getResourcesPerTime(r.production - r.upkeep);
+            amount = Helpers.prettify(r.amount, 0);
+            header = amount + "/" + r.capacity + " " + Helpers.getResourcesPerTime(r.production - r.upkeep);
         }
 
         $("#r-header-" + r.id).text(header);
@@ -144,14 +145,14 @@ function resourceUpdate() {
 
         if (i === 0) {
             // only used for water - might use for others later, add consumption stat to resources
-            let netProd = prettify(r.production - r.upkeep, 2);
-            desc += "Your available amount of " + r.id + " is increasing by " + prettify(r.production, 2) + " every second.<br/>" +
+            let netProd = Helpers.prettify(r.production - r.upkeep, 2);
+            desc += "Your available amount of " + r.id + " is increasing by " + Helpers.prettify(r.production, 2) + " every second.<br/>" +
                 "Your workers consume " + stats.population + " water per second, making your net water gain " + netProd + " per second.";
         } else if (i === 1) {
             desc += "Each worker requires 1 water per second. In total, they consume " + r.amount + " water per second.";
 
             //update worker buttons
-            determineWorkersButtonLayout();
+            Helpers.determineWorkersButtonLayout();
 
             // update purchase worker buttons
             let formInput = $("#r-input-" + r.id).val();
@@ -168,14 +169,14 @@ function resourceUpdate() {
             $("#r-button-" + r.id + "-2").attr("onclick", "addResource(" + Math.floor(r.purchasable / 4) + ", resources[1]);");
             $("#r-button-" + r.id + "-3").attr("onclick", "addResource(" + r.purchasable + ", resources[1]);");
         } else {
-            desc += "Your available amount of " + r.id + " is increasing by " + prettify(r.production, 2) + " every second.";
+            desc += "Your available amount of " + r.id + " is increasing by " + Helpers.prettify(r.production, 2) + " every second.";
         }
 
         $("#r-desc-" + r.id + "-count").html(desc);
     }
 }
 
-function resourceIncrement() {
+Resources.increment = function() {
     let divisor = 1000 / rewardIntervalTime;
 
     for (let i = 0; i < resources.length; i++) {

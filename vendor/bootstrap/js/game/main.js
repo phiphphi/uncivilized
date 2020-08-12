@@ -74,14 +74,16 @@ let growthExponent = 1.1;
 // log
 function log(text) { console.log("uncivilized v" + version + ": " + text); }
 
-function gameInit() {
+function Main() {}
+
+Main.init = function() {
     log("Calling Update.gameInit() - loading game!");
     // set init to true here when local storage is implemented
 
     // resource initializes before buildings to add resource descriptions
-    resourceInit();
-    buildingInit();
-    techInit();
+    Resources.init();
+    Buildings.init();
+    Tech.init();
 
     if (!init) {
         introInit();
@@ -91,33 +93,34 @@ function gameInit() {
 }
 
 // Handles displaying the info for resources, population, city status...
-function updateCityData() {
+Main.updateCityData = function() {
     if (init === true) {
-        $("#pop-count").text("Population: " + prettify(stats.population, 0));
-        $("#city-status").text(getCityStatus(stats.population));
+        $("#pop-count").text("Population: " + Helpers.prettify(stats.population, 0));
+        $("#city-status").text(Helpers.getCityStatus(stats.population));
         $("#era").text("era " + stats.era);
 
         // update only changes ui - increment method updates actual numbers
-        resourceUpdate();
-        buildingUpdate();
-        techUpdate();
+        Resources.update();
+        Buildings.update();
+        Tech.update();
     }
 }
 
 // Game loop
 window.onload = function() {
-    gameInit();
+    Main.init();
+    Main.loadSave();
 };
 
 mainInterval = window.setInterval(function () {
-    updateCityData();
+    Main.updateCityData();
 }, interval);
 
 // note: set all producers internal stats as amount produced per 10 milliseconds, but described as per second
 // so if description says 1 worker per second, then internal reward is 0.01 - since this goes every 10 milliseconds
 rewardInterval = window.setInterval(function () {
-    buildingIncrement();
-    resourceIncrement();
+    Buildings.increment();
+    Resources.increment();
 }, rewardIntervalTime);
 
 // TODO: add custom scroll bar for tech
