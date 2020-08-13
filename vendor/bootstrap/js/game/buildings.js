@@ -162,7 +162,7 @@ Buildings.addBuilding = function(b, category, index) {
     $("#b-desc-" + b.id).html(desc);
 
     // attach onClick attr to Buy 1 button for form input
-    $("#b-button-" + b.id + "-1").attr("onclick", "buildingPurchase(buildings." + category + "[" + index + "], 1);");
+    $("#b-button-" + b.id + "-1").attr("onclick", "Buildings.purchase(buildings." + category + "[" + index + "], 1);");
 
     Helpers.determineButtonLayout(b);
 }
@@ -194,9 +194,9 @@ Buildings.update = function() {
                     Helpers.getCostDisplay(b.currCost, formInput, b)
                 );
 
-                $("#b-button-" + b.id + "-1").attr("onclick", "buildingPurchase(buildings." + category + "[" + i + "], " + formInput + ");");
-                $("#b-button-" + b.id + "-2").attr("onclick", "buildingPurchase(buildings." + category + "[" + i + "], " + Math.floor(b.purchasable / 4) + ");");
-                $("#b-button-" + b.id + "-3").attr("onclick", "buildingPurchase(buildings." + category + "[" + i + "], " + b.purchasable + ");");
+                $("#b-button-" + b.id + "-1").attr("onclick", "Buildings.purchase(buildings." + category + "[" + i + "], " + formInput + ");");
+                $("#b-button-" + b.id + "-2").attr("onclick", "Buildings.purchase(buildings." + category + "[" + i + "], " + Math.floor(b.purchasable / 4) + ");");
+                $("#b-button-" + b.id + "-3").attr("onclick", "Buildings.purchase(buildings." + category + "[" + i + "], " + b.purchasable + ");");
             }
         }
     }

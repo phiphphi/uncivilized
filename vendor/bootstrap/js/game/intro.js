@@ -19,13 +19,15 @@ intro = {
     ]
 }
 
-function introInit() {
+function Intro() {}
+
+Intro.init = function() {
     // hide certain game elements before they're unlocked
     for (let i = 0; i < resources.length; i++) {
         $("#" + resources[i].id + "-nav-item").hide();
     }
 
-    let walkButton = "<button type=button class=btn id=walk-btn onClick='getWalkText();' style='display: none'></button>" +
+    let walkButton = "<button type=button class=btn id=walk-btn onClick='Intro.getWalkText();' style='display: none'></button>" +
         "<div class='progress progress-custom' id='walk-bar' style='display: none'>" +
         "<div class='progress-bar progress-bar-custom' id='walk-progress-bar' role='progressbar'></div>" +
         "</div>"
@@ -34,7 +36,7 @@ function introInit() {
 
 
     // add skip button
-    let skipButton = "<button type=button class=btn id=skip-intro-btn onClick='skipIntro();'>Skip Intro</button>";
+    let skipButton = "<button type=button class=btn id=skip-intro-btn onClick='Intro.skip();'>Skip Intro</button>";
     $("#dev-tools").append(skipButton);
 
     // some style and animations for the intro
@@ -43,18 +45,18 @@ function introInit() {
     $("#walk-btn").delay(500).fadeIn(1000);
 }
 
-function getWalkText() {
+Intro.getWalkText = function() {
     let $alerts = $("#alert-container");
 
     if (walkButtonClicks === 0 || walkButtonClicks === 4 || walkButtonClicks === 8 || walkButtonClicks === 11) { // add intro text
-        addIntroText($alerts, intro.text[currentText], walkButtonClicks);
+        Intro.addText($alerts, intro.text[currentText], walkButtonClicks);
     } else if (walkButtonClicks === 2 || walkButtonClicks === 6 || walkButtonClicks === 10 || walkButtonClicks === 12) { // add intro alert
-        addIntroAlert($alerts, intro.text[currentText], walkButtonClicks);
+        Intro.addAlert($alerts, intro.text[currentText], walkButtonClicks);
     }
 
     if (walkButtonClicks === 12) { // add start game button and remove walk button
         $alerts.append(
-            "<button type=button class=btn id='intro-start-btn' onClick=startGame() style='display: none'><b>Begin</b></button>"
+            "<button type=button class=btn id='intro-start-btn' onClick='Intro.startGame()' style='display: none'><b>Begin</b></button>"
         );
         $("#intro-start-btn").fadeIn(1000);
 
@@ -71,7 +73,7 @@ function getWalkText() {
         resources[0].amount--;
     }
 
-    updateWalkButton();
+    Intro.updateWalkButton();
 
     walkButtonClicks++;
 }
@@ -83,7 +85,7 @@ function getWalkText() {
  * @param text the text string to be displayed
  * @param id the desired id for the created object
  */
-function addIntroText(alerts, text, id) {
+Intro.addText = function(alerts, text, id) {
     alerts.append(
         "<p class='intro-text' id='intro-text-" + id + "' style='display: none'><i>" + text +"</i></div>");
     currentText++;
@@ -97,14 +99,14 @@ function addIntroText(alerts, text, id) {
  * @param text the text string to be displayed
  * @param id the desired id for the created object
  */
-function addIntroAlert(alerts, text, id) {
+Intro.addAlert = function(alerts, text, id) {
     alerts.append(
         "<div class='alert alert-custom' id='intro-text-" + id + "' style='display: none'>" + text + "</div>");
     currentText++;
     $("#intro-text-" + id).fadeIn(1000);
 }
 
-function updateWalkButton() {
+Intro.updateWalkButton = function() {
     let $walkBtn = $("#walk-btn");
     // update walk button text
     if (walkButtonClicks === 6) {
@@ -140,7 +142,7 @@ function updateWalkButton() {
     }, btnTimeout + 50);
 }
 
-function startGame() {
+Intro.startGame = function() {
     let initialFadeOutTime = 1500;
     let titleFadeinTime = 3000;
     let titleShowTime = 5000;
@@ -192,7 +194,7 @@ function startGame() {
 }
 
 // dev use for skipping straight to gameplay
-function skipIntro() {
+Intro.skip = function() {
     $("#walk-btn").remove();
     $("#walk-bar").remove();
 

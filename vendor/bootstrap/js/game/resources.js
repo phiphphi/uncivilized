@@ -165,9 +165,9 @@ Resources.update = function() {
                 (formInput * r.price) + " <i class='" + resources[0].image + "'></i>."
             );
 
-            $("#r-button-" + r.id + "-1").attr("onclick", "addResource(" + formInput + ", resources[1]);");
-            $("#r-button-" + r.id + "-2").attr("onclick", "addResource(" + Math.floor(r.purchasable / 4) + ", resources[1]);");
-            $("#r-button-" + r.id + "-3").attr("onclick", "addResource(" + r.purchasable + ", resources[1]);");
+            $("#r-button-" + r.id + "-1").attr("onclick", "Helpers.addResource(" + formInput + ", resources[1]);");
+            $("#r-button-" + r.id + "-2").attr("onclick", "Helpers.addResource(" + Math.floor(r.purchasable / 4) + ", resources[1]);");
+            $("#r-button-" + r.id + "-3").attr("onclick", "Helpers.addResource(" + r.purchasable + ", resources[1]);");
         } else {
             desc += "Your available amount of " + r.id + " is increasing by " + Helpers.prettify(r.production, 2) + " every second.";
         }

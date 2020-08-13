@@ -134,7 +134,7 @@ Tech.addTechCard = function(t) {
             "</div>";
         $("#tech").append(techCard);
 
-        $("#t-button-" + t.id).attr("onclick", "applyTech(techs." + t.id + ");");
+        $("#t-button-" + t.id).attr("onclick", "Tech.applyTech(techs." + t.id + ");");
         $("#t-" + t.id).slideDown(1000);
     }
 }

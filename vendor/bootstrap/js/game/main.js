@@ -86,7 +86,7 @@ Main.init = function() {
     Tech.init();
 
     if (!init) {
-        introInit();
+        Intro.init();
     }
 
     init = true;
