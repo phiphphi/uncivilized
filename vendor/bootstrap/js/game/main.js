@@ -63,7 +63,10 @@ let introTour = new Tour({
 
 let fps = 30;
 let interval = (1000 / fps);
-let rewardIntervalTime = 10;
+let rewardInterval = 10;
+// default: save every 10 seconds
+let saveInterval = 10000;
+
 let version = "0.0.01";
 let init = false;
 let growthExponent = 1.1;
@@ -92,7 +95,9 @@ Main.init = function() {
     init = true;
 }
 
-// Handles displaying the info for resources, population, city status...
+/**
+ * Handles displaying the info for resources, population, city status...
+ */
 Main.updateCityData = function() {
     if (init === true) {
         $("#pop-count").text("Population: " + Helpers.prettify(stats.population, 0));
@@ -106,12 +111,45 @@ Main.updateCityData = function() {
     }
 }
 
-// Game loop
+/**
+ * Retrieves saved game data from local storage before game initialization.
+ */
+Main.loadData = function() {
+    // add delete save button for testing
+    let removeSaveButton =
+        "<button type=button class=btn id=remove-save-btn onClick='localStorage.removeItem(\"gameSave\");'>" +
+            "Delete Save" +
+        "</button>";
+    $("#dev-tools").append(removeSaveButton);
+
+    let saveData = localStorage.getItem("gameSave");
+    Resources.load(saveData[Resources.key]);
+    Buildings.load(saveData[Buildings.key]);
+    Tech.load(saveData[Tech.key]);
+}
+
+/**
+ * Saves current game data into local storage.
+ */
+Main.saveData = function() {
+    let saveData = {};
+    saveData[Resources.key] = Resources.save();
+    saveData[Buildings.key] = Buildings.save();
+    saveData[Tech.key] = Tech.save();
+    localStorage.setItem("gameSave", JSON.stringify(saveData));
+}
+
+/**
+ * Loads saved game data and initializes the UI.
+ */
 window.onload = function() {
+    Main.loadData();
     Main.init();
-    Main.loadSave();
 };
 
+/**
+ * Updates the UI at the set FPS.
+ */
 mainInterval = window.setInterval(function () {
     Main.updateCityData();
 }, interval);
@@ -121,6 +159,10 @@ mainInterval = window.setInterval(function () {
 rewardInterval = window.setInterval(function () {
     Buildings.increment();
     Resources.increment();
-}, rewardIntervalTime);
+}, rewardInterval);
+
+saveInterval = window.setInterval(function() {
+    Main.saveData();
+}, saveInterval);
 
 // TODO: add custom scroll bar for tech

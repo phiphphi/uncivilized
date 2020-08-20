@@ -39,6 +39,7 @@ resources = [
         price: 25,
         purchasable: 0,
         // tracks room for more workers - goes down when workers are bought, but not up when they are used in jobs
+        // capacity - workers (everywhere)
         netCapacity: 5,
     },
     {
@@ -193,4 +194,15 @@ Resources.increment = function() {
             r.amount = r.capacity;
         }
     }
+}
+
+
+let key = "resourcesData";
+
+Resources.save = function() {
+    return JSON.toString()
+}
+
+Resources.load = function() {
+
 }
