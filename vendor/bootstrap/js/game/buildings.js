@@ -248,3 +248,13 @@ Buildings.increment = function() {
         }
     }
 }
+
+let key = "buildingsData";
+
+Buildings.save = function() {
+    return JSON.stringify(this.buildings);
+}
+
+Buildings.load = function(saveBuildings) {
+    this.buildings = saveBuildings;
+}

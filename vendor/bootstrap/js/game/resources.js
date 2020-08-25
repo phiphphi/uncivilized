@@ -196,13 +196,12 @@ Resources.increment = function() {
     }
 }
 
-
 let key = "resourcesData";
 
 Resources.save = function() {
-    return JSON.toString()
+    return JSON.stringify(this.resources);
 }
 
-Resources.load = function() {
-
+Resources.load = function(saveResources) {
+    this.resources = saveResources;
 }

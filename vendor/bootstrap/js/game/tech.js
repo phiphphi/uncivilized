@@ -336,4 +336,12 @@ Tech.update = function() {
     }
 }
 
+let key = "techData";
 
+Tech.save = function() {
+    return JSON.stringify(this.techs);
+}
+
+Tech.load = function(saveTechs) {
+    this.techs = saveTechs;
+}
