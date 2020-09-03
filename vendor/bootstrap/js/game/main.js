@@ -90,9 +90,10 @@ Main.init = function() {
 
     if (!init) {
         Intro.init();
+        init = true;
+    } else {
+        Intro.skip();
     }
-
-    init = true;
 }
 
 /**
@@ -115,27 +116,37 @@ Main.updateCityData = function() {
  * Retrieves saved game data from local storage before game initialization.
  */
 Main.loadData = function() {
+    let saveData = localStorage.getItem("gameSave");
+    init = saveData["gameInit"];
+
+    if (init) { // don't load on first startup
+        log("Loading previous save!");
+        Resources.load(saveData[resourcesKey]);
+        Buildings.load(saveData[buildingsKey]);
+        Tech.load(saveData[techKey]);
+    } else {
+        log("First time loading!");
+    }
+
     // add delete save button for testing
     let removeSaveButton =
         "<button type=button class=btn id=remove-save-btn onClick='localStorage.removeItem(\"gameSave\");'>" +
-            "Delete Save" +
+        "Delete Save" +
         "</button>";
     $("#dev-tools").append(removeSaveButton);
-
-    let saveData = localStorage.getItem("gameSave");
-    Resources.load(saveData[Resources.key]);
-    Buildings.load(saveData[Buildings.key]);
-    Tech.load(saveData[Tech.key]);
 }
 
 /**
  * Saves current game data into local storage.
  */
 Main.saveData = function() {
+    log("Saving game!");
+    // NOTE: current saving method won't work for updates when new stuff is added
     let saveData = {};
-    saveData[Resources.key] = Resources.save();
-    saveData[Buildings.key] = Buildings.save();
-    saveData[Tech.key] = Tech.save();
+    saveData["gameInit"] = init;
+    saveData[resourcesKey] = Resources.save();
+    saveData[buildingsKey] = Buildings.save();
+    saveData[techKey] = Tech.save();
     localStorage.setItem("gameSave", JSON.stringify(saveData));
 }
 

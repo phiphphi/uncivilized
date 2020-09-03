@@ -230,7 +230,7 @@ Buildings.purchase = function(building, amount) {
 
 Buildings.increment = function() {
     // number to divide building production by
-    let divisor = 1000 / rewardIntervalTime;
+    let divisor = 1000 / rewardInterval;
 
     for (const category in buildings) {
         for (let i = 0; i < buildings[category].length; i++) {
@@ -249,7 +249,7 @@ Buildings.increment = function() {
     }
 }
 
-let key = "buildingsData";
+const buildingsKey = "buildingsData";
 
 Buildings.save = function() {
     return JSON.stringify(this.buildings);

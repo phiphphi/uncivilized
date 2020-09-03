@@ -161,7 +161,7 @@ Tech.applyTech = function(t) {
     // has to go after capBoost so can add resources to increased capacity
     if (t.hasOwnProperty("resourceBoost")) {
         for (let i = 0; i < t.resourceBoost.length; i++) {
-            Resources.addResource(t.resourceBoost[i], resources[i]);
+            Helpers.addResource(t.resourceBoost[i], resources[i]);
         }
     }
 
@@ -336,7 +336,7 @@ Tech.update = function() {
     }
 }
 
-let key = "techData";
+const techKey = "techData";
 
 Tech.save = function() {
     return JSON.stringify(this.techs);

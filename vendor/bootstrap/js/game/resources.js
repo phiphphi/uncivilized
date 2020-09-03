@@ -178,7 +178,7 @@ Resources.update = function() {
 }
 
 Resources.increment = function() {
-    let divisor = 1000 / rewardIntervalTime;
+    let divisor = 1000 / rewardInterval;
 
     for (let i = 0; i < resources.length; i++) {
         let r = resources[i];
@@ -196,7 +196,7 @@ Resources.increment = function() {
     }
 }
 
-let key = "resourcesData";
+const resourcesKey = "resourcesData";
 
 Resources.save = function() {
     return JSON.stringify(this.resources);
