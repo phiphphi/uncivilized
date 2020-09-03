@@ -117,15 +117,16 @@ Main.updateCityData = function() {
  */
 Main.loadData = function() {
     let saveData = localStorage.getItem("gameSave");
-    init = saveData["gameInit"];
 
-    if (init) { // don't load on first startup
+    if (saveData === null) { // don't load on first startup
+        log("First time loading!");
+    } else { // load previous data
         log("Loading previous save!");
+
+        init = saveData["gameInit"];
         Resources.load(saveData[resourcesKey]);
         Buildings.load(saveData[buildingsKey]);
         Tech.load(saveData[techKey]);
-    } else {
-        log("First time loading!");
     }
 
     // add delete save button for testing
